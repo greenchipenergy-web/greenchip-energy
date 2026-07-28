@@ -1,0 +1,222 @@
+/* Load Roboto for site-wide typography */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+/* ─── RESET ───────────────────────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:#f8fdf9;
+  color:#1a2e1a;
+  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* Reserve space for the fixed header (top accent 34px + nav 66px = 100px) */
+body{padding-top:100px}
+
+/* Force Roboto everywhere (override inline font-family styles to ensure uniform professional typography) */
+:where(body, body *):not(svg):not(img){
+  font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#f0f9f1}
+::-webkit-scrollbar-thumb{background:linear-gradient(#16a34a,#166534);border-radius:2px}
+::selection{background:rgba(22,163,74,.18);color:#14532d}
+h1,h2,h3,h4,h5{font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;line-height:1.1}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+input,textarea,select{font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+
+/* ─── COLOUR TOKENS ───────────────────────────────────────── */
+/* Primary green scale */
+:root{
+  --g50:  #f0fdf4;
+  --g100: #dcfce7;
+  --g200: #bbf7d0;
+  --g300: #86efac;
+  --g400: #4ade80;
+  --g500: #22c55e;
+  --g600: #16a34a;
+  --g700: #15803d;
+  --g800: #166534;
+  --g900: #14532d;
+  /* Neutrals */
+  --n50:  #f8fdf9;
+  --n100: #f0f9f1;
+  --n200: #e4f5e6;
+  --n300: #c9e8cc;
+  --n500: #6b9e7a;
+  --n700: #2d4a30;
+  --n900: #1a2e1a;
+  /* Accents */
+  --white:#ffffff;
+  --shadow-sm: 0 1px 3px rgba(22,101,52,.08), 0 1px 2px rgba(22,101,52,.05);
+  --shadow-md: 0 4px 16px rgba(22,101,52,.1), 0 2px 8px rgba(22,101,52,.06);
+  --shadow-lg: 0 12px 40px rgba(22,101,52,.14), 0 4px 16px rgba(22,101,52,.08);
+  --shadow-xl: 0 24px 64px rgba(22,101,52,.18);
+}
+
+/* ─── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes fadeUp    {from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeLeft  {from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeRight {from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn   {from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes float     {0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse     {0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes marquee   {from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes lineGrow  {from{width:0}to{width:100%}}
+@keyframes dotBlink  {0%,100%{opacity:1}50%{opacity:0}}
+@keyframes spin      {to{transform:rotate(360deg)}}
+@keyframes gradMove  {0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.spin{animation:spin 1s linear infinite}
+
+/* ─── REVEAL CLASSES ──────────────────────────────────────── */
+.reveal      {opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.vis  {opacity:1;transform:translateY(0)}
+.rev-l       {opacity:0;transform:translateX(-36px);transition:opacity .75s ease,transform .75s ease}
+.rev-l.vis   {opacity:1;transform:translateX(0)}
+.rev-r       {opacity:0;transform:translateX(36px);transition:opacity .75s ease,transform .75s ease}
+.rev-r.vis   {opacity:1;transform:translateX(0)}
+
+/* ─── BUTTONS ─────────────────────────────────────────────── */
+.btn-primary{
+  background:linear-gradient(135deg,var(--g600),var(--g700));
+  color:#fff;border:none;border-radius:8px;
+  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-weight:700;
+  letter-spacing:.3px;transition:all .25s;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  position:relative;overflow:hidden;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,163,74,.32)}
+.btn-primary:active{transform:translateY(0)}
+
+.btn-outline{
+  background:transparent;color:var(--g700);
+  border:1.5px solid var(--g600);border-radius:8px;
+  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-weight:700;
+  transition:all .25s;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+}
+.btn-outline:hover{background:var(--g50);border-color:var(--g700);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+.btn-white{
+  background:#fff;color:var(--g700);
+  border:1.5px solid #fff;border-radius:8px;
+  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-weight:700;
+  transition:all .25s;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+}
+.btn-white:hover{background:var(--g50);border-color:var(--g200);transform:translateY(-2px)}
+
+/* ─── BADGE / TAG ─────────────────────────────────────────── */
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 13px;
+  background:var(--g100);border:1px solid var(--g200);
+  border-radius:100px;color:var(--g700);
+  font-size:11px;font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  letter-spacing:1.8px;text-transform:uppercase;font-weight:700;
+}
+.badge .dot{width:5px;height:5px;border-radius:50%;background:var(--g500);flex-shrink:0}
+.badge .dot-blink{animation:dotBlink 2s infinite}
+
+.badge-dark{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 13px;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);
+  border-radius:100px;color:#fff;
+  font-size:11px;font-family:'Space Grotesk',sans-serif;
+  letter-spacing:1.8px;text-transform:uppercase;font-weight:600;
+}
+
+/* ─── CARDS ───────────────────────────────────────────────── */
+.card{
+  background:#fff;border:1px solid var(--n200);
+  border-radius:16px;transition:all .3s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+.card:hover{
+  transform:translateY(-6px);
+  border-color:var(--g300);
+  box-shadow:var(--shadow-lg);
+}
+.card-flat{background:#fff;border:1px solid var(--n200);border-radius:16px;overflow:hidden}
+
+/* ─── SECTION PADDING ─────────────────────────────────────── */
+.section   {padding:88px 8%}
+.section-sm{padding:60px 8%}
+.section-xs{padding:40px 8%}
+
+/* ─── GRIDS ───────────────────────────────────────────────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+
+/* ─── TEXT UTILITIES ──────────────────────────────────────── */
+.text-green {color:var(--g600)}
+.text-muted {color:var(--n500)}
+.text-dark  {color:var(--n900)}
+.text-white {color:#fff}
+.grad-text{
+  background:linear-gradient(135deg,var(--g600),var(--g800));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ─── DIVIDER ─────────────────────────────────────────────── */
+.divider{width:48px;height:3px;background:linear-gradient(90deg,var(--g500),transparent);border-radius:2px;margin:16px 0}
+.divider-c{margin:16px auto}
+
+/* ─── FORM ────────────────────────────────────────────────── */
+.input{
+  width:100%;padding:13px 16px;
+  background:#fff;border:1.5px solid var(--n200);border-radius:10px;
+  color:var(--n900);font-size:14px;outline:none;
+  transition:border .2s,box-shadow .2s;
+}
+.input:focus{border-color:var(--g500);box-shadow:0 0 0 3px rgba(34,197,94,.12)}
+.input::placeholder{color:#9cbaA2}
+
+/* ─── HERO OVERLAY PATTERN ────────────────────────────────── */
+.hero-pattern{
+  background-image:
+    radial-gradient(circle at 1px 1px,rgba(255,255,255,.12) 1px,transparent 0);
+  background-size:32px 32px;
+}
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media(max-width:1100px){.section{padding:72px 6%}.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  .g2,.g3{grid-template-columns:1fr!important;gap:32px!important}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .section{padding:56px 5%}
+  .hide-mob{display:none!important}
+  .show-mob{display:flex!important}
+}
+
+/* Mobile spacing: ensure stats band sits below hero with extra top margin on mobile */
+@media(max-width:900px){
+  .stats-band-mobile{margin-top:120px}
+}
+@media(max-width:600px){
+  .g4{grid-template-columns:1fr}
+  .section{padding:44px 5%}
+  h1{font-size:clamp(2rem,8vw,3.5rem)!important}
+}
+
+/* Mobile CTA bar: visible only on small screens */
+.global-mobile-cta{display:none}
+@media(max-width:900px){
+  .global-mobile-cta{display:block;position:fixed;left:12px;right:12px;bottom:12px;z-index:1600}
+  .global-mobile-cta > div{background:transparent;padding:0}
+  .global-mobile-cta button{padding:12px;border-radius:999px;font-weight:700}
+  .global-mobile-cta button:first-child{background:#fff;border:1px solid #e5e7eb;color:#14532d}
+  .global-mobile-cta button:last-child{background:linear-gradient(135deg,#16a34a,#14532d);border:none;color:#fff}
+}
+
+/* Last-resort: force Roboto on every element (overrides inline styles if necessary) */
+*:not(svg):not(img){
+  font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
