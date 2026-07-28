@@ -2,14 +2,18 @@ import express from 'express'
 import nodemailer from 'nodemailer'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 dotenv.config()
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 
-const PORT = process.env.BACKEND_PORT || 5000
+const PORT = process.env.PORT || process.env.BACKEND_PORT || 5000
 
 // Configure Nodemailer (just like PHP mail!)
 const transporter = nodemailer.createTransport({
@@ -21,7 +25,7 @@ const transporter = nodemailer.createTransport({
 })
 
 // Endpoint for Lead Form (Request a Quote)
-app.post('/api/send-lead', async (req, res) => {
+app.post('/api/send-lead.php', async (req, res) => {
   try {
     const { name, email, phone, location, eb_bill, customer_type, installation_type, solution, message } = req.body
 
@@ -79,7 +83,7 @@ app.post('/api/send-lead', async (req, res) => {
 })
 
 // Endpoint for Contact Form
-app.post('/api/send-contact', async (req, res) => {
+app.post('/api/send-contact.php', async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body
 
@@ -130,6 +134,13 @@ app.post('/api/send-contact', async (req, res) => {
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'Backend running ✓' })
+})
+
+// Serve the built frontend (npm run build output)
+const distDir = path.join(__dirname, 'dist')
+app.use(express.static(distDir))
+app.use((req, res) => {
+  res.sendFile(path.join(distDir, 'index.html'))
 })
 
 app.listen(PORT, () => {
