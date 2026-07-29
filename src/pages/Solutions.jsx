@@ -7,7 +7,7 @@ import{Check}from'lucide-react'
 export function Solutions({setPage}){
   const[ref,vis]=useReveal()
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Our Solutions" subtitle="Comprehensive renewable energy solutions for every scale and application across India." img={`${IMG}Commerial rooftop.jpg`} breadcrumb="What We Do → Solutions"/>
 
       <section className="section" style={{background:'#fff'}}>
@@ -62,7 +62,7 @@ export function SolutionDetail({id,setPage}){
   const[r1,v1]=useReveal()
   const[r2,v2]=useReveal()
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title={sol.title} subtitle={sol.tagline} img={`${IMG}${sol.img}`} breadcrumb={`Solutions → ${sol.title}`}/>
       <style>{`
         .sol-stat{transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease}

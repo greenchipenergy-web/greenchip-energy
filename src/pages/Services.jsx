@@ -16,7 +16,7 @@ export function Services({setPage}){
   ]
 
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Our Services" subtitle="End-to-end solar services from engineering to ongoing asset management." img={`${IMG}services.jpg`} breadcrumb="What We Do → Services"/>
       <style>{`
         .epc-circle{transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease}
@@ -191,7 +191,7 @@ export function EPC(){
     {i:Star,t:'Quality Assurance',d:'EPC contractors ensure project compliance with standards and regulations, ensuring high-quality outcomes that meet requirements. This model minimises risks, enhances efficiency, and maximises value for project owners and stakeholders.'},
   ]
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="EPC Services" subtitle="Engineering, Procurement & Construction — complete project delivery from design to commissioning." img={`${IMG}EPCdetails.jpg`} breadcrumb="Services → EPC"/>
       <style>{`
         .epc-circle{transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease}

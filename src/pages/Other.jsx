@@ -122,7 +122,7 @@ export function Initiatives({ setPage }) {
   ]
 
   return (
-    <div style={{ background: '#f8fdf9', paddingTop: 34 }}>
+    <div style={{ background: '#f8fdf9' }}>
       <PageHero
         title="New Initiatives"
         subtitle="Pioneering the next frontier of clean energy technology — hydrogen and bio-energy."
@@ -214,7 +214,7 @@ export function HydrogenPage({ setPage }) {
   ]
 
   return (
-    <div style={{ background: '#f8fdf9', paddingTop: 34 }}>
+    <div style={{ background: '#f8fdf9' }}>
       <PageHero
         title="Hydrogen Electrolyser"
         subtitle="The Green Hydrogen Promise — National Green Hydrogen Mission"
@@ -410,7 +410,7 @@ export function CBGPage({ setPage }) {
   ]
 
   return (
-    <div style={{ background: '#f8fdf9', paddingTop: 34 }}>
+    <div style={{ background: '#f8fdf9' }}>
       <PageHero
         title="CBG (Bio-CNG) Production Plant"
         subtitle="Your partner in sustainable bio-energy solutions — setting up CBG manufacturing plants across India."
@@ -618,7 +618,7 @@ export function Projects(){
   const prevPreview = ()=>setPreviewIndex(i=> (i-1+gallery.length)%gallery.length)
   const nextPreview = ()=>setPreviewIndex(i=> (i+1)%gallery.length)
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Our Projects" subtitle="Pioneering solar and renewable energy projects across India." img={`${IMG}ourprojects.jpg`} breadcrumb="Projects"/>
       <section className="section" style={{background:'#fff'}}>
         <div style={{textAlign:'center',marginBottom:52}}>
@@ -799,7 +799,7 @@ export function Calculator(){
   ]
 
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Solar Calculator" subtitle="AI-powered solar savings estimator for Indian rooftop & ground installations." img={`${IMG}calculate.png`} breadcrumb="Solar Calculator"/>
 
       <section className="section" style={{background:'#fff',maxWidth:1180,margin:'0 auto'}}>
@@ -1019,7 +1019,7 @@ export function Careers(){
   const[open,setOpen]=useState(null)
   const[ref,vis]=useReveal()
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Careers" subtitle="Join us in powering India's clean energy revolution." img={`${IMG}carear.png`} breadcrumb="Careers"/>
       <section className="section" style={{background:'#fff'}}>
         {/* Hero copy */}
@@ -1172,7 +1172,7 @@ export function   Contact({setPage}){
   }
 
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Contact Us" subtitle="Get in touch with our solar energy experts today." img={`${IMG}contact.png`} breadcrumb="Contact"/>
       <section className="section" style={{background:'#fff'}}>
         {/* Info cards */}

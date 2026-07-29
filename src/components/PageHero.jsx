@@ -1,6 +1,6 @@
 export default function PageHero({title,subtitle,img,breadcrumb}){
   return(
-    <div style={{position:'relative',minHeight:440,overflow:'hidden',marginTop:66,display:'flex',alignItems:'center'}}>
+    <div style={{position:'relative',minHeight:440,overflow:'hidden',display:'flex',alignItems:'center'}}>
       {/* BG image with a slow ken-burns drift */}
       <img className="ph-img" src={img} alt={title} style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'center'}}/>
 

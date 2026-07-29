@@ -191,7 +191,7 @@ export default function AssetManagementPage({ setPage }) {
   ]
 
   return (
-    <div style={{ background: '#f8fdf9', paddingTop: 34 }}>
+    <div style={{ background: '#f8fdf9' }}>
       <PageHero
         title="Asset Management"
         subtitle="Solar Asset Management: Maximizing The Potential Of Your Solar Plant Project"

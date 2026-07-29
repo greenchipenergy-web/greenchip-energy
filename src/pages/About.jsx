@@ -11,7 +11,7 @@ export function About({setPage}){
   const[r1,v1]=useReveal()
   const[r2,v2]=useReveal()
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="About GreenChip Energy" subtitle="Leading turnkey renewable energy solutions across India since 2017." img={`${IMG}about12.png`} breadcrumb="About Us"/>
 
       <section className="section" style={{background:'#fff'}}>
@@ -80,7 +80,7 @@ export function About({setPage}){
 export function Values(){
   const[ref,vis]=useReveal()
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Our Values" subtitle="The principles that guide everything we do at GreenChip Energy." img={`${IMG}ourvalue.jpg`} breadcrumb="About Us → Values"/>
       <section className="section" style={{background:'#fff'}}>
         <div style={{textAlign:'center',marginBottom:56}}>
@@ -138,7 +138,7 @@ export function Approach(){
   ]
 
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Our Approach" subtitle="A proven four-stage methodology for delivering exceptional renewable energy projects." img={`${IMG}Approach.jpg`} breadcrumb="About Us → Approach"/>
       <section className="section" style={{background:'#fff'}}>
         <div style={{textAlign:'center',marginBottom:64}}>
@@ -296,7 +296,7 @@ export function Approach(){
 export function Ethics(){
   const[ref,vis]=useReveal()
   return(
-    <div style={{background:'#f8fdf9',paddingTop:34}}>
+    <div style={{background:'#f8fdf9'}}>
       <PageHero title="Ethics & Principles" subtitle="Our commitment to ethical business and responsible energy development." img={`${IMG}ethics.jpg`} breadcrumb="About Us → Ethics"/>
       <section className="section" style={{background:'#fff'}}>
         <div style={{textAlign:'center',marginBottom:52}}>
@@ -350,7 +350,7 @@ export function Team(){
   ]
 
   return (
-    <div style={{ background: '#f8fdf9', paddingTop: 34 }}>
+    <div style={{ background: '#f8fdf9' }}>
       <PageHero title="Our Team" subtitle="Experienced professionals driving India's renewable energy transformation." img={`${IMG}team-1.jpg`} breadcrumb="About Us → Team" />
 
       <section className="section" style={{ background: '#fff' }}>

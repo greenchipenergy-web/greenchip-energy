@@ -70,7 +70,7 @@ export default function FinancingPage({ setPage }) {
   ]
 
   return (
-    <div style={{ background: '#f8fdf9', paddingTop: 34 }}>
+    <div style={{ background: '#f8fdf9' }}>
       <PageHero
         title="Financing Models"
         subtitle="CAPEX / LEASING / DEFERRED PAYMENT / OPEX / PPA / RESCO — going solar has never been this easy & affordable."
