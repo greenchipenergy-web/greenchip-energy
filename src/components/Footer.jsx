@@ -11,13 +11,13 @@ export default function Footer({setPage}){
   }
   const link={
     color:'rgba(255,255,255,.6)',fontSize:13,lineHeight:1,
-    marginBottom:13,cursor:'pointer',transition:'color .2s',display:'block'
+    marginBottom:13,cursor:'pointer',display:'block',width:'fit-content'
   }
-  const hl=e=>e.target.style.color='#86efac'
-  const ul=e=>e.target.style.color='rgba(255,255,255,.6)'
 
   return(
-    <footer style={{background:'#14532d',color:'#fff'}}>
+    <footer style={{background:'#14532d',color:'#fff',position:'relative'}}>
+      {/* Top accent line */}
+      <div style={{height:3,background:'linear-gradient(90deg,#16a34a,#4ade80,#16a34a)'}}/>
 
       {/* ── MAIN GRID ─────────────────────────────────────── */}
       <div style={{padding:'64px 8% 48px'}}>
@@ -63,10 +63,8 @@ export default function Footer({setPage}){
                   )
                 }
               ].map(({icon,title,url})=>(
-                <a key={title} href={url} target="_blank" rel="noreferrer" title={title}
-                  style={{width:34,height:34,borderRadius:'50%',background:'rgba(255,255,255,.1)',border:'1px solid rgba(255,255,255,.2)',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',textDecoration:'none',transition:'all .2s'}}
-                  onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,.25)'}
-                  onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,.1)'}>
+                <a key={title} className="foot-social" href={url} target="_blank" rel="noreferrer" title={title}
+                  style={{width:38,height:38,borderRadius:'50%',background:'rgba(255,255,255,.1)',border:'1px solid rgba(255,255,255,.2)',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',textDecoration:'none'}}>
                   {icon}
                 </a>
               ))}
@@ -77,7 +75,7 @@ export default function Footer({setPage}){
           <div>
             <div style={colHead}>Company</div>
             {[['about','About Us'],['values','Our Values'],['approach','Our Approach'],['ethics','Ethics'],['team','Team']].map(([p,l])=>(
-              <span key={p} onClick={()=>go(p)} style={link} onMouseEnter={hl} onMouseLeave={ul}>{l}</span>
+              <span key={p} className="foot-link" onClick={()=>go(p)} style={link}>{l}</span>
             ))}
           </div>
 
@@ -85,7 +83,7 @@ export default function Footer({setPage}){
           <div>
             <div style={colHead}>Solutions</div>
             {[['rooftop','Rooftop Solar'],['solutions','Ground Mounted'],['solutions','Solar Park'],['solutions','Floating Solar'],['solutions','Hybrid Systems'],['solutions','Wind Turbine']].map(([p,l],i)=>(
-              <span key={i} onClick={()=>go(p)} style={link} onMouseEnter={hl} onMouseLeave={ul}>{l}</span>
+              <span key={i} className="foot-link" onClick={()=>go(p)} style={link}>{l}</span>
             ))}
           </div>
 
@@ -93,7 +91,7 @@ export default function Footer({setPage}){
           <div>
             <div style={colHead}>Services</div>
             {[['epc','EPC Services'],['financing','Financing Models'],['assetmanagement','Asset Management'],['initiatives','New Initiatives'],['projects','Our Projects'],['calculator','Solar Calculator']].map(([p,l],i)=>(
-              <span key={i} onClick={()=>go(p)} style={link} onMouseEnter={hl} onMouseLeave={ul}>{l}</span>
+              <span key={i} className="foot-link" onClick={()=>go(p)} style={link}>{l}</span>
             ))}
           </div>
 
@@ -109,8 +107,8 @@ export default function Footer({setPage}){
             {/* Gallery thumbnails */}
             <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:5,marginTop:18}}>
               {[1,2,3,4,5,6].map(n=>(
-                <img key={n} src={`${IMG}gallery-${n}.jpg`} alt=""
-                  style={{width:'100%',aspectRatio:'1',objectFit:'cover',borderRadius:6,border:'1px solid rgba(255,255,255,.12)',cursor:'pointer'}}
+                <img key={n} className="foot-thumb" src={`${IMG}gallery-${n}.jpg`} alt=""
+                  style={{width:'100%',aspectRatio:'1',objectFit:'cover',borderRadius:8,border:'1px solid rgba(255,255,255,.12)',cursor:'pointer'}}
                 />
               ))}
             </div>
@@ -120,7 +118,7 @@ export default function Footer({setPage}){
           <div className="footer-legal-col">
             <div style={colHead}>Legal</div>
             {[['terms','Terms & Conditions'],['privacy','Privacy Policy'],['warranty','Warranty Policy']].map(([p,l])=>(
-              <span key={p} onClick={()=>go(p)} style={link} onMouseEnter={hl} onMouseLeave={ul}>{l}</span>
+              <span key={p} className="foot-link" onClick={()=>go(p)} style={link}>{l}</span>
             ))}
           </div>
         </div>
@@ -155,17 +153,15 @@ export default function Footer({setPage}){
             {[['Terms & Conditions','terms'],['Privacy Policy','privacy'],['Warranty Policy','warranty']].map(([label,key],i,arr)=>(
               <span key={key} style={{display:'flex',alignItems:'center'}}>
                 <span
+                  className="foot-legal"
                   onClick={()=>go(key)}
                   style={{
                     color:'rgba(255,255,255,.5)',
                     fontSize:12,
                     cursor:'pointer',
-                    transition:'color .2s',
                     padding:'4px 0',
                     whiteSpace:'nowrap',
                   }}
-                  onMouseEnter={e=>e.target.style.color='#86efac'}
-                  onMouseLeave={e=>e.target.style.color='rgba(255,255,255,.5)'}
                 >
                   {label}
                 </span>
@@ -180,6 +176,25 @@ export default function Footer({setPage}){
 
       {/* ── RESPONSIVE STYLES ─────────────────────────────── */}
       <style>{`
+        /* Footer links: slide right + tint on hover, with a growing bullet */
+        .foot-link{position:relative;padding-left:0;transition:color .25s ease,padding-left .25s cubic-bezier(.16,1,.3,1)}
+        .foot-link::before{
+          content:'';position:absolute;left:0;top:50%;width:0;height:1.5px;
+          background:#86efac;transform:translateY(-50%);
+          transition:width .25s cubic-bezier(.16,1,.3,1);
+        }
+        .foot-link:hover{color:#86efac;padding-left:15px}
+        .foot-link:hover::before{width:9px}
+
+        .foot-legal{transition:color .25s ease}
+        .foot-legal:hover{color:#86efac}
+
+        .foot-social{transition:background .3s ease,transform .3s cubic-bezier(.16,1,.3,1),border-color .3s ease}
+        .foot-social:hover{background:#16a34a;border-color:#4ade80;transform:translateY(-3px)}
+
+        .foot-thumb{transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .3s ease,opacity .3s ease;opacity:.75}
+        .foot-thumb:hover{transform:scale(1.08);border-color:#4ade80;opacity:1}
+
         /* Legal column: hidden on desktop (already in bottom bar), shown on mobile */
         .footer-legal-col {
           display: none;

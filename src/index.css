@@ -53,10 +53,33 @@ input,textarea,select{font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Ro
   --n900: #1a2e1a;
   /* Accents */
   --white:#ffffff;
-  --shadow-sm: 0 1px 3px rgba(22,101,52,.08), 0 1px 2px rgba(22,101,52,.05);
-  --shadow-md: 0 4px 16px rgba(22,101,52,.1), 0 2px 8px rgba(22,101,52,.06);
-  --shadow-lg: 0 12px 40px rgba(22,101,52,.14), 0 4px 16px rgba(22,101,52,.08);
-  --shadow-xl: 0 24px 64px rgba(22,101,52,.18);
+  --shadow-sm: 0 1px 2px rgba(20,83,45,.06), 0 1px 3px rgba(20,83,45,.04);
+  --shadow-md: 0 4px 12px -2px rgba(20,83,45,.08), 0 2px 6px -2px rgba(20,83,45,.05);
+  --shadow-lg: 0 18px 36px -12px rgba(20,83,45,.18), 0 6px 14px -6px rgba(20,83,45,.08);
+  --shadow-xl: 0 32px 64px -20px rgba(20,83,45,.26), 0 12px 24px -12px rgba(20,83,45,.1);
+  --shadow-glow: 0 0 0 1px rgba(22,163,74,.12), 0 18px 36px -14px rgba(22,163,74,.3);
+
+  /* Radii */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 26px;
+  --r-pill: 100px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-in-out: cubic-bezier(.65,0,.35,1);
+  --t-fast: .2s;
+  --t-base: .35s;
+  --t-slow: .6s;
+}
+
+/* Respect users who prefer reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important;
+  }
 }
 
 /* ─── ANIMATIONS ──────────────────────────────────────────── */
@@ -74,51 +97,82 @@ input,textarea,select{font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Ro
 .spin{animation:spin 1s linear infinite}
 
 /* ─── REVEAL CLASSES ──────────────────────────────────────── */
-.reveal      {opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal      {opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s var(--ease-out)}
 .reveal.vis  {opacity:1;transform:translateY(0)}
-.rev-l       {opacity:0;transform:translateX(-36px);transition:opacity .75s ease,transform .75s ease}
+.rev-l       {opacity:0;transform:translateX(-36px);transition:opacity .75s ease,transform .75s var(--ease-out)}
 .rev-l.vis   {opacity:1;transform:translateX(0)}
-.rev-r       {opacity:0;transform:translateX(36px);transition:opacity .75s ease,transform .75s ease}
+.rev-r       {opacity:0;transform:translateX(36px);transition:opacity .75s ease,transform .75s var(--ease-out)}
 .rev-r.vis   {opacity:1;transform:translateX(0)}
 
+/* Stagger children of a revealed container: .reveal-stagger > * */
+.reveal-stagger > *{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s var(--ease-out)}
+.reveal-stagger.vis > *{opacity:1;transform:translateY(0)}
+.reveal-stagger.vis > *:nth-child(1){transition-delay:.05s}
+.reveal-stagger.vis > *:nth-child(2){transition-delay:.12s}
+.reveal-stagger.vis > *:nth-child(3){transition-delay:.19s}
+.reveal-stagger.vis > *:nth-child(4){transition-delay:.26s}
+.reveal-stagger.vis > *:nth-child(5){transition-delay:.33s}
+.reveal-stagger.vis > *:nth-child(6){transition-delay:.4s}
+.reveal-stagger.vis > *:nth-child(7){transition-delay:.47s}
+.reveal-stagger.vis > *:nth-child(8){transition-delay:.54s}
+.reveal-stagger.vis > *:nth-child(n+9){transition-delay:.6s}
+
 /* ─── BUTTONS ─────────────────────────────────────────────── */
+.btn-primary,.btn-outline,.btn-white{
+  border-radius:var(--r-sm);
+  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  font-weight:700;letter-spacing:.3px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  position:relative;overflow:hidden;isolation:isolate;
+  transition:transform var(--t-base) var(--ease-out),box-shadow var(--t-base) var(--ease-out),
+             background var(--t-base) ease,border-color var(--t-base) ease,color var(--t-base) ease;
+}
+/* Shine sweep shared by all buttons */
+.btn-primary::after,.btn-outline::after,.btn-white::after{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.28) 50%,transparent 75%);
+  transform:translateX(-120%);transition:transform .7s var(--ease-out);
+}
+.btn-primary:hover::after,.btn-outline:hover::after,.btn-white:hover::after{transform:translateX(120%)}
+
 .btn-primary{
   background:linear-gradient(135deg,var(--g600),var(--g700));
-  color:#fff;border:none;border-radius:8px;
-  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-weight:700;
-  letter-spacing:.3px;transition:all .25s;
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  position:relative;overflow:hidden;
+  color:#fff;border:none;
+  box-shadow:0 2px 8px -2px rgba(22,163,74,.4);
 }
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,163,74,.32)}
-.btn-primary:active{transform:translateY(0)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 28px -8px rgba(22,163,74,.5)}
+.btn-primary:active{transform:translateY(-1px)}
 
 .btn-outline{
   background:transparent;color:var(--g700);
-  border:1.5px solid var(--g600);border-radius:8px;
-  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-weight:700;
-  transition:all .25s;
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  border:1.5px solid var(--g600);
 }
-.btn-outline:hover{background:var(--g50);border-color:var(--g700);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn-outline:hover{background:var(--g50);border-color:var(--g700);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.btn-outline:active{transform:translateY(-1px)}
 
 .btn-white{
   background:#fff;color:var(--g700);
-  border:1.5px solid #fff;border-radius:8px;
-  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-weight:700;
-  transition:all .25s;
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  border:1.5px solid #fff;
+  box-shadow:0 2px 8px -2px rgba(0,0,0,.16);
 }
-.btn-white:hover{background:var(--g50);border-color:var(--g200);transform:translateY(-2px)}
+.btn-white:hover{background:var(--g50);border-color:var(--g200);transform:translateY(-3px);box-shadow:0 14px 28px -10px rgba(0,0,0,.28)}
+.btn-white:active{transform:translateY(-1px)}
+
+/* Keyboard accessibility — visible focus ring on all interactive elements */
+a:focus-visible,button:focus-visible,input:focus-visible,
+textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--g600);outline-offset:3px;border-radius:4px;
+}
 
 /* ─── BADGE / TAG ─────────────────────────────────────────── */
 .badge{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:4px 13px;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 15px;
   background:var(--g100);border:1px solid var(--g200);
-  border-radius:100px;color:var(--g700);
+  border-radius:var(--r-pill);color:var(--g700);
   font-size:11px;font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   letter-spacing:1.8px;text-transform:uppercase;font-weight:700;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
 }
 .badge .dot{width:5px;height:5px;border-radius:50%;background:var(--g500);flex-shrink:0}
 .badge .dot-blink{animation:dotBlink 2s infinite}
@@ -135,7 +189,9 @@ input,textarea,select{font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Ro
 /* ─── CARDS ───────────────────────────────────────────────── */
 .card{
   background:#fff;border:1px solid var(--n200);
-  border-radius:16px;transition:all .3s cubic-bezier(.4,0,.2,1);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  transition:transform var(--t-base) var(--ease-out),box-shadow var(--t-base) var(--ease-out),border-color var(--t-base) ease;
   overflow:hidden;
 }
 .card:hover{
@@ -143,7 +199,36 @@ input,textarea,select{font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Ro
   border-color:var(--g300);
   box-shadow:var(--shadow-lg);
 }
-.card-flat{background:#fff;border:1px solid var(--n200);border-radius:16px;overflow:hidden}
+.card-flat{
+  background:#fff;border:1px solid var(--n200);
+  border-radius:var(--r-lg);overflow:hidden;
+  transition:transform var(--t-base) var(--ease-out),box-shadow var(--t-base) var(--ease-out),border-color var(--t-base) ease;
+}
+
+/* ─── INTERACTION UTILITIES ───────────────────────────────── */
+.hover-lift{transition:transform var(--t-base) var(--ease-out),box-shadow var(--t-base) var(--ease-out)}
+.hover-lift:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+
+/* Image zoom-on-hover — wrap an <img> in .media-zoom */
+.media-zoom{overflow:hidden}
+.media-zoom img,.media-zoom video{transition:transform var(--t-slow) var(--ease-out);will-change:transform}
+.media-zoom:hover img,.media-zoom:hover video{transform:scale(1.07)}
+
+/* Animated underline for text links */
+.link-underline{position:relative;display:inline-block}
+.link-underline::after{
+  content:'';position:absolute;left:0;bottom:-2px;height:2px;width:100%;
+  background:currentColor;transform:scaleX(0);transform-origin:right;
+  transition:transform var(--t-base) var(--ease-out);
+}
+.link-underline:hover::after{transform:scaleX(1);transform-origin:left}
+
+/* Arrow that nudges right on parent hover */
+.nudge-x{transition:transform var(--t-base) var(--ease-out)}
+*:hover > .nudge-x,*:hover .nudge-x{transform:translateX(4px)}
+
+/* Frosted-glass surface for use over imagery */
+.glass{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(10px)}
 
 /* ─── SECTION PADDING ─────────────────────────────────────── */
 .section   {padding:88px 8%}
@@ -171,12 +256,14 @@ input,textarea,select{font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Ro
 
 /* ─── FORM ────────────────────────────────────────────────── */
 .input{
-  width:100%;padding:13px 16px;
-  background:#fff;border:1.5px solid var(--n200);border-radius:10px;
+  width:100%;padding:14px 16px;
+  background:#fff;border:1.5px solid var(--n200);border-radius:var(--r-sm);
   color:var(--n900);font-size:14px;outline:none;
-  transition:border .2s,box-shadow .2s;
+  transition:border-color var(--t-fast) ease,box-shadow var(--t-fast) ease,background var(--t-fast) ease;
 }
-.input:focus{border-color:var(--g500);box-shadow:0 0 0 3px rgba(34,197,94,.12)}
+.input:hover{border-color:var(--n300)}
+.input:focus{border-color:var(--g500);box-shadow:0 0 0 4px rgba(34,197,94,.14)}
+.input:focus-visible{outline:none}
 .input::placeholder{color:#9cbaA2}
 
 /* ─── HERO OVERLAY PATTERN ────────────────────────────────── */

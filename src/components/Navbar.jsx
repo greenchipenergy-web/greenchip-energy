@@ -26,19 +26,20 @@ export default function Navbar({page,setPage}){
     background:'none',border:'none',
     color:page===p?'#16a34a':'#374151',
     fontFamily:"'Space Grotesk',sans-serif",fontWeight:500,fontSize:13.5,
-    cursor:'pointer',padding:'3px 0',transition:'color .2s',letterSpacing:'.2px',
+    cursor:'pointer',padding:'6px 0',letterSpacing:'.2px',
   })
   const dd={
-    position:'absolute',top:'calc(100% + 10px)',left:0,
-    background:'#fff',border:'1px solid #e5e7eb',
-    borderRadius:12,padding:'8px 0',minWidth:200,
-    boxShadow:'0 12px 40px rgba(0,0,0,.1)',zIndex:300,
+    position:'absolute',top:'calc(100% + 12px)',left:0,
+    background:'rgba(255,255,255,.97)',border:'1px solid #e5e7eb',
+    borderRadius:16,padding:'8px',minWidth:224,
+    boxShadow:'0 20px 44px -16px rgba(20,83,45,.28),0 6px 16px -8px rgba(20,83,45,.12)',
+    zIndex:300,backdropFilter:'blur(16px)',
   }
-  
+
   const di={
-    padding:'10px 20px',color:'#374151',cursor:'pointer',
-    fontFamily:"'Inter',sans-serif",fontSize:13,transition:'all .15s',
-    display:'flex',alignItems:'center',gap:8,
+    padding:'10px 14px',color:'#374151',cursor:'pointer',
+    fontFamily:"'Inter',sans-serif",fontSize:13,borderRadius:10,
+    display:'flex',alignItems:'center',gap:9,
   }
 
   return(
@@ -72,23 +73,17 @@ export default function Navbar({page,setPage}){
 
         {/* Desktop links */}
         <div className="hide-mob" style={{display:'flex',alignItems:'center',gap:26}}>
-          <button style={lk('home')} onClick={()=>go('home')}
-            onMouseEnter={e=>e.target.style.color='#16a34a'}
-            onMouseLeave={e=>e.target.style.color=page==='home'?'#16a34a':'#374151'}>Home</button>
+          <button className={`nav-link${page==='home'?' is-active':''}`} style={lk('home')} onClick={()=>go('home')}>Home</button>
 
           {/* About dropdown */}
           <div style={{position:'relative'}} onMouseEnter={()=>{clearTimeout(adTimer.current);setAd(true)}} onMouseLeave={()=>{adTimer.current = setTimeout(()=>setAd(false),120)}}>
-            <button style={{...lk('about'),display:'flex',alignItems:'center',gap:4}} onClick={()=>go('about')}
-              onMouseEnter={e=>e.currentTarget.style.color='#16a34a'}
-              onMouseLeave={e=>e.currentTarget.style.color=page==='about'?'#16a34a':'#374151'}>
-              About Us <span style={{fontSize:8,marginTop:1}}>▾</span>
+            <button className={`nav-link${page==='about'?' is-active':''}`} style={{...lk('about'),display:'flex',alignItems:'center',gap:5}} onClick={()=>go('about')}>
+              About Us <span className="nav-caret" style={{fontSize:8,marginTop:1,transform:ad?'rotate(180deg)':'rotate(0deg)'}}>▾</span>
             </button>
-            {ad&&<div style={dd}>
+            {ad&&<div className="nav-dd" style={dd}>
               {ABOUT_DD.map(([p,l])=>(
-                <div key={p} onClick={()=>go(p)} style={di}
-                  onMouseEnter={e=>{e.currentTarget.style.color='#16a34a';e.currentTarget.style.background='#f0fdf4'}}
-                  onMouseLeave={e=>{e.currentTarget.style.color='#374151';e.currentTarget.style.background='transparent'}}>
-                  <span style={{width:4,height:4,borderRadius:'50%',background:'#16a34a',flexShrink:0}}/>
+                <div key={p} className="dd-item" onClick={()=>go(p)} style={di}>
+                  <span className="dd-dot" style={{width:5,height:5,borderRadius:'50%',background:'#16a34a',flexShrink:0}}/>
                   {l}
                 </div>
               ))}
@@ -97,15 +92,13 @@ export default function Navbar({page,setPage}){
 
           {/* What We Do dropdown */}
           <div style={{position:'relative'}} onMouseEnter={()=>{clearTimeout(wdTimer.current);setWd(true)}} onMouseLeave={()=>{wdTimer.current = setTimeout(()=>setWd(false),120)}}>
-            <button style={{...lk('solutions'),display:'flex',alignItems:'center',gap:4}}>
-              What We Do <span style={{fontSize:8,marginTop:1}}>▾</span>
+            <button className={`nav-link${page==='solutions'?' is-active':''}`} style={{...lk('solutions'),display:'flex',alignItems:'center',gap:5}}>
+              What We Do <span className="nav-caret" style={{fontSize:8,marginTop:1,transform:wd?'rotate(180deg)':'rotate(0deg)'}}>▾</span>
             </button>
-            {wd&&<div style={dd}>
+            {wd&&<div className="nav-dd" style={dd}>
               {WHAT_DD.map(([p,l])=>(
-                <div key={p} onClick={()=>go(p)} style={di}
-                  onMouseEnter={e=>{e.currentTarget.style.color='#16a34a';e.currentTarget.style.background='#f0fdf4'}}
-                  onMouseLeave={e=>{e.currentTarget.style.color='#374151';e.currentTarget.style.background='transparent'}}>
-                  <span style={{width:4,height:4,borderRadius:'50%',background:'#16a34a',flexShrink:0}}/>
+                <div key={p} className="dd-item" onClick={()=>go(p)} style={di}>
+                  <span className="dd-dot" style={{width:5,height:5,borderRadius:'50%',background:'#16a34a',flexShrink:0}}/>
                   {l}
                 </div>
               ))}
@@ -113,9 +106,7 @@ export default function Navbar({page,setPage}){
           </div>
 
           {[['projects','Projects'],['careers','Careers'],['contact','Contact']].map(([p,l])=>(
-            <button key={p} style={lk(p)} onClick={()=>go(p)}
-              onMouseEnter={e=>e.target.style.color='#16a34a'}
-              onMouseLeave={e=>e.target.style.color=page===p?'#16a34a':'#374151'}>{l}</button>
+            <button key={p} className={`nav-link${page===p?' is-active':''}`} style={lk(p)} onClick={()=>go(p)}>{l}</button>
           ))}
 
           <button className="btn-primary" onClick={()=>go('calculator')} style={{padding:'9px 20px',fontSize:13,borderRadius:8,display:'inline-flex',alignItems:'center',gap:7}}>
@@ -149,7 +140,7 @@ export default function Navbar({page,setPage}){
         <div style={{position:'absolute',top:'100%',left:0,right:0,background:'#fff',borderTop:'1px solid #e5e7eb',padding:'10px 0 20px',zIndex:1100,boxShadow:'0 8px 30px rgba(0,0,0,.06)'}}>
           {/* Mobile header logo removed as requested */}
           {[['home','Home'],...ABOUT_DD,...WHAT_DD,['projects','Projects'],['careers','Careers'],['calculator','Solar Calculator'],['terms','Terms & Conditions'],['privacy','Privacy Policy'],['warranty','Warranty Policy'],['contact','Contact']].map(([p,l])=>(
-            <div key={p} onClick={()=>go(p)} style={{padding:'12px 20px',color:page===p?'#16a34a':'#374151',cursor:'pointer',fontFamily:"'Inter',sans-serif",fontSize:14,borderBottom:'1px solid #f3f4f6',display:'flex',alignItems:'center',gap:8}}>
+            <div key={p} className="mob-item" onClick={()=>go(p)} style={{padding:'12px 20px',color:page===p?'#16a34a':'#374151',cursor:'pointer',fontFamily:"'Inter',sans-serif",fontSize:14,borderBottom:'1px solid #f3f4f6',display:'flex',alignItems:'center',gap:8}}>
               {page===p&&<span style={{width:3,height:3,borderRadius:'50%',background:'#16a34a'}}/>}
               {p==='calculator'&&<Sun size={14} strokeWidth={2}/>}
               {l}
@@ -159,7 +150,36 @@ export default function Navbar({page,setPage}){
       )}
     </nav>
 
-    <style>{`.show-mob{display:none}@media(max-width:900px){.hide-mob{display:none!important}.show-mob{display:flex!important}}`}</style>
+    <style>{`
+      .show-mob{display:none}
+      @media(max-width:900px){.hide-mob{display:none!important}.show-mob{display:flex!important}}
+
+      /* Nav links: animated underline that grows from the centre */
+      .nav-link{position:relative;transition:color .25s ease}
+      .nav-link::after{
+        content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;
+        background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:2px;
+        transform:scaleX(0);transform-origin:center;
+        transition:transform .35s cubic-bezier(.16,1,.3,1);
+      }
+      .nav-link:hover{color:#16a34a}
+      .nav-link:hover::after,.nav-link.is-active::after{transform:scaleX(1)}
+      .nav-caret{display:inline-block;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+
+      /* Dropdown entrance */
+      .nav-dd{animation:ddIn .28s cubic-bezier(.16,1,.3,1) both;transform-origin:top left}
+      @keyframes ddIn{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+      /* Dropdown items */
+      .dd-item{transition:background .2s ease,color .2s ease,transform .2s ease}
+      .dd-item:hover{background:#f0fdf4;color:#16a34a;transform:translateX(3px)}
+      .dd-item .dd-dot{transition:transform .2s ease}
+      .dd-item:hover .dd-dot{transform:scale(1.5)}
+
+      /* Mobile menu rows */
+      .mob-item{transition:background .2s ease,color .2s ease,padding-left .2s ease}
+      .mob-item:hover{background:#f0fdf4;color:#16a34a;padding-left:26px}
+    `}</style>
     </>
   )
 }
