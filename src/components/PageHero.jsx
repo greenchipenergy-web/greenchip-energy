@@ -1,6 +1,6 @@
 export default function PageHero({title,subtitle,img,breadcrumb}){
   return(
-    <div style={{position:'relative',height:420,overflow:'hidden',marginTop:100}}>
+    <div style={{position:'relative',height:420,overflow:'hidden',marginTop:66}}>
       {/* BG image */}
       <img src={img} alt={title} style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'center'}}/>
       {/* Dark gradient overlay — strong enough so text is always readable */}
