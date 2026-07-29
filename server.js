@@ -136,6 +136,11 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'Backend running ✓' })
 })
 
+// Serve images directly from the source public/ folder — this is guaranteed to
+// exist (committed to git), unlike dist/images which depends on the host's
+// build step correctly copying Vite's public/ output.
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')))
+
 // Serve the built frontend (npm run build output)
 const distDir = path.join(__dirname, 'dist')
 app.use(express.static(distDir))
