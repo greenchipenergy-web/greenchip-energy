@@ -185,40 +185,58 @@ function AboutSnippet({setPage}){
 /* ─── SOLUTIONS BENTO ─────────────────────────── */
 function SolutionsBento({setPage}){
   const[ref,vis]=useReveal()
+  const[hover,setHover]=useState(null)
   const items=SOLUTIONS.slice(0,6)
   return(
     <section className="section" style={{background:'#f8fdf9'}}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:52,flexWrap:'wrap',gap:16}}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:44,flexWrap:'wrap',gap:16}}>
         <div>
           <div className="badge" style={{marginBottom:14}}><span className="dot"/>Our Solutions</div>
-          <h2 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.8rem,3.5vw,2.7rem)',color:'#14532d'}}>
+          <h2 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.8rem,3.5vw,2.7rem)',color:'#14532d',marginBottom:12}}>
             Renewable Energy<br/><span className="grad-text">Solutions</span>
           </h2>
+          <p style={{color:'#6b7280',fontSize:15,maxWidth:480,lineHeight:1.75}}>Turnkey solar, storage and grid infrastructure — engineered end-to-end for every scale, from a single rooftop to a utility-scale park.</p>
         </div>
-        <button className="btn-outline" onClick={()=>setPage('solutions')} style={{padding:'10px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7}}>View All <ArrowRight size={14} strokeWidth={2.25}/></button>
+        <button className="btn-outline" onClick={()=>setPage('solutions')} style={{padding:'10px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7,flexShrink:0}}>View All <ArrowRight size={14} strokeWidth={2.25}/></button>
       </div>
 
-      <div ref={ref} className="solutions-grid" style={{gap:18}}>
-        {items.map((s,i)=>(
-          <div key={i} className="card" onClick={()=>setPage(s.id==='rooftop'?'rooftop':'solutions')}
-            style={{cursor:'pointer',position:'relative',overflow:'hidden',
-              gridColumn:i===0?'span 2':'span 1',
-              height:i===0?340:220,
-              opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(28px)',
-              transition:`all .6s ease ${i*.1}s`}}>
-            <img src={`${IMG}${s.img}`} alt={s.title} style={{width:'100%',height:'100%',objectFit:'cover',transition:'transform .5s ease'}}
-              onMouseEnter={e=>e.target.style.transform='scale(1.07)'}
-              onMouseLeave={e=>e.target.style.transform='scale(1)'}/>
-            <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(10,40,15,.92) 0%,rgba(10,40,15,.1) 55%,transparent 100%)'}}/>
-            <div style={{position:'absolute',top:14,right:14,width:32,height:32,borderRadius:'50%',background:'rgba(255,255,255,.18)',border:'1px solid rgba(255,255,255,.4)',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff'}}><ArrowRight size={15} strokeWidth={2.25}/></div>
-            <div style={{position:'absolute',bottom:0,left:0,right:0,padding:'22px 20px'}}>
-              <div style={{color:'#86efac',fontSize:9.5,letterSpacing:2.5,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginBottom:5}}>{s.sub}</div>
-              <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:i===0?21:16,color:'#fff'}}>{s.title}</h3>
+      <div ref={ref} className="solutions-grid">
+        {items.map((s,i)=>{
+          const big=i===0
+          const isHover=hover===i
+          return(
+          <div key={i} onClick={()=>setPage(s.id==='rooftop'?'rooftop':'solutions')}
+            onMouseEnter={()=>setHover(i)}
+            onMouseLeave={()=>setHover(null)}
+            style={{cursor:'pointer',position:'relative',overflow:'hidden',borderRadius:22,
+              gridColumn:big?'span 2':'span 1',
+              gridRow:big?'span 2':'span 1',
+              boxShadow:isHover?'0 24px 48px -16px rgba(10,40,15,.35)':'0 4px 16px -4px rgba(10,40,15,.12)',
+              transform:isHover?'translateY(-6px)':(vis?'translateY(0)':'translateY(28px)'),
+              opacity:vis?1:0,
+              transition:`opacity .6s ease ${i*.08}s, transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s ease`}}>
+            <img src={`${IMG}${s.img}`} alt={s.title} style={{width:'100%',height:'100%',objectFit:'cover',transform:isHover?'scale(1.08)':'scale(1)',transition:'transform .6s cubic-bezier(.16,1,.3,1)'}}/>
+            <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(6,30,12,.94) 0%,rgba(6,30,12,.25) 60%,rgba(6,30,12,.05) 100%)'}}/>
+            <div style={{position:'absolute',inset:0,background:isHover?'rgba(22,163,74,.14)':'transparent',transition:'background .45s ease'}}/>
+
+            {/* Icon badge */}
+            <div style={{position:'absolute',top:16,left:16,width:big?46:38,height:big?46:38,borderRadius:14,background:'rgba(255,255,255,.14)',border:'1px solid rgba(255,255,255,.3)',backdropFilter:'blur(8px)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <s.icon size={big?22:17} strokeWidth={1.75} color="#fff"/>
+            </div>
+
+            {/* Arrow button */}
+            <div style={{position:'absolute',top:16,right:16,width:big?40:34,height:big?40:34,borderRadius:'50%',background:isHover?'#16a34a':'rgba(255,255,255,.16)',border:'1px solid rgba(255,255,255,.35)',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',transition:'all .35s ease',transform:isHover?'rotate(0deg)':'rotate(-45deg)'}}>
+              <ArrowRight size={big?17:14} strokeWidth={2.25}/>
+            </div>
+
+            <div style={{position:'absolute',bottom:0,left:0,right:0,padding:big?'26px 26px 24px':'18px 18px 16px'}}>
+              <div style={{color:'#86efac',fontSize:big?10:9,letterSpacing:2.5,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,marginBottom:6}}>{s.sub}</div>
+              <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:big?24:16.5,color:'#fff',marginBottom:big?8:0,lineHeight:1.15}}>{s.title}</h3>
+              {big&&<p style={{color:'rgba(255,255,255,.8)',fontSize:14,lineHeight:1.7,maxWidth:420,opacity:isHover?1:0,maxHeight:isHover?60:0,transition:'opacity .35s ease, max-height .35s ease'}}>{s.tagline}</p>}
             </div>
           </div>
-        ))}
+        )})}
       </div>
-      <style>{`@media(max-width:900px){div[style*="grid-template-columns: repeat(3,1fr)"]{grid-template-columns:1fr!important} div[style*="grid-column: span 2"]{grid-column:span 1!important}}`}</style>
     </section>
   )
 }
@@ -495,7 +513,7 @@ export default function Home({setPage}){
       <style>{`
         /* Desktop defaults for grids (preserve original layout) */
         .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
-        .solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+        .solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:220px;grid-auto-flow:dense;gap:18px}
         .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:210px;gap:14px}
 
         @media(max-width:900px){
@@ -507,8 +525,8 @@ export default function Home({setPage}){
 
           /* Mobile: stats show 2x2, solutions and gallery stack */
           .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-          .solutions-grid{display:grid;grid-template-columns:1fr;gap:18px}
-          .solutions-grid > div{grid-column:span 1 !important;height:auto !important}
+          .solutions-grid{display:grid;grid-template-columns:1fr;grid-auto-rows:auto;gap:16px}
+          .solutions-grid > div{grid-column:span 1 !important;grid-row:span 1 !important;height:260px !important}
           .gallery-grid{display:grid;grid-template-columns:1fr;grid-auto-rows:210px;gap:14px}
           .gallery-grid > div{grid-column:span 1 !important}
         }
