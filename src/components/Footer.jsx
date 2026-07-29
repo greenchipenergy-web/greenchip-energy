@@ -28,7 +28,7 @@ export default function Footer({setPage}){
         }}>
 
           {/* Brand */}
-          <div>
+          <div className="foot-col-brand">
             <div style={{marginBottom:20}}>
               <img
                 src={`${IMG}GCE___8_-removebg-preview.png`}
@@ -72,7 +72,7 @@ export default function Footer({setPage}){
           </div>
 
           {/* Company */}
-          <div>
+          <div className="foot-col-links">
             <div style={colHead}>Company</div>
             {[['about','About Us'],['values','Our Values'],['approach','Our Approach'],['ethics','Ethics'],['team','Team']].map(([p,l])=>(
               <span key={p} className="foot-link" onClick={()=>go(p)} style={link}>{l}</span>
@@ -80,7 +80,7 @@ export default function Footer({setPage}){
           </div>
 
           {/* Solutions */}
-          <div>
+          <div className="foot-col-links">
             <div style={colHead}>Solutions</div>
             {[['rooftop','Rooftop Solar'],['solutions','Ground Mounted'],['solutions','Solar Park'],['solutions','Floating Solar'],['solutions','Hybrid Systems'],['solutions','Wind Turbine']].map(([p,l],i)=>(
               <span key={i} className="foot-link" onClick={()=>go(p)} style={link}>{l}</span>
@@ -88,7 +88,7 @@ export default function Footer({setPage}){
           </div>
 
           {/* Services */}
-          <div>
+          <div className="foot-col-links">
             <div style={colHead}>Services</div>
             {[['epc','EPC Services'],['financing','Financing Models'],['assetmanagement','Asset Management'],['initiatives','New Initiatives'],['projects','Our Projects'],['calculator','Solar Calculator']].map(([p,l],i)=>(
               <span key={i} className="foot-link" onClick={()=>go(p)} style={link}>{l}</span>
@@ -96,7 +96,7 @@ export default function Footer({setPage}){
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="foot-col-contact">
             <div style={colHead}>Talk To Us</div>
             {[[MapPin,'64, Nandagiri Hills Rear Rd, HUDA Enclave, Jubilee Hills, Hyderabad, Telangana 500033'],[Phone,'84648 84642'],[Phone,'9010434455'],[Mail,'info@greenchipenergy.com']].map(([Ic,val],i)=>(
               <div key={i} style={{display:'flex',gap:9,marginBottom:12,alignItems:'flex-start'}}>
@@ -196,61 +196,59 @@ export default function Footer({setPage}){
         .foot-thumb:hover{transform:scale(1.08);border-color:#4ade80;opacity:1}
 
         /* Legal column: hidden on desktop (already in bottom bar), shown on mobile */
-        .footer-legal-col {
-          display: none;
-        }
+        .footer-legal-col { display: none; }
 
         /* Tablet: 2-column grid */
         @media(max-width:1024px){
-          .footer-grid {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 36px !important;
-          }
-          /* Show legal col in the grid on tablet too */
-          .footer-legal-col {
-            display: block !important;
-          }
-          /* Hide bottom bar legal links on tablet/mobile since col shows them */
-          .footer-legal-links {
-            display: none !important;
-          }
+          .footer-grid{grid-template-columns:1fr 1fr!important;gap:36px!important}
+          .footer-legal-col{display:block!important}
+          .footer-legal-links{display:none!important}
         }
 
-        /* Mobile: full single column */
+        /* Mobile: keep two columns so the link lists don't stack into one
+           very long strip. Brand and contact still span the full width. */
         @media(max-width:640px){
-          footer > div:first-child {
-            padding: 44px 6% 36px !important;
+          footer > div:nth-of-type(2){padding:40px 6% 32px!important}
+
+          .footer-grid{
+            grid-template-columns:1fr 1fr!important;
+            gap:26px 20px!important;
+            align-items:start;
           }
-          .footer-grid {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-          }
-          /* Legal col always visible on mobile */
-          .footer-legal-col {
-            display: block !important;
-          }
-          /* Hide bottom bar legal links on mobile */
-          .footer-legal-links {
-            display: none !important;
-          }
-          /* Bottom bar: stack vertically, center */
-          footer > div:last-child {
-            padding: 16px 6% !important;
-          }
-          footer > div:last-child > div {
-            flex-direction: column !important;
-            align-items: center !important;
-            text-align: center !important;
-            gap: 10px !important;
-          }
+
+          /* Explicit order so the pairs read Company|Solutions, Services|Legal */
+          .foot-col-brand{grid-column:1 / -1;order:1}
+          .foot-col-links:nth-of-type(2){order:2}
+          .foot-col-links:nth-of-type(3){order:3}
+          .foot-col-links:nth-of-type(4){order:4}
+          .footer-legal-col{order:5}
+          .foot-col-contact{grid-column:1 / -1;order:6}
+
+          /* Tighter link rhythm at small sizes */
+          .footer-grid .foot-link{font-size:12.5px!important;margin-bottom:11px!important}
+          .footer-grid .foot-link:hover{padding-left:12px}
+
+          /* Smaller brand block */
+          .foot-col-brand img{height:78px!important;margin-top:-14px!important}
+          .foot-col-brand p{font-size:12.5px!important;margin-bottom:18px!important}
+
+          .footer-legal-links{display:none!important}
         }
 
-        /* Very small screens */
-        @media(max-width:400px){
-          footer > div:last-child > div > div {
-            flex-direction: column !important;
-            align-items: center !important;
-            gap: 6px !important;
+        /* Very small screens: single column is genuinely easier to scan */
+        @media(max-width:380px){
+          .footer-grid{grid-template-columns:1fr!important}
+          .foot-col-brand,.foot-col-contact{grid-column:1 / -1}
+        }
+
+        /* Bottom bar stacks and centres on mobile */
+        @media(max-width:640px){
+          footer > div:last-of-type{padding:16px 6%!important}
+          footer > div:last-of-type > div{
+            flex-direction:column!important;
+            align-items:center!important;
+            text-align:center!important;
+            gap:10px!important;
           }
         }
       `}</style>
