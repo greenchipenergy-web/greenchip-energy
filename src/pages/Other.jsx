@@ -1061,19 +1061,19 @@ export function Careers(){
               boxShadow:open===i?'var(--shadow-md)':'var(--shadow-sm)',
               transition:'border-color .3s ease, box-shadow .3s ease, transform .3s cubic-bezier(.16,1,.3,1)',
               opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(18px)'}}>
-              <div onClick={()=>setOpen(open===i?null:i)} style={{padding:'24px 30px',cursor:'pointer',display:'flex',justifyContent:'space-between',alignItems:'center',gap:18}}>
-                <div style={{display:'flex',alignItems:'center',gap:16}}>
+              <div className="job-head" onClick={()=>setOpen(open===i?null:i)} style={{padding:'24px 30px',cursor:'pointer',display:'flex',justifyContent:'space-between',alignItems:'center',gap:18}}>
+                <div className="job-lead" style={{display:'flex',alignItems:'center',gap:16,minWidth:0}}>
                   <div className="job-icon" style={{width:50,height:50,borderRadius:14,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><j.icon size={22} strokeWidth={1.75} color="#16a34a"/></div>
-                  <div>
+                  <div style={{minWidth:0}}>
                     <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:16.5,color:'#14532d',marginBottom:4}}>{j.title}</h3>
-                    <div style={{display:'flex',gap:9}}>
+                    <div style={{display:'flex',gap:9,flexWrap:'wrap',alignItems:'center'}}>
                       <span style={{color:'#16a34a',fontSize:12,fontFamily:"'Space Grotesk',sans-serif",fontWeight:500}}>{j.dept}</span>
                       <span style={{color:'#d1d5db'}}>•</span>
-                      <span style={{color:'#6b7280',fontSize:12}}>{j.type}</span>
+                      <span style={{color:'#6b7280',fontSize:12,whiteSpace:'nowrap'}}>{j.type}</span>
                     </div>
                   </div>
                 </div>
-                <div style={{display:'flex',alignItems:'center',gap:11,flexShrink:0}}>
+                <div className="job-actions" style={{display:'flex',alignItems:'center',gap:11,flexShrink:0}}>
                   <a href="https://forms.gle/XX6yqFdGb1n1CxVJA" target="_blank" rel="noopener noreferrer"
                     onClick={e=>e.stopPropagation()}
                     className="btn-primary" style={{padding:'8px 18px',fontSize:12,textDecoration:'none',borderRadius:8}}>

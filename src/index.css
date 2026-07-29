@@ -365,6 +365,19 @@ textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{
   }
 }
 
+/* Careers job rows: on phones the title and the Apply/expand controls were
+   fighting for the same line, forcing the title to wrap mid-word. Stack them. */
+@media(max-width:640px){
+  .job-head{
+    flex-direction:column;
+    align-items:stretch!important;
+    gap:14px!important;
+    padding:20px!important;
+  }
+  .job-actions{width:100%;justify-content:space-between}
+  .job-actions a{flex:1;justify-content:center}
+}
+
 /* Gallery lightbox: controls sit outside the frame on desktop, so pull them
    inside once there's no room beside it. */
 @media(max-width:820px){
