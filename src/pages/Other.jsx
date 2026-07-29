@@ -577,9 +577,12 @@ export function Projects(){
   const[ref,vis]=useReveal()
   const[solutionFilter,setSolutionFilter]=useState('All')
   const[galleryAnim,setGalleryAnim]=useState(true)
-  
+  const GALLERY_PAGE_SIZE=15
+  const[visibleCount,setVisibleCount]=useState(GALLERY_PAGE_SIZE)
+
   useEffect(()=>{
     setGalleryAnim(false)
+    setVisibleCount(GALLERY_PAGE_SIZE)
     const timer=setTimeout(()=>setGalleryAnim(true),50)
     return()=>clearTimeout(timer)
   },[solutionFilter])
@@ -665,10 +668,10 @@ export function Projects(){
         {/* Solutions gallery - moved outside g3 grid */}
         <div style={{marginTop:52}}>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:14}}>
-            {gallery.length ? gallery.map((g,i)=>{
+            {gallery.length ? gallery.slice(0,visibleCount).map((g,i)=>{
               const src = encodeURI(`${IMG}Latest_Solar_Projects/${g.folder}/${g.file}`)
               return (
-                <div key={`${g.folder}-${g.file}-${i}`} style={{overflow:'hidden',borderRadius:12,cursor:'pointer',transform:galleryAnim? 'translateY(0)':'translateY(16px)',opacity:galleryAnim?1:0,transition:`all .4s cubic-bezier(.34,.1,.68,1) ${i*.05}s`}} onClick={()=>openPreview(i)}>
+                <div key={`${g.folder}-${g.file}-${i}`} style={{overflow:'hidden',borderRadius:12,cursor:'pointer',transform:galleryAnim? 'translateY(0)':'translateY(16px)',opacity:galleryAnim?1:0,transition:`all .4s cubic-bezier(.34,.1,.68,1) ${(i%GALLERY_PAGE_SIZE)*.05}s`}} onClick={()=>openPreview(i)}>
                   {g.file.toLowerCase().endsWith('.mp4') ? (
                     <video src={src} style={{width:'100%',height:180,objectFit:'cover',minHeight:180}} muted loop playsInline controls />
                   ) : (
@@ -680,6 +683,13 @@ export function Projects(){
               <div style={{gridColumn:'1 / -1',padding:24,background:'#ecfdf5',border:'1px solid #bbf7d0',borderRadius:16,textAlign:'center',color:'#166534'}}>No gallery images are available for this solution yet.</div>
             )}
           </div>
+          {visibleCount<gallery.length&&(
+            <div style={{display:'flex',justifyContent:'center',marginTop:32}}>
+              <button className="btn-outline" onClick={()=>setVisibleCount(v=>v+GALLERY_PAGE_SIZE)} style={{padding:'12px 32px',fontSize:14,borderRadius:10}}>
+                Load More ({gallery.length-visibleCount} more)
+              </button>
+            </div>
+          )}
         </div>
         {/* Preview modal */}
         {previewIndex>-1 && (
