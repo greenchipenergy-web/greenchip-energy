@@ -2,11 +2,22 @@ import{useState,useEffect}from'react'
 import{useReveal}from'../hooks/index.js'
 import{IMG,PROJECTS,JOBS,SOLUTIONS,LATEST_GALLERY}from'../data/content.js'
 import PageHero from'../components/PageHero.jsx'
-import{Check,ArrowRight,ArrowLeft,X,Sun,FlaskConical,Microscope,Truck,Settings,Factory,Rocket,Briefcase,Building2,Landmark,Globe2,Wrench,Handshake,Lightbulb,Zap,IndianRupee,Ruler,Timer,Leaf,TreePine,Home,MapPin,Phone,Mail,Clock,CheckCircle2,Send,Loader2}from'lucide-react'
+import{Check,ArrowRight,ArrowLeft,X,Sun,FlaskConical,Microscope,Truck,Settings,Factory,Rocket,Briefcase,Building2,Landmark,Globe2,Wrench,Handshake,Lightbulb,Zap,IndianRupee,Ruler,Timer,Leaf,TreePine,Home,MapPin,Phone,Mail,Clock,CheckCircle2,Send,Loader2,ZoomIn,Play}from'lucide-react'
 
 /* ══ INITIATIVES ══════════════════════════════ */
 
 const IMG_BASE = IMG
+
+const GALLERY_FOLDER_LABELS = {
+  carport:'Solar Carport',
+  Enargystorage:'Energy Storage',
+  bio_CNG:'Bio-CNG',
+  floting:'Floating Solar',
+  ground:'Ground Mounted',
+  rooftop:'Rooftop Solar',
+  transformer:'Substation',
+  wind:'Wind Turbine',
+}
 
 /* ─── Shared section wrapper ─────────────────── */
 const Sec = ({ children, bg = '#fff', pt = 88, pb = 88 }) => (
@@ -605,6 +616,7 @@ export function Projects(){
   }
   const gallery = buildGallery()
   const [previewIndex,setPreviewIndex]=useState(-1)
+  const [galleryHover,setGalleryHover]=useState(-1)
   const openPreview = i=>setPreviewIndex(i)
   const closePreview = ()=>setPreviewIndex(-1)
   const prevPreview = ()=>setPreviewIndex(i=> (i-1+gallery.length)%gallery.length)
@@ -667,15 +679,42 @@ export function Projects(){
         </div>
         {/* Solutions gallery - moved outside g3 grid */}
         <div style={{marginTop:52}}>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:14}}>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))',gap:18}}>
             {gallery.length ? gallery.slice(0,visibleCount).map((g,i)=>{
               const src = encodeURI(`${IMG}Latest_Solar_Projects/${g.folder}/${g.file}`)
+              const isVideo = g.file.toLowerCase().endsWith('.mp4')
+              const isHover = galleryHover===i
+              const label = GALLERY_FOLDER_LABELS[g.folder]||g.folder
               return (
-                <div key={`${g.folder}-${g.file}-${i}`} style={{overflow:'hidden',borderRadius:12,cursor:'pointer',transform:galleryAnim? 'translateY(0)':'translateY(16px)',opacity:galleryAnim?1:0,transition:`all .4s cubic-bezier(.34,.1,.68,1) ${(i%GALLERY_PAGE_SIZE)*.05}s`}} onClick={()=>openPreview(i)}>
-                  {g.file.toLowerCase().endsWith('.mp4') ? (
-                    <video src={src} style={{width:'100%',height:180,objectFit:'cover',minHeight:180}} muted loop playsInline controls />
+                <div key={`${g.folder}-${g.file}-${i}`}
+                  onMouseEnter={()=>setGalleryHover(i)}
+                  onMouseLeave={()=>setGalleryHover(-1)}
+                  onClick={()=>openPreview(i)}
+                  style={{
+                    position:'relative',overflow:'hidden',borderRadius:18,cursor:'pointer',
+                    border:'1px solid #e5e7eb',background:'#0a2818',height:200,
+                    boxShadow:isHover?'0 20px 40px -14px rgba(10,40,15,.3)':'0 2px 8px rgba(10,40,15,.06)',
+                    transform:`${galleryAnim?'translateY(0)':'translateY(16px)'} ${isHover?'translateY(-4px)':''}`,
+                    opacity:galleryAnim?1:0,
+                    transition:`opacity .4s cubic-bezier(.34,.1,.68,1) ${(i%GALLERY_PAGE_SIZE)*.05}s, transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease`
+                  }}>
+                  {isVideo ? (
+                    <video src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} muted loop playsInline preload="metadata"/>
                   ) : (
-                    <img src={src} alt={g.file} style={{width:'100%',height:180,objectFit:'cover',display:'block',transition:'transform .45s'}} onMouseEnter={e=>e.currentTarget.style.transform='scale(1.04)'} onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'} />
+                    <img src={src} alt={g.file} style={{width:'100%',height:'100%',objectFit:'cover',display:'block',transform:isHover?'scale(1.08)':'scale(1)',transition:'transform .6s cubic-bezier(.16,1,.3,1)'}}/>
+                  )}
+                  <div style={{position:'absolute',inset:0,background:isHover?'linear-gradient(to top,rgba(6,30,12,.85) 0%,rgba(6,30,12,.15) 55%,transparent 100%)':'linear-gradient(to top,rgba(6,30,12,.55) 0%,transparent 45%)',transition:'background .35s ease'}}/>
+
+                  <div style={{position:'absolute',top:12,left:12,padding:'4px 11px',background:'rgba(255,255,255,.14)',border:'1px solid rgba(255,255,255,.28)',borderRadius:100,backdropFilter:'blur(8px)',color:'#fff',fontSize:9.5,fontWeight:600,letterSpacing:1.5,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif"}}>{label}</div>
+
+                  {isVideo ? (
+                    <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:48,height:48,borderRadius:'50%',background:'rgba(255,255,255,.2)',border:'1px solid rgba(255,255,255,.4)',backdropFilter:'blur(6px)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                      <Play size={18} strokeWidth={2} color="#fff" fill="#fff" style={{marginLeft:2}}/>
+                    </div>
+                  ) : (
+                    <div style={{position:'absolute',top:'50%',left:'50%',transform:`translate(-50%,-50%) scale(${isHover?1:.6})`,opacity:isHover?1:0,transition:'all .3s cubic-bezier(.16,1,.3,1)',width:44,height:44,borderRadius:'50%',background:'rgba(255,255,255,.16)',border:'1px solid rgba(255,255,255,.35)',backdropFilter:'blur(6px)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                      <ZoomIn size={18} strokeWidth={2} color="#fff"/>
+                    </div>
                   )}
                 </div>
               )
