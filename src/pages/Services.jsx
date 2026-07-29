@@ -121,7 +121,7 @@ export function Services({setPage}){
           <p style={{color:'#374151',lineHeight:1.9,fontSize:14.5,marginBottom:10,maxWidth:800,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>Attractive Financing Schemes for Our Rooftop Customers. Going Solar has never been this Easy &amp; Affordable. Take the right step into the world of Solar Power Solutions with our hassle-free financing.</p>
           <p style={{color:'#6b7280',lineHeight:1.9,fontSize:14,marginBottom:36,maxWidth:800,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>Depending on your situation, we connect you with partner organisations for unsecured loans from ₹1 Lakh up to ₹100 Lakhs, financing up to 80% of project cost with flexible repayment schedules.</p>
         <button className="btn-primary" onClick={()=>setPage('financing')} style={{padding:'11px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7,marginBottom:26}}>Learn More <ArrowRight size={14} strokeWidth={2.25}/></button>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:28}}>
+          <div className="rg-3" style={{gap:20,marginBottom:28}}>
             {models.map((m,i)=>(
               <div key={i} className="fin-card" style={{background:m.bg,border:`1px solid ${m.border}`,borderRadius:'var(--r-lg)',padding:'28px 22px',position:'relative',overflow:'hidden'}}>
                 <div style={{position:'absolute',top:12,right:12,padding:'3px 10px',background:'rgba(255,255,255,.7)',border:`1px solid ${m.border}`,borderRadius:100,color:m.col,fontSize:10,fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,letterSpacing:.8}}>{m.badge}</div>

@@ -250,7 +250,7 @@ export default function AssetManagementPage({ setPage }) {
           sub="We provide you with a hassle-free experience in managing your assets by being a one-stop solution for asset management."
           center
         />
-        <div ref={r2} style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 18 }}>
+        <div ref={r2} className="rg-5" style={{ gap: 18 }}>
           {whyCards.map((c, i) => (
             <div
               key={i}
@@ -315,7 +315,7 @@ export default function AssetManagementPage({ setPage }) {
           sub="At GreenChip, we are dedicated to providing comprehensive solutions for solar asset management, ensuring the optimal performance and longevity of your solar energy management system project."
           center
         />
-        <div ref={r4} style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
+        <div ref={r4} className="rg-3" style={{ gap: 20 }}>
           {whyChoose.map((item, i) => (
             <div
               key={i}
@@ -365,7 +365,7 @@ export default function AssetManagementPage({ setPage }) {
         <div style={{ background: '#f8fdf9', border: '1px solid #e5e7eb', borderRadius: 18, padding: '32px 36px', marginBottom: 40 }}>
           <H3>Current State Review — O&M Elements</H3>
           <Para c="Typical operations and maintenance (O&M) organisations mainly focus on the following operation and maintenance elements, with key performance indicators as applicable:" />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
+          <div className="rg-4" style={{ gap: 12 }}>
             {omElements.map((el, i) => (
               <div key={i} className="am-chip" style={{ background: '#fff', border: '1px solid #bbf7d0', borderRadius: 'var(--r-sm)', padding: '13px 15px', display: 'flex', alignItems: 'center', gap: 9 }}>
                 <Check size={14} strokeWidth={2.5} color="#16a34a" style={{ flexShrink: 0 }}/>
@@ -449,7 +449,7 @@ export default function AssetManagementPage({ setPage }) {
           <div style={{ padding: '28px 32px' }}>
             <H3>Decision-Making Grid (DMG)</H3>
             <Para c="The decision-making grid (DMG) is a tool used to decide the maintenance strategy among similar equipment. A plot of downtime versus failures is used to decide the type of maintenance required for the assets, from the following categories:" />
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 10, marginBottom: 28 }}>
+            <div className="rg-5" style={{ gap: 10, marginBottom: 28 }}>
               {dmgStrategies.map((s, i) => (
                 <div key={i} className="am-chip" style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 'var(--r-sm)', padding: '13px 15px', textAlign: 'center' }}>
                   <div style={{ color: '#16a34a', fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>
@@ -461,14 +461,14 @@ export default function AssetManagementPage({ setPage }) {
             </div>
 
             {/* DMG images row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20, marginBottom: 28 }}>
+            <div className="rg-2" style={{ gap: 20, marginBottom: 28 }}>
               <FigImg src={`${IMG}ast8.gif`} alt="DMG" caption="Decision-making grid tool for inverter failure" height={200} />
               <FigImg src={`${IMG}ast9.gif`} alt="Inverter failure data" caption="Inverter failure data — downtime vs frequency" height={200} />
             </div>
 
             <H3>Failure Mode Effects and Criticality Analysis (FMECA)</H3>
             <Para c="Failure mode effects and criticality analysis (FMECA) is a method aimed at developing quantitative failure analysis linking the potential failure modes and impact of failure with causes of the failure. A typical FMECA example of one inverter is illustrated here, where the failure mode, cause, effect, and maintenance strategy are discussed with a risk priority number (RPN) score compiled from multiplication of occurrence, detection and severity." />
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20 }}>
+            <div className="rg-2" style={{ gap: 20 }}>
               <FigImg src={`${IMG}ast10.gif`} alt="FMECA" caption="FMECA example for inverter analysis" height={200} />
               <FigImg src={`${IMG}ast11.gif`} alt="Occurrence detection severity" caption="Occurrence, detection and severity criteria" height={200} />
             </div>
@@ -516,7 +516,7 @@ export default function AssetManagementPage({ setPage }) {
       {/* ── KEY BENEFITS ── */}
       <section className="section" style={{ background: '#fff', paddingTop: 60, paddingBottom: 72 }}>
         <SectionTitle badge="Key Benefits" title="What You Gain With GreenChip Asset Management" center />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 14, maxWidth: 860, margin: '0 auto 48px' }}>
+        <div className="rg-2" style={{ gap: 14, maxWidth: 860, margin: '0 auto 48px' }}>
           {keyBenefits.map((b, i) => (
             <div key={i} className="am-chip" style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 'var(--r-md)', padding: '19px 21px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
               <div style={{ width: 28, height: 28, borderRadius: 8, background: '#fff', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Check size={14} strokeWidth={2.5} color="#16a34a"/></div>
@@ -548,9 +548,6 @@ export default function AssetManagementPage({ setPage }) {
 
       <style>{`
         @media(max-width:900px){
-          div[style*="grid-template-columns: repeat(5,1fr)"]{grid-template-columns:repeat(2,1fr)!important}
-          div[style*="grid-template-columns: repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}
-          div[style*="grid-template-columns: repeat(2,1fr)"]{grid-template-columns:1fr!important}
           div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important}
         }
       `}</style>

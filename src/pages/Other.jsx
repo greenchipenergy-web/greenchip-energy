@@ -260,7 +260,7 @@ export function HydrogenPage({ setPage }) {
       {/* Key Points */}
       <Sec bg="#f0fdf4">
         <SHead badge="How It Works" title="Hydrogen Electrolyser — Key Facts" center />
-        <div ref={r2} style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 16 }}>
+        <div ref={r2} className="rg-2" style={{ gap: 16 }}>
           {keyPoints.map((pt, i) => (
             <div
               key={i}
@@ -318,7 +318,7 @@ export function HydrogenPage({ setPage }) {
 
         {/* Process steps */}
         <SHead badge="Production Process" title="How Green Hydrogen is Produced" center />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 18, marginBottom: 56 }}>
+        <div className="rg-4" style={{ gap: 18, marginBottom: 56 }}>
           {processSteps.map((s, i) => (
             <div key={i} className="card o-step" style={{ padding: '30px 20px', textAlign: 'center' }}>
               <div className="o-step-icon" style={{ display:'flex', justifyContent:'center', marginBottom: 14 }}><s.icon size={32} strokeWidth={1.75} color="#16a34a"/></div>
@@ -362,8 +362,6 @@ export function HydrogenPage({ setPage }) {
       </Sec>
 
       <style>{`@media(max-width:900px){
-        div[style*="grid-template-columns: repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}
-        div[style*="grid-template-columns: repeat(2,1fr)"]{grid-template-columns:1fr!important}
       }`}</style>
     </div>
   )
@@ -466,7 +464,7 @@ export function CBGPage({ setPage }) {
         </div>
 
         {/* Circular process images */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, marginTop: 36 }}>
+        <div className="rg-3" style={{ gap: 18, marginTop: 36 }}>
           {[['Latest_Solar_Projects/bio_CNG/bio_CNG2.jpeg', 'CBG Plant Setup'], ['Latest_Solar_Projects/bio_CNG/bio_CNG3.jpeg', 'Biogas Process'], ['Latest_Solar_Projects/bio_CNG/bio_CNG4.jpeg', 'Bio Fertilizer']].map(([img, label]) => (
             <div key={label} className="media-zoom o-card" style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', border: '1px solid #e5e7eb' }}>
               <img src={`${IMG_BASE}${img}`} alt={label} style={{ width: '100%', height: 220, objectFit: 'cover' }} />
@@ -505,7 +503,7 @@ export function CBGPage({ setPage }) {
       {/* Benefits + Support */}
       <Sec bg="#f8fdf9">
         <SHead badge="Why Partner With GreenChip" title="CBG Manufacturing — Benefits & Support" center />
-        <div ref={r3} style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 22 }}>
+        <div ref={r3} className="rg-3" style={{ gap: 22 }}>
           <InfoCard
             icon={Briefcase}
             title="Investor Benefits"
@@ -572,7 +570,6 @@ export function CBGPage({ setPage }) {
       </Sec>
 
       <style>{`@media(max-width:900px){
-        div[style*="grid-template-columns: repeat(3,1fr)"]{grid-template-columns:1fr!important}
         div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important}
         div[style*="grid-template-columns: 64px 1fr"]{grid-template-columns:1fr!important}
       }`}</style>
@@ -733,9 +730,9 @@ export function Projects(){
         {previewIndex>-1 && (
           <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,.7)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1200}} onClick={closePreview}>
             <div style={{maxWidth:'92%',maxHeight:'86%',position:'relative'}} onClick={e=>e.stopPropagation()}>
-              <button onClick={closePreview} style={{position:'absolute',right:-12,top:-12,background:'#fff',borderRadius:999,padding:8,border:'none',cursor:'pointer',display:'flex'}}><X size={16} strokeWidth={2.25}/></button>
-              <button onClick={prevPreview} style={{position:'absolute',left:-48,top:'50%',transform:'translateY(-50%)',background:'rgba(255,255,255,.9)',borderRadius:999,padding:'10px 12px',border:'none',cursor:'pointer',display:'flex'}}><ArrowLeft size={16} strokeWidth={2.25}/></button>
-              <button onClick={nextPreview} style={{position:'absolute',right:-48,top:'50%',transform:'translateY(-50%)',background:'rgba(255,255,255,.9)',borderRadius:999,padding:'10px 12px',border:'none',cursor:'pointer',display:'flex'}}><ArrowRight size={16} strokeWidth={2.25}/></button>
+              <button className="lb-close" onClick={closePreview} aria-label="Close preview" style={{position:'absolute',right:-12,top:-12,background:'#fff',borderRadius:999,padding:8,border:'none',cursor:'pointer',display:'flex',zIndex:2}}><X size={16} strokeWidth={2.25}/></button>
+              <button className="lb-prev" onClick={prevPreview} aria-label="Previous" style={{position:'absolute',left:-48,top:'50%',transform:'translateY(-50%)',background:'rgba(255,255,255,.9)',borderRadius:999,padding:'10px 12px',border:'none',cursor:'pointer',display:'flex',zIndex:2}}><ArrowLeft size={16} strokeWidth={2.25}/></button>
+              <button className="lb-next" onClick={nextPreview} aria-label="Next" style={{position:'absolute',right:-48,top:'50%',transform:'translateY(-50%)',background:'rgba(255,255,255,.9)',borderRadius:999,padding:'10px 12px',border:'none',cursor:'pointer',display:'flex',zIndex:2}}><ArrowRight size={16} strokeWidth={2.25}/></button>
               {(() => {
                 const item = gallery[previewIndex]
                 const src = encodeURI(`${IMG}Latest_Solar_Projects/${item.folder}/${item.file}`)

@@ -140,6 +140,14 @@ export default function WarrantyPolicy() {
         .wr-tr:hover{background:#f0f9f4!important}
         .wr-exc{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease}
         .wr-exc:hover{transform:translateX(4px);box-shadow:0 6px 16px -8px rgba(122,58,0,.35)}
+
+        /* Wide comparison tables scroll sideways on small screens rather than
+           squashing four text columns into a phone width. */
+        @media(max-width:760px){
+          .wr-scroll{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+          .wr-grid4{min-width:620px}
+          .wr-grid3{min-width:520px}
+        }
       `}</style>
 
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px 80px" }}>
@@ -172,8 +180,8 @@ export default function WarrantyPolicy() {
           </div>
 
           {/* Table */}
-          <div style={{ background: "#fff", borderRadius: 14, border: "1px solid #dce8d4", overflow: "hidden" }}>
-            <div style={{
+          <div className="wr-scroll" style={{ background: "#fff", borderRadius: 14, border: "1px solid #dce8d4", overflow: "hidden" }}>
+            <div className="wr-grid4" style={{
               display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1.2fr",
               background: "#0a2e1a", padding: "12px 20px",
               gap: 8,
@@ -183,7 +191,7 @@ export default function WarrantyPolicy() {
               ))}
             </div>
             {activeCustomer.components.map((comp, i) => (
-              <div key={comp.name} className="wr-tr" style={{
+              <div key={comp.name} className="wr-tr wr-grid4" style={{
                 display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1.2fr",
                 padding: "15px 20px", gap: 8,
                 background: i % 2 === 0 ? "#fff" : "#f5faf6",
@@ -400,8 +408,8 @@ export default function WarrantyPolicy() {
         {/* ── POST-WARRANTY / AMC ── */}
         <div style={{ marginBottom: 56 }}>
           <SectionHeading number="06" title="Post-Warranty Support & AMC" />
-          <div style={{ background: "#fff", borderRadius: 14, border: "1px solid #dce8d4", overflow: "hidden" }}>
-            <div style={{ background: "#0a2e1a", padding: "12px 20px", display: "grid", gridTemplateColumns: "1.5fr 1fr 2fr" }}>
+          <div className="wr-scroll" style={{ background: "#fff", borderRadius: 14, border: "1px solid #dce8d4", overflow: "hidden" }}>
+            <div className="wr-grid3" style={{ background: "#0a2e1a", padding: "12px 20px", display: "grid", gridTemplateColumns: "1.5fr 1fr 2fr" }}>
               {["Service Component", "Frequency", "Inclusions"].map((h) => (
                 <div key={h} style={{ color: "rgba(255,255,255,0.8)", fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>{h}</div>
               ))}
@@ -412,7 +420,7 @@ export default function WarrantyPolicy() {
               ["Preventive Maintenance", "Annual", "Electrical and mechanical checks, tightening of terminals"],
               ["SCADA / Monitoring Support", "Monthly / Quarterly", "Connectivity check, data log review, troubleshooting alerts"],
             ].map(([comp, freq, inc], i) => (
-              <div key={comp} className="wr-tr" style={{
+              <div key={comp} className="wr-tr wr-grid3" style={{
                 display: "grid", gridTemplateColumns: "1.5fr 1fr 2fr",
                 padding: "15px 20px", background: i % 2 === 0 ? "#fff" : "#f5faf6",
                 borderTop: "1px solid #edf5eb",

@@ -126,7 +126,7 @@ export default function FinancingPage({ setPage }) {
         </div>
 
         {/* Loan metric cards */}
-        <div ref={r2} style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 18 }}>
+        <div ref={r2} className="rg-4" style={{ gap: 18 }}>
           {[
             { icon: IndianRupee, n: '₹1L – ₹100L',  sub: 'Unsecured loan range' },
             { icon: BarChart3, n: 'Up to 80%',      sub: 'Of total project cost' },
@@ -296,7 +296,7 @@ export default function FinancingPage({ setPage }) {
           </div>
 
           {/* 4 project images grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 13, opacity: v5 ? 1 : 0, transform: v5 ? 'translateX(0)' : 'translateX(28px)', transition: 'all .8s ease .2s' }}>
+          <div className="rg-2" style={{ gap: 13, opacity: v5 ? 1 : 0, transform: v5 ? 'translateX(0)' : 'translateX(28px)', transition: 'all .8s ease .2s' }}>
             {[
               ['groundmount.jpg', 'Ground Mounted'],
               ['Commerial rooftop.jpg', 'Rooftop Solar'],
@@ -365,9 +365,7 @@ export default function FinancingPage({ setPage }) {
       </section>
 
       <style>{`@media(max-width:900px){
-        div[style*="grid-template-columns: repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}
         div[style*="grid-template-columns: 300px 1fr"]{grid-template-columns:1fr!important}
-        div[style*="grid-template-columns: repeat(2,1fr)"]{grid-template-columns:1fr!important}
       }`}</style>
     </div>
   )

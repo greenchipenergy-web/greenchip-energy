@@ -101,7 +101,7 @@ export function SolutionDetail({id,setPage}){
 
         {/* Stats */}
         {sol.stats&&(
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:56}}>
+          <div className="rg-3" style={{gap:20,marginBottom:56}}>
             {sol.stats.map(([n,l])=>(
               <div key={n} className="sol-stat" style={{background:'linear-gradient(135deg,#f0fdf4,#dcfce7)',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',padding:'30px 20px',textAlign:'center'}}>
                 <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#16a34a',fontSize:'clamp(1.5rem,2.5vw,2rem)',marginBottom:8}}>{n}</div>
@@ -118,7 +118,7 @@ export function SolutionDetail({id,setPage}){
               <div className="badge" style={{marginBottom:12,justifyContent:'center'}}><span className="dot"/>Key Benefits</div>
               <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:'clamp(1.4rem,2.5vw,2rem)',color:'#14532d'}}>Why Choose {sol.title}?</h3>
             </div>
-            <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:18}}>
+            <div className="rg-3" style={{gap:18}}>
               {sol.benefits.map((b,i)=>(
                 <div key={i} className="card-flat ben-card" style={{padding:'24px 22px',display:'flex',alignItems:'flex-start',gap:14,
                   opacity:v2?1:0,transform:v2?'translateY(0)':'translateY(22px)',

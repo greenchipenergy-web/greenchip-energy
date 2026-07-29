@@ -275,6 +275,28 @@ textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 
+/* Responsive column helpers.
+   These replace inline grid-template-columns so media queries can actually
+   override them — an inline style always beats a stylesheet rule, and the
+   previous `div[style*="repeat(3,1fr)"]` selectors never matched anyway
+   because the browser re-serialises inline values as `repeat(3, 1fr)`. */
+.rg-2,.rg-3,.rg-4,.rg-5{display:grid}
+.rg-2{grid-template-columns:repeat(2,1fr)}
+.rg-3{grid-template-columns:repeat(3,1fr)}
+.rg-4{grid-template-columns:repeat(4,1fr)}
+.rg-5{grid-template-columns:repeat(5,1fr)}
+@media(max-width:1100px){
+  .rg-5{grid-template-columns:repeat(3,1fr)}
+  .rg-4{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .rg-3{grid-template-columns:repeat(2,1fr)}
+  .rg-5{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .rg-2,.rg-3,.rg-4,.rg-5{grid-template-columns:1fr}
+}
+
 /* ─── TEXT UTILITIES ──────────────────────────────────────── */
 .text-green {color:var(--g600)}
 .text-muted {color:var(--n500)}
@@ -318,9 +340,54 @@ textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{
   .show-mob{display:flex!important}
 }
 
+/* ─── GLOBAL RESPONSIVE FALLBACKS ─────────────────────────
+   These live here rather than in per-page <style> blocks: those only
+   render while their page is mounted, so rules meant to apply site-wide
+   silently stopped working on other routes. Values below are
+   space-separated, which serialise unchanged in the style attribute. */
+@media(max-width:900px){
+  div[style*="grid-template-columns: 1fr 1fr"]:not(.calc-metrics):not(.calc-seg),
+  div[style*="grid-template-columns: 1fr 1.5fr"],
+  div[style*="grid-template-columns: 300px 1fr"]{
+    grid-template-columns:1fr!important;
+  }
+  /* Two-up image/text splits shouldn't keep a huge desktop gap */
+  .g2{gap:32px!important}
+}
+
+/* Icon-and-text rows: keep the icon inline but tighten the gutter */
+@media(max-width:600px){
+  div[style*="grid-template-columns: 64px 1fr"],
+  div[style*="grid-template-columns: 68px 1fr"],
+  div[style*="grid-template-columns: 60px 1fr"]{
+    grid-template-columns:46px 1fr!important;
+    gap:14px!important;
+  }
+}
+
+/* Gallery lightbox: controls sit outside the frame on desktop, so pull them
+   inside once there's no room beside it. */
+@media(max-width:820px){
+  .lb-prev{left:8px!important}
+  .lb-next{right:8px!important}
+  .lb-close{right:8px!important;top:8px!important}
+}
+
+/* Quote form: full-width sheet on phones, and never taller than the screen */
+@media(max-width:640px){
+  .lf-pop{left:10px!important;right:10px!important;bottom:10px!important}
+  .lf-pop > div{width:100%!important;max-width:100%!important;max-height:88vh;overflow-y:auto}
+}
+
+/* Nothing should ever cause a horizontal scrollbar */
+html,body{max-width:100%;overflow-x:hidden}
+img,video,iframe,table{max-width:100%}
+
 /* Mobile spacing: ensure stats band sits below hero with extra top margin on mobile */
 @media(max-width:900px){
   .stats-band-mobile{margin-top:120px}
+  /* Clear the fixed bottom CTA bar so it never covers page content */
+  body{padding-bottom:84px}
 }
 @media(max-width:600px){
   .g4{grid-template-columns:1fr}
