@@ -46,7 +46,7 @@ $phone = sanitize($data['phone'] ?? 'Not provided');
 $subject = sanitize($data['subject'] ?? 'Contact Form Submission');
 
 // Company email address
-$company_email = 'sudeep@crawlerstechnologies.com';
+$company_email = 'greenchipenergy@gmail.com';
 
 // Email to company
 $subject_company = "📧 Contact Form: $subject";

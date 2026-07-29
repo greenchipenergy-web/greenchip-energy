@@ -50,7 +50,7 @@ $installation_type = sanitize($data['installation_type'] ?? 'Not specified');
 $message = sanitize($data['message'] ?? 'No message');
 
 // Company email address
-$company_email = 'sudeep@crawlerstechnologies.com';
+$company_email = 'greenchipenergy@gmail.com';
 
 // Email to company
 $subject_company = "🌞 New Lead: $name - $solution";
