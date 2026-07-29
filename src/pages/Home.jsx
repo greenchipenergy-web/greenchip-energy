@@ -116,17 +116,24 @@ function Stats(){
   const c3=useCounter(100,1700,vis)
   const c4=useCounter(16,1700,vis)
   return( 
-    <div ref={ref} className="stats-band-mobile" style={{background:'linear-gradient(135deg,#166534,#15803d)',padding:'52px 8%'}}>
-      <div className="stats-grid" style={{textAlign:'center'}}>
+    <div ref={ref} className="stats-band-mobile" style={{background:'linear-gradient(135deg,#14532d,#166534 45%,#15803d)',padding:'60px 8%',position:'relative',overflow:'hidden'}}>
+      {/* texture + glow */}
+      <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 1px 1px,rgba(255,255,255,.07) 1px,transparent 0)',backgroundSize:'28px 28px',pointerEvents:'none'}}/>
+      <div style={{position:'absolute',top:'-60%',left:'20%',width:520,height:520,borderRadius:'50%',background:'radial-gradient(circle,rgba(74,222,128,.18),transparent 70%)',pointerEvents:'none'}}/>
+
+      <div className="stats-grid" style={{textAlign:'center',position:'relative',zIndex:1}}>
         {[[c1,'MW+','Projects Delivered'],[c2,'GWh+','Clean Energy'],[c3,'+','Happy Clients'],[c4,'Yrs','Experience']].map(([n,suf,label],i)=>(
-          <div key={i} style={{opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(20px)',transition:`all .6s ease ${i*.12}s`}}>
-            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(2rem,4vw,3rem)',color:'#fff',lineHeight:1}}>
+          <div key={i} className="stat-cell" style={{position:'relative',padding:'4px 12px',opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(22px)',transition:`opacity .6s ease ${i*.12}s, transform .6s cubic-bezier(.16,1,.3,1) ${i*.12}s`}}>
+            {i>0&&<span className="stat-div" style={{position:'absolute',left:0,top:'12%',bottom:'12%',width:1,background:'linear-gradient(to bottom,transparent,rgba(255,255,255,.22),transparent)'}}/>}
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(2rem,4vw,3rem)',color:'#fff',lineHeight:1,letterSpacing:'-.02em',textShadow:'0 2px 20px rgba(74,222,128,.25)'}}>
               {n}<span style={{fontSize:'58%',color:'#bbf7d0'}}>{suf}</span>
             </div>
-            <div style={{color:'rgba(255,255,255,.7)',fontSize:11.5,letterSpacing:1.8,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginTop:7}}>{label}</div>
+            <div style={{width:26,height:2,background:'rgba(187,247,208,.5)',borderRadius:2,margin:'12px auto 10px'}}/>
+            <div style={{color:'rgba(255,255,255,.72)',fontSize:11.5,letterSpacing:1.8,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif"}}>{label}</div>
           </div>
         ))}
       </div>
+      <style>{`@media(max-width:900px){.stat-div{display:none}}`}</style>
     </div>
   )
 }
@@ -139,17 +146,21 @@ function AboutSnippet({setPage}){
       <div className="g2" style={{alignItems:'center'}}>
         {/* Image */}
         <div className={`rev-l ${vis?'vis':''}`} style={{position:'relative'}}>
-          <div style={{borderRadius:20,overflow:'hidden',position:'relative'}}>
+          <div className="media-zoom" style={{borderRadius:'var(--r-xl)',overflow:'hidden',position:'relative',boxShadow:'var(--shadow-lg)'}}>
             <img src={`${IMG}about.png`} alt="About" style={{width:'100%',height:480,objectFit:'cover',display:'block'}}/>
-            <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(20,83,45,.4),transparent 60%)'}}/>
+            <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(20,83,45,.45),transparent 60%)'}}/>
           </div>
           {/* Floating badge */}
-          <div style={{position:'absolute',bottom:-20,right:-20,background:'linear-gradient(135deg,#16a34a,#166534)',borderRadius:16,padding:'20px 26px',boxShadow:'0 16px 40px rgba(22,163,74,.35)'}}>
+          <div className="float-badge" style={{position:'absolute',bottom:-20,right:-20,background:'linear-gradient(135deg,#16a34a,#166534)',borderRadius:'var(--r-lg)',padding:'20px 28px',boxShadow:'0 18px 40px -12px rgba(22,163,74,.55)',border:'1px solid rgba(255,255,255,.16)'}}>
             <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:30,color:'#fff',lineHeight:1}}>2017</div>
-            <div style={{color:'rgba(255,255,255,.85)',fontSize:10,fontWeight:600,letterSpacing:1.5,marginTop:3}}>FOUNDED</div>
+            <div style={{color:'rgba(255,255,255,.85)',fontSize:10,fontWeight:600,letterSpacing:1.5,marginTop:4}}>FOUNDED</div>
           </div>
           {/* Accent ring */}
-          <div style={{position:'absolute',top:-14,left:-14,right:40,bottom:40,borderRadius:20,border:'2px solid #bbf7d0',zIndex:-1}}/>
+          <div style={{position:'absolute',top:-16,left:-16,right:44,bottom:44,borderRadius:'var(--r-xl)',border:'2px solid #bbf7d0',zIndex:-1}}/>
+          <style>{`
+            .float-badge{transition:transform .45s cubic-bezier(.16,1,.3,1)}
+            .float-badge:hover{transform:translateY(-6px) scale(1.03)}
+          `}</style>
         </div>
 
         {/* Text */}
@@ -169,8 +180,12 @@ function AboutSnippet({setPage}){
           {/* Feature pills */}
           <div style={{display:'flex',flexWrap:'wrap',gap:8,marginBottom:32}}>
             {['System Design','EPC Delivery','Performance Monitoring','Asset Management','Financing','O&M'].map(f=>(
-              <span key={f} style={{padding:'5px 13px',background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:100,color:'#166534',fontSize:12,fontFamily:"'Space Grotesk',sans-serif",fontWeight:500}}>{f}</span>
+              <span key={f} className="feat-pill" style={{padding:'7px 15px',background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:100,color:'#166534',fontSize:12,fontFamily:"'Space Grotesk',sans-serif",fontWeight:500,cursor:'default'}}>{f}</span>
             ))}
+            <style>{`
+              .feat-pill{transition:background .28s ease,color .28s ease,border-color .28s ease,transform .28s cubic-bezier(.16,1,.3,1)}
+              .feat-pill:hover{background:#16a34a;border-color:#16a34a;color:#fff;transform:translateY(-2px)}
+            `}</style>
           </div>
           <div style={{display:'flex',gap:12}}>
             <button className="btn-primary" onClick={()=>setPage('about')} style={{padding:'12px 26px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7}}>Discover Our Story <ArrowRight size={14} strokeWidth={2.25}/></button>
@@ -283,15 +298,23 @@ function ServicesStrip({setPage}){
       </div>
       <div ref={ref} className="g3">
         {svcs.map((s,i)=>(
-          <div key={i} className="card" onClick={()=>setPage(s.page)} style={{padding:'36px 30px',cursor:'pointer',opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(28px)',transition:`all .6s ease ${i*.15}s`}}>
-            <div style={{width:54,height:54,borderRadius:14,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,marginBottom:22}}>{s.icon}</div>
+          <div key={i} className="card svc-card" onClick={()=>setPage(s.page)} style={{padding:'36px 30px',cursor:'pointer',position:'relative',display:'flex',flexDirection:'column',opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(28px)',transition:`opacity .6s ease ${i*.12}s, transform .6s cubic-bezier(.16,1,.3,1) ${i*.12}s, box-shadow .35s ease, border-color .35s ease`}}>
+            {/* top accent that draws in on hover */}
+            <span className="svc-accent" style={{position:'absolute',top:0,left:0,height:3,width:'100%',background:'linear-gradient(90deg,#16a34a,#4ade80)',transformOrigin:'left'}}/>
+            <div className="svc-icon" style={{width:58,height:58,borderRadius:16,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,marginBottom:22}}>{s.icon}</div>
             <div style={{color:'#16a34a',fontSize:9.5,letterSpacing:2,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginBottom:8}}>{s.sub}</div>
             <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:20,color:'#14532d',marginBottom:11}}>{s.title}</h3>
-            <p style={{color:'#6b7280',fontSize:13.5,lineHeight:1.82}}>{s.desc}</p>
-            <div style={{marginTop:18,color:'#16a34a',fontSize:12.5,fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,display:'flex',alignItems:'center',gap:5}}>Learn More <ArrowRight size={13} strokeWidth={2.25}/></div>
+            <p style={{color:'#6b7280',fontSize:13.5,lineHeight:1.82,flex:1}}>{s.desc}</p>
+            <div style={{marginTop:20,color:'#16a34a',fontSize:12.5,fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,display:'flex',alignItems:'center',gap:6}}>Learn More <ArrowRight className="nudge-x" size={13} strokeWidth={2.25}/></div>
           </div>
         ))}
       </div>
+      <style>{`
+        .svc-accent{transform:scaleX(0);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+        .svc-card:hover .svc-accent{transform:scaleX(1)}
+        .svc-icon{transition:background .35s ease,border-color .35s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+        .svc-card:hover .svc-icon{background:#dcfce7;border-color:#86efac;transform:translateY(-3px) scale(1.05)}
+      `}</style>
     </section>
   )
 }
@@ -373,13 +396,13 @@ function Partners(){
         <div className="badge" style={{marginBottom:12,justifyContent:'center'}}><span className="dot"/>Trusted Partners</div>
         <h2 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:'clamp(1.5rem,2.8vw,2.1rem)',color:'#14532d'}}>We Are Trusted by Leading Brands!</h2>
       </div>
-      <div style={{display:'flex',flexDirection:'column',gap:12,overflow:'hidden'}}>
+      <div className="marquee-wrap" style={{display:'flex',flexDirection:'column',gap:14,overflow:'hidden'}}>
         {/* Top row: left → right (moves left) */}
         <div style={{overflow:'hidden'}}>
           <div className="marquee marquee-left" style={{display:'flex',gap:24,width:'max-content'}}>
             {[...PARTNERS,...PARTNERS].map((p,i)=> (
-              <div key={'t'+i} style={{flexShrink:0,background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:12,padding:'14px 24px',display:'flex',alignItems:'center',justifyContent:'center',minWidth:120}}>
-                <img src={`${IMG}partners/${p}`} alt="" style={{height:36,maxWidth:110,objectFit:'contain',filter:'grayscale(40%) opacity(.8)'}}/>
+              <div key={'t'+i} className="pt-logo" style={{flexShrink:0,background:'#fff',border:'1px solid #e5e7eb',borderRadius:'var(--r-md)',padding:'16px 26px',display:'flex',alignItems:'center',justifyContent:'center',minWidth:130}}>
+                <img src={`${IMG}partners/${p}`} alt="" style={{height:36,maxWidth:110,objectFit:'contain'}}/>
               </div>
             ))}
           </div>
@@ -389,8 +412,8 @@ function Partners(){
         <div style={{overflow:'hidden'}}>
           <div className="marquee marquee-right" style={{display:'flex',gap:24,width:'max-content'}}>
             {[...PARTNERS].reverse().concat([...PARTNERS].reverse()).map((p,i)=> (
-              <div key={'b'+i} style={{flexShrink:0,background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:12,padding:'14px 24px',display:'flex',alignItems:'center',justifyContent:'center',minWidth:120}}>
-                <img src={`${IMG}partners/${p}`} alt="" style={{height:36,maxWidth:110,objectFit:'contain',filter:'grayscale(40%) opacity(.8)'}}/>
+              <div key={'b'+i} className="pt-logo" style={{flexShrink:0,background:'#fff',border:'1px solid #e5e7eb',borderRadius:'var(--r-md)',padding:'16px 26px',display:'flex',alignItems:'center',justifyContent:'center',minWidth:130}}>
+                <img src={`${IMG}partners/${p}`} alt="" style={{height:36,maxWidth:110,objectFit:'contain'}}/>
               </div>
             ))}
           </div>
@@ -403,6 +426,15 @@ function Partners(){
         .marquee.marquee-left { animation: marqueeLeft 44s linear infinite; }
         .marquee.marquee-right { animation: marqueeRight 52s linear infinite; }
         .marquee:hover { animation-play-state: paused; }
+        .pt-logo{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease}
+        .pt-logo img{filter:grayscale(100%) opacity(.55);transition:filter .35s ease}
+        .pt-logo:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:#bbf7d0}
+        .pt-logo:hover img{filter:grayscale(0%) opacity(1)}
+        /* Fade the marquee out at both edges instead of hard-cutting */
+        .marquee-wrap{
+          -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+        }
         @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
       `}</style>
     </div>
@@ -418,19 +450,24 @@ function Gallery(){
         <div className="badge" style={{marginBottom:12,justifyContent:'center'}}><span className="dot"/>Project Gallery</div>
         <h2 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.5rem,2.8vw,2.1rem)',color:'#14532d'}}>Our Solar Projects</h2>
       </div>
-      <div ref={ref} className="gallery-grid" style={{gridTemplateRows:'210px 210px',gap:14}}>
+      <div ref={ref} className="gallery-grid" style={{gridTemplateRows:'210px 210px',gap:16}}>
         {[1,2,3,4,5,6].map((n,i)=>(
-          <div key={n} style={{position:'relative',borderRadius:14,overflow:'hidden',cursor:'pointer',
+          <div key={n} className="media-zoom gal-tile" style={{position:'relative',borderRadius:'var(--r-lg)',overflow:'hidden',cursor:'pointer',
             gridColumn:i===0||i===5?'span 2':'span 1',
             opacity:vis?1:0,transform:vis?'scale(1)':'scale(.94)',
-            transition:`all .55s ease ${i*.08}s`,
+            transition:`opacity .55s ease ${i*.07}s, transform .55s cubic-bezier(.16,1,.3,1) ${i*.07}s, box-shadow .4s ease`,
             border:'1px solid #e5e7eb'}}>
-            <img src={`${IMG}gallery-${n}.jpg`} alt="" style={{width:'100%',height:'100%',objectFit:'cover',transition:'transform .5s ease'}}
-              onMouseEnter={e=>e.target.style.transform='scale(1.07)'}
-              onMouseLeave={e=>e.target.style.transform='scale(1)'}/>
+            <img src={`${IMG}gallery-${n}.jpg`} alt="" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+            {/* hover veil */}
+            <div className="gal-veil" style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(6,30,12,.6),transparent 60%)'}}/>
           </div>
         ))}
       </div>
+      <style>{`
+        .gal-veil{opacity:0;transition:opacity .4s ease}
+        .gal-tile:hover .gal-veil{opacity:1}
+        .gal-tile:hover{box-shadow:var(--shadow-lg)}
+      `}</style>
     </section>
   )
 }

@@ -24,10 +24,8 @@ export function Solutions({setPage}){
               style={{cursor:'pointer',overflow:'hidden',display:'flex',flexDirection:'column',height:'100%',
                 opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(28px)',
                 transition:`all .6s ease ${i*.07}s`}}>
-              <div style={{position:'relative',height:210,overflow:'hidden',flexShrink:0}}>
-                <img src={`${IMG}${s.img}`} alt={s.title} style={{width:'100%',height:'100%',objectFit:'cover',transition:'transform .5s ease'}}
-                  onMouseEnter={e=>e.target.style.transform='scale(1.07)'}
-                  onMouseLeave={e=>e.target.style.transform='scale(1)'}/>
+              <div className="media-zoom" style={{position:'relative',height:210,overflow:'hidden',flexShrink:0}}>
+                <img src={`${IMG}${s.img}`} alt={s.title} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
                 <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(10,40,15,.7),transparent 55%)'}}/>
                 <div style={{position:'absolute',top:12,left:12,width:36,height:36,borderRadius:'50%',background:'rgba(255,255,255,.9)',display:'flex',alignItems:'center',justifyContent:'center'}}><s.icon size={18} strokeWidth={2} color="#16a34a"/></div>
               </div>
@@ -66,6 +64,13 @@ export function SolutionDetail({id,setPage}){
   return(
     <div style={{background:'#f8fdf9',paddingTop:34}}>
       <PageHero title={sol.title} subtitle={sol.tagline} img={`${IMG}${sol.img}`} breadcrumb={`Solutions → ${sol.title}`}/>
+      <style>{`
+        .sol-stat{transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease}
+        .sol-stat:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+        .ben-card:hover{box-shadow:var(--shadow-md);border-color:#bbf7d0;transform:translateY(-3px)}
+        .ben-check{transition:transform .4s cubic-bezier(.16,1,.3,1),background .3s ease}
+        .ben-card:hover .ben-check{transform:scale(1.1);background:#dcfce7}
+      `}</style>
 
       {/* Main content */}
       <section className="section" style={{background:'#fff'}}>
@@ -89,7 +94,7 @@ export function SolutionDetail({id,setPage}){
               <button className="btn-outline" onClick={()=>setPage('contact')} style={{padding:'12px 26px',fontSize:13}}>Get a Quote</button>
             </div>
           </div>
-          <div className={`rev-r ${v1?'vis':''}`} style={{borderRadius:20,overflow:'hidden',boxShadow:'0 12px 36px rgba(22,163,74,.12)'}}>
+          <div className={`rev-r media-zoom ${v1?'vis':''}`} style={{borderRadius:'var(--r-xl)',overflow:'hidden',boxShadow:'var(--shadow-lg)'}}>
             <img src={`${IMG}${sol.img}`} alt={sol.title} style={{width:'100%',height:460,objectFit:'cover'}}/>
           </div>
         </div>
@@ -98,7 +103,7 @@ export function SolutionDetail({id,setPage}){
         {sol.stats&&(
           <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:56}}>
             {sol.stats.map(([n,l])=>(
-              <div key={n} style={{background:'linear-gradient(135deg,#f0fdf4,#dcfce7)',border:'1px solid #bbf7d0',borderRadius:16,padding:'28px 20px',textAlign:'center'}}>
+              <div key={n} className="sol-stat" style={{background:'linear-gradient(135deg,#f0fdf4,#dcfce7)',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',padding:'30px 20px',textAlign:'center'}}>
                 <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#16a34a',fontSize:'clamp(1.5rem,2.5vw,2rem)',marginBottom:8}}>{n}</div>
                 <div style={{color:'#15803d',fontSize:12,letterSpacing:1.5,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",fontWeight:600}}>{l}</div>
               </div>
@@ -115,10 +120,10 @@ export function SolutionDetail({id,setPage}){
             </div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:18}}>
               {sol.benefits.map((b,i)=>(
-                <div key={i} className="card-flat" style={{padding:'22px 20px',display:'flex',alignItems:'flex-start',gap:14,
+                <div key={i} className="card-flat ben-card" style={{padding:'24px 22px',display:'flex',alignItems:'flex-start',gap:14,
                   opacity:v2?1:0,transform:v2?'translateY(0)':'translateY(22px)',
-                  transition:`all .55s ease ${i*.1}s`}}>
-                  <div style={{width:32,height:32,borderRadius:9,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><Check size={16} strokeWidth={2.5} color="#16a34a"/></div>
+                  transition:`opacity .55s ease ${i*.08}s, transform .55s cubic-bezier(.16,1,.3,1) ${i*.08}s, box-shadow .35s ease, border-color .35s ease`}}>
+                  <div className="ben-check" style={{width:34,height:34,borderRadius:10,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><Check size={16} strokeWidth={2.5} color="#16a34a"/></div>
                   <p style={{color:'#374151',fontSize:14,lineHeight:1.75,marginTop:5}}>{b}</p>
                 </div>
               ))}
@@ -136,7 +141,7 @@ export function SolutionDetail({id,setPage}){
             </div>
             <div className="g3">
               {sol.gallery.map((g,i)=>(
-                <div key={i} className="card" style={{overflow:'hidden'}}>
+                <div key={i} className="card media-zoom" style={{overflow:'hidden'}}>
                   <img src={`${IMG}${g}`} alt={`gallery-${i}`} style={{width:'100%',height:200,objectFit:'cover'}}/>
                 </div>
               ))}
@@ -155,9 +160,7 @@ export function SolutionDetail({id,setPage}){
         <div className="g3">
           {SOLUTIONS.filter(s=>s.id!==id).slice(0,3).map((s,i)=>(
             <div key={i} className="card" onClick={()=>setPage('sol_'+s.id)} style={{cursor:'pointer',overflow:'hidden'}}>
-              <img src={`${IMG}${s.img}`} alt={s.title} style={{width:'100%',height:180,objectFit:'cover',transition:'transform .5s ease'}}
-                onMouseEnter={e=>e.target.style.transform='scale(1.06)'}
-                onMouseLeave={e=>e.target.style.transform='scale(1)'}/>
+              <div className="media-zoom"><img src={`${IMG}${s.img}`} alt={s.title} style={{width:'100%',height:180,objectFit:'cover'}}/></div>
               <div style={{padding:'18px 18px 22px'}}>
                 <div style={{color:'#16a34a',fontSize:9.5,letterSpacing:2,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginBottom:6,fontWeight:600}}>{s.sub}</div>
                 <h4 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:16,color:'#14532d'}}>{s.title}</h4>

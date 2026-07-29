@@ -77,6 +77,17 @@ export default function FinancingPage({ setPage }) {
         img={`${IMG}financingmodel.jpg`}
         breadcrumb="Services → Financing Models"
       />
+      <style>{`
+        .fin-metric{transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .35s ease}
+        .fin-metric:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+        .fin-explain:hover,.fin-model:hover{box-shadow:var(--shadow-lg)}
+        .fin-hl{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease}
+        .fin-hl:hover{transform:translateX(4px);box-shadow:var(--shadow-sm)}
+        .fin-proj{transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .35s ease}
+        .fin-proj:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+        .fin-tr{transition:background .25s ease}
+        .fin-tr:hover{background:#f0fdf4!important}
+      `}</style>
 
       {/* INTRO + IMAGE STACK */}
       <section className="section" style={{ background: '#fff' }}>
@@ -122,7 +133,7 @@ export default function FinancingPage({ setPage }) {
             { icon: Home, n: 'Solar Loans',    sub: 'Top-up on existing Solar Loans (T&C)' },
             { icon: Calendar, n: '10–14 Days',     sub: 'Loan approval timeline' },
           ].map((h, i) => (
-            <div key={i} style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 16, padding: '24px 18px', textAlign: 'center', opacity: v2 ? 1 : 0, transform: v2 ? 'translateY(0)' : 'translateY(20px)', transition: `all .55s ease ${i * .1}s` }}>
+            <div key={i} className="fin-metric" style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 'var(--r-lg)', padding: '26px 18px', textAlign: 'center', opacity: v2 ? 1 : 0, transform: v2 ? 'translateY(0)' : 'translateY(20px)', transition: `opacity .55s ease ${i * .1}s, transform .55s cubic-bezier(.16,1,.3,1) ${i * .1}s, box-shadow .35s ease` }}>
               <div style={{ display:'flex', justifyContent:'center', marginBottom: 11 }}><h.icon size={28} strokeWidth={1.75} color="#16a34a"/></div>
               <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#16a34a', fontSize: 'clamp(.9rem,1.6vw,1.2rem)', marginBottom: 5 }}>{h.n}</div>
               <div style={{ color: '#6b7280', fontSize: 12, fontFamily: "'Space Grotesk',sans-serif" }}>{h.sub}</div>
@@ -141,8 +152,8 @@ export default function FinancingPage({ setPage }) {
         </div>
         <div ref={r3} className="g2" style={{ alignItems: 'stretch' }}>
           {/* CAPEX card with image */}
-          <div style={{ background: '#fff', border: '1px solid #bbf7d0', borderRadius: 18, overflow: 'hidden', opacity: v3 ? 1 : 0, transform: v3 ? 'translateX(0)' : 'translateX(-28px)', transition: 'all .7s ease' }}>
-            <div style={{ height: 210, overflow: 'hidden', position: 'relative' }}>
+          <div className="fin-explain" style={{ background: '#fff', border: '1px solid #bbf7d0', borderRadius: 'var(--r-xl)', overflow: 'hidden', opacity: v3 ? 1 : 0, transform: v3 ? 'translateX(0)' : 'translateX(-28px)', transition: 'opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1), box-shadow .4s ease' }}>
+            <div className="media-zoom" style={{ height: 210, overflow: 'hidden', position: 'relative' }}>
               <img src={`${IMG}Commerial rooftop.jpg`} alt="CAPEX Solar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '10px 16px', background: 'linear-gradient(to top,rgba(10,40,15,.85),transparent)' }}>
                 <span style={{ color: '#fff', fontSize: 12, fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, letterSpacing: .5 }}>Rooftop Solar — CAPEX Model</span>
@@ -167,8 +178,8 @@ export default function FinancingPage({ setPage }) {
           </div>
 
           {/* OPEX card with image */}
-          <div style={{ background: '#fff', border: '1px solid #86efac', borderRadius: 18, overflow: 'hidden', opacity: v3 ? 1 : 0, transform: v3 ? 'translateX(0)' : 'translateX(28px)', transition: 'all .7s ease .15s' }}>
-            <div style={{ height: 210, overflow: 'hidden', position: 'relative' }}>
+          <div className="fin-explain" style={{ background: '#fff', border: '1px solid #86efac', borderRadius: 'var(--r-xl)', overflow: 'hidden', opacity: v3 ? 1 : 0, transform: v3 ? 'translateX(0)' : 'translateX(28px)', transition: 'opacity .7s ease .15s, transform .7s cubic-bezier(.16,1,.3,1) .15s, box-shadow .4s ease' }}>
+            <div className="media-zoom" style={{ height: 210, overflow: 'hidden', position: 'relative' }}>
               <img src={`${IMG}solarpark.jpg`} alt="OPEX Solar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '10px 16px', background: 'linear-gradient(to top,rgba(10,40,15,.85),transparent)' }}>
                 <span style={{ color: '#fff', fontSize: 12, fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, letterSpacing: .5 }}>Solar Park — OPEX / PPA Model</span>
@@ -204,7 +215,7 @@ export default function FinancingPage({ setPage }) {
         </div>
         <div ref={r4} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
           {models.map((m, i) => (
-            <div key={i} style={{ background: m.bg, border: `1px solid ${m.border}`, borderRadius: 20, overflow: 'hidden', opacity: v4 ? 1 : 0, transform: v4 ? 'translateY(0)' : 'translateY(24px)', transition: `all .65s ease ${i * .15}s` }}>
+            <div key={i} className="fin-model" style={{ background: m.bg, border: `1px solid ${m.border}`, borderRadius: 'var(--r-xl)', overflow: 'hidden', opacity: v4 ? 1 : 0, transform: v4 ? 'translateY(0)' : 'translateY(24px)', transition: `opacity .65s ease ${i * .15}s, transform .65s cubic-bezier(.16,1,.3,1) ${i * .15}s, box-shadow .4s ease` }}>
               {/* Colored header bar */}
               <div style={{ background: `linear-gradient(135deg,${m.col},${i === 0 ? '#15803d' : i === 1 ? '#166534' : '#14532d'})`, padding: '16px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -247,7 +258,7 @@ export default function FinancingPage({ setPage }) {
                     <div style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, color: m.col, fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Key Highlights</div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                       {m.highlights.map((h, j) => (
-                        <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 12px', background: '#fff', border: `1px solid ${m.border}`, borderRadius: 9 }}>
+                        <div key={j} className="fin-hl" style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '10px 13px', background: '#fff', border: `1px solid ${m.border}`, borderRadius: 10 }}>
                           <div style={{ width: 22, height: 22, borderRadius: 6, background: m.bg, border: `1px solid ${m.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Check size={12} strokeWidth={2.5} color={m.col}/></div>
                           <span style={{ color: '#374151', fontSize: 12.5 }}>{h}</span>
                         </div>
@@ -272,7 +283,7 @@ export default function FinancingPage({ setPage }) {
             <Para c="We work with a wide range of clients across India. Here are the types of projects and companies we look for when offering our financing solutions:" />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 11, marginBottom: 28 }}>
               {criteria.map((c, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 13, padding: '13px 16px', background: '#fff', border: '1px solid #bbf7d0', borderRadius: 12 }}>
+                <div key={i} className="fin-hl" style={{ display: 'flex', alignItems: 'flex-start', gap: 13, padding: '14px 17px', background: '#fff', border: '1px solid #bbf7d0', borderRadius: 'var(--r-md)' }}>
                   <div style={{ width: 28, height: 28, borderRadius: 8, background: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Check size={14} strokeWidth={2.5} color="#16a34a"/></div>
                   <span style={{ color: '#374151', fontSize: 14, lineHeight: 1.65 }}>{c}</span>
                 </div>
@@ -292,7 +303,7 @@ export default function FinancingPage({ setPage }) {
               ['solarpark.jpg', 'Solar Park'],
               ['solar-battery.jpg', 'BESS Storage'],
             ].map(([img, label]) => (
-              <div key={label} style={{ borderRadius: 13, overflow: 'hidden', boxShadow: '0 6px 18px rgba(22,163,74,.1)', position: 'relative' }}>
+              <div key={label} className="media-zoom fin-proj" style={{ borderRadius: 'var(--r-md)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', position: 'relative' }}>
                 <img src={`${IMG}${img}`} alt={label} style={{ width: '100%', height: 160, objectFit: 'cover' }} />
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '9px 13px', background: 'linear-gradient(to top,rgba(10,40,15,.85),transparent)' }}>
                   <div style={{ color: '#fff', fontSize: 12, fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600 }}>{label}</div>
@@ -309,7 +320,7 @@ export default function FinancingPage({ setPage }) {
           <div className="badge" style={{ marginBottom: 14, justifyContent: 'center' }}><span className="dot" />Quick Comparison</div>
           <h2 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 'clamp(1.6rem,3vw,2.3rem)', color: '#14532d' }}>Compare All Financing Models</h2>
         </div>
-        <div style={{ overflowX: 'auto' }}>
+        <div style={{ overflowX: 'auto', borderRadius: 'var(--r-lg)', border: '1px solid #e5e7eb', boxShadow: 'var(--shadow-sm)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 620 }}>
             <thead>
               <tr style={{ background: 'linear-gradient(135deg,#14532d,#166534)' }}>
@@ -330,7 +341,7 @@ export default function FinancingPage({ setPage }) {
                 ['Collateral Required', 'No', 'No', 'Not applicable'],
                 ['Best For', 'Capex-ready businesses', 'SMEs, growing companies', 'Any business size'],
               ].map((row, ri) => (
-                <tr key={ri} style={{ background: ri % 2 === 0 ? '#f8fdf9' : '#fff', borderBottom: '1px solid #e5e7eb' }}>
+                <tr key={ri} className="fin-tr" style={{ background: ri % 2 === 0 ? '#f8fdf9' : '#fff', borderBottom: '1px solid #e5e7eb' }}>
                   {row.map((cell, ci) => (
                     <td key={ci} style={{ padding: '13px 17px', color: ci === 0 ? '#14532d' : '#374151', fontFamily: ci === 0 ? "'Space Grotesk',sans-serif" : "'Inter',sans-serif", fontWeight: ci === 0 ? 600 : 400, fontSize: 13.5, textAlign: ci === 0 ? 'left' : 'center', borderRight: ci < 3 ? '1px solid #e5e7eb' : 'none' }}>
                       {cell === 'Yes' && ci>0 ? <span style={{ color: '#16a34a', fontWeight: 700, display:'inline-flex', alignItems:'center', gap:5 }}><Check size={14} strokeWidth={2.5}/>Yes</span> : cell === 'No' && ci===3 ? <span style={{ color: '#ef4444', display:'inline-flex', alignItems:'center', gap:5 }}><X size={14} strokeWidth={2.5}/>No</span> : cell}
@@ -341,7 +352,7 @@ export default function FinancingPage({ setPage }) {
             </tbody>
           </table>
         </div>
-        <div style={{ marginTop: 44, background: 'linear-gradient(135deg,#14532d,#166534)', borderRadius: 20, padding: '36px 42px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 22 }}>
+        <div style={{ marginTop: 44, background: 'linear-gradient(135deg,#14532d,#166534)', borderRadius: 'var(--r-xl)', padding: '40px 44px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 22 }}>
           <div>
             <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#fff', fontSize: 'clamp(1.2rem,2.5vw,1.7rem)', marginBottom: 7 }}>Not Sure Which Model is Right For You?</h3>
             <p style={{ color: 'rgba(255,255,255,.75)', fontSize: 14, lineHeight: 1.75 }}>Talk to our solar financing experts — we'll help you pick the best option.</p>

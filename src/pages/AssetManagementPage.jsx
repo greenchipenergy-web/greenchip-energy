@@ -72,7 +72,7 @@ const NumberedList = ({ items }) => (
 /* img with caption */
 const FigImg = ({ src, alt, caption, height = 320 }) => (
   <div style={{ marginBottom: 32 }}>
-    <div style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 28px rgba(22,163,74,.1)', border: '1px solid #e5e7eb' }}>
+    <div className="media-zoom" style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', border: '1px solid #e5e7eb' }}>
       <img src={src} alt={alt} style={{ width: '100%', height, objectFit: 'cover', display: 'block' }} />
     </div>
     {caption && (
@@ -198,6 +198,13 @@ export default function AssetManagementPage({ setPage }) {
         img={`${IMG}assetsmanagement.png`}
         breadcrumb="Services → Asset Management"
       />
+      <style>{`
+        .am-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:#bbf7d0}
+        .am-icon{transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease}
+        .am-card:hover .am-icon{transform:translateY(-3px) scale(1.06);background:#dcfce7;border-color:#86efac}
+        .am-chip{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,border-color .3s ease}
+        .am-chip:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:#86efac}
+      `}</style>
 
       {/* ── INTRO ── */}
       <section className="section" style={{ background: '#fff' }}>
@@ -220,14 +227,14 @@ export default function AssetManagementPage({ setPage }) {
 
           {/* Right: stacked images */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, opacity: v1 ? 1 : 0, transform: v1 ? 'translateX(0)' : 'translateX(36px)', transition: 'all .8s ease .2s' }}>
-            <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 10px 32px rgba(22,163,74,.12)' }}>
+            <div className="media-zoom" style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
               <img src={`${IMG}1.jpg`} alt="Asset Management" style={{ width: '100%', height: 240, objectFit: 'cover' }} />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 13 }}>
-              <div style={{ borderRadius: 13, overflow: 'hidden', boxShadow: '0 4px 14px rgba(22,163,74,.09)' }}>
+              <div className="media-zoom" style={{ borderRadius: 'var(--r-md)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
                 <img src={`${IMG}img-600x400-3.jpg`} alt="Solar Plant" style={{ width: '100%', height: 135, objectFit: 'cover' }} />
               </div>
-              <div style={{ borderRadius: 13, overflow: 'hidden', boxShadow: '0 4px 14px rgba(22,163,74,.09)' }}>
+              <div className="media-zoom" style={{ borderRadius: 'var(--r-md)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
                 <img src={`${IMG}img-600x400-1.jpg`} alt="Solar Monitoring" style={{ width: '100%', height: 135, objectFit: 'cover' }} />
               </div>
             </div>
@@ -248,13 +255,14 @@ export default function AssetManagementPage({ setPage }) {
             <div
               key={i}
               style={{
-                background: '#fff', border: '1px solid #bbf7d0', borderRadius: 16,
-                padding: '28px 16px', textAlign: 'center',
+                background: '#fff', border: '1px solid #bbf7d0', borderRadius: 'var(--r-lg)',
+                padding: '30px 16px', textAlign: 'center',
                 opacity: v2 ? 1 : 0, transform: v2 ? 'translateY(0)' : 'translateY(24px)',
-                transition: `all .6s ease ${i * .1}s`,
+                transition: `opacity .6s ease ${i * .1}s, transform .6s cubic-bezier(.16,1,.3,1) ${i * .1}s, box-shadow .35s ease, border-color .35s ease`,
               }}
+              className="am-card"
             >
-              <div style={{ width: 72, height: 72, borderRadius: 16, background: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', overflow: 'hidden' }}>
+              <div className="am-icon" style={{ width: 72, height: 72, borderRadius: 18, background: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', overflow: 'hidden' }}>
                 <img src={c.img} alt={c.title} style={{ width: 44, height: 44, objectFit: 'contain' }}
                   onError={e => { e.target.style.display = 'none'; e.target.parentNode.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>' }} />
               </div>
@@ -283,13 +291,13 @@ export default function AssetManagementPage({ setPage }) {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, opacity: v3 ? 1 : 0, transform: v3 ? 'translateX(0)' : 'translateX(28px)', transition: 'all .8s ease .2s' }}>
-            <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 8px 24px rgba(22,163,74,.1)' }}>
+            <div className="media-zoom am-card" style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
               <img src={`${IMG}img-600x400-6.jpg`} alt="Commercial Solar" style={{ width: '100%', height: 200, objectFit: 'cover' }} />
               <div style={{ padding: '14px 18px', background: '#f0fdf4', borderTop: '1px solid #bbf7d0' }}>
                 <div style={{ color: '#15803d', fontFamily: "'Space Grotesk',sans-serif", fontSize: 12.5, fontWeight: 600 }}>CAPEX — Commercial Rooftop O&M</div>
               </div>
             </div>
-            <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 8px 24px rgba(22,163,74,.1)' }}>
+            <div className="media-zoom am-card" style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
               <img src={`${IMG}solarpark.jpg`} alt="OPEX Solar Park" style={{ width: '100%', height: 200, objectFit: 'cover' }} />
               <div style={{ padding: '14px 18px', background: '#f0fdf4', borderTop: '1px solid #bbf7d0' }}>
                 <div style={{ color: '#15803d', fontFamily: "'Space Grotesk',sans-serif", fontSize: 12.5, fontWeight: 600 }}>OPEX — Utility Scale O&M</div>
@@ -312,13 +320,14 @@ export default function AssetManagementPage({ setPage }) {
             <div
               key={i}
               style={{
-                background: '#fff', border: '1px solid #e5e7eb', borderRadius: 18,
-                padding: '28px 26px', display: 'flex', gap: 18, alignItems: 'flex-start',
+                background: '#fff', border: '1px solid #e5e7eb', borderRadius: 'var(--r-lg)',
+                padding: '30px 26px', display: 'flex', gap: 18, alignItems: 'flex-start',
                 opacity: v4 ? 1 : 0, transform: v4 ? 'translateY(0)' : 'translateY(24px)',
-                transition: `all .6s ease ${i * .12}s`,
+                transition: `opacity .6s ease ${i * .12}s, transform .6s cubic-bezier(.16,1,.3,1) ${i * .12}s, box-shadow .35s ease, border-color .35s ease`,
               }}
+              className="am-card"
             >
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#16a34a', fontSize: 16, flexShrink: 0 }}>{i + 1}</div>
+              <div className="am-icon" style={{ width: 46, height: 46, borderRadius: 14, background: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#16a34a', fontSize: 16, flexShrink: 0 }}>{i + 1}</div>
               <div>
                 <h4 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#14532d', fontSize: 17, marginBottom: 10 }}>{item.title}</h4>
                 <p style={{ color: '#6b7280', fontSize: 14, lineHeight: 1.85 }}>{item.desc}</p>
@@ -358,7 +367,7 @@ export default function AssetManagementPage({ setPage }) {
           <Para c="Typical operations and maintenance (O&M) organisations mainly focus on the following operation and maintenance elements, with key performance indicators as applicable:" />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
             {omElements.map((el, i) => (
-              <div key={i} style={{ background: '#fff', border: '1px solid #bbf7d0', borderRadius: 10, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 9 }}>
+              <div key={i} className="am-chip" style={{ background: '#fff', border: '1px solid #bbf7d0', borderRadius: 'var(--r-sm)', padding: '13px 15px', display: 'flex', alignItems: 'center', gap: 9 }}>
                 <Check size={14} strokeWidth={2.5} color="#16a34a" style={{ flexShrink: 0 }}/>
                 <span style={{ color: '#374151', fontSize: 13, fontFamily: "'Space Grotesk',sans-serif" }}>{el}</span>
               </div>
@@ -400,7 +409,7 @@ export default function AssetManagementPage({ setPage }) {
 
         {frameworks.map((fw, i) => (
           <div key={i} ref={i === 0 ? r6 : undefined} style={{ marginBottom: 56, opacity: v6 ? 1 : 0, transform: v6 ? 'translateY(0)' : 'translateY(24px)', transition: `all .7s ease ${i * .15}s` }}>
-            <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 20, overflow: 'hidden' }}>
+            <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
               {/* Header */}
               <div style={{ background: 'linear-gradient(135deg,#14532d,#166534)', padding: '16px 28px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -430,7 +439,7 @@ export default function AssetManagementPage({ setPage }) {
         ))}
 
         {/* Decision Making Grid section */}
-        <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 20, overflow: 'hidden', marginBottom: 40 }}>
+        <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 40, boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ background: 'linear-gradient(135deg,#14532d,#166534)', padding: '16px 28px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(255,255,255,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#fff', fontSize: 15 }}>04</div>
@@ -442,7 +451,7 @@ export default function AssetManagementPage({ setPage }) {
             <Para c="The decision-making grid (DMG) is a tool used to decide the maintenance strategy among similar equipment. A plot of downtime versus failures is used to decide the type of maintenance required for the assets, from the following categories:" />
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 10, marginBottom: 28 }}>
               {dmgStrategies.map((s, i) => (
-                <div key={i} style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: '12px 14px', textAlign: 'center' }}>
+                <div key={i} className="am-chip" style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 'var(--r-sm)', padding: '13px 15px', textAlign: 'center' }}>
                   <div style={{ color: '#16a34a', fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', marginBottom: 4 }}>
                     {s.match(/\((\w+)\)/)?.[1] || ''}
                   </div>
@@ -467,7 +476,7 @@ export default function AssetManagementPage({ setPage }) {
         </div>
 
         {/* Spare parts management */}
-        <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 20, overflow: 'hidden', marginBottom: 40 }}>
+        <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 40, boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ background: 'linear-gradient(135deg,#166534,#14532d)', padding: '16px 28px' }}>
             <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#fff', fontSize: 'clamp(1rem,2vw,1.3rem)', margin: 0 }}>Spare Parts Management</h3>
           </div>
@@ -484,7 +493,7 @@ export default function AssetManagementPage({ setPage }) {
         </div>
 
         {/* Case study */}
-        <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 20, overflow: 'hidden', marginBottom: 40 }}>
+        <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 40, boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ background: 'linear-gradient(135deg,#15803d,#166534)', padding: '16px 28px' }}>
             <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#fff', fontSize: 'clamp(1rem,2vw,1.3rem)', margin: 0 }}>Case Studies — 200 MW Solar Plant Assessment</h3>
           </div>
@@ -509,7 +518,7 @@ export default function AssetManagementPage({ setPage }) {
         <SectionTitle badge="Key Benefits" title="What You Gain With GreenChip Asset Management" center />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 14, maxWidth: 860, margin: '0 auto 48px' }}>
           {keyBenefits.map((b, i) => (
-            <div key={i} style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 12, padding: '18px 20px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+            <div key={i} className="am-chip" style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 'var(--r-md)', padding: '19px 21px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
               <div style={{ width: 28, height: 28, borderRadius: 8, background: '#fff', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Check size={14} strokeWidth={2.5} color="#16a34a"/></div>
               <span style={{ color: '#374151', fontSize: 14, lineHeight: 1.75 }}>{b}</span>
             </div>
@@ -517,7 +526,7 @@ export default function AssetManagementPage({ setPage }) {
         </div>
 
         {/* Final CTA */}
-        <div style={{ background: 'linear-gradient(135deg,#14532d,#166534)', borderRadius: 20, padding: '44px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 24 }}>
+        <div style={{ background: 'linear-gradient(135deg,#14532d,#166534)', borderRadius: 'var(--r-xl)', padding: '46px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 24 }}>
           <div>
             <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#fff', fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', marginBottom: 8 }}>
               Ready to Maximise Your Solar Asset Performance?

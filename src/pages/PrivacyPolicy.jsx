@@ -217,7 +217,7 @@ export default function PrivacyPolicy() {
             return (
               <div key={section.id} style={{
                 background: "#fff",
-                borderRadius: 10,
+                borderRadius: 14,
                 border: "1px solid #dce8d4",
                 overflow: "hidden",
                 boxShadow: isOpen ? "0 4px 20px rgba(26,122,58,0.08)" : "0 1px 4px rgba(0,0,0,0.04)",

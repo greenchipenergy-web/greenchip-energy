@@ -18,6 +18,19 @@ export function Services({setPage}){
   return(
     <div style={{background:'#f8fdf9',paddingTop:34}}>
       <PageHero title="Our Services" subtitle="End-to-end solar services from engineering to ongoing asset management." img={`${IMG}services.jpg`} breadcrumb="What We Do → Services"/>
+      <style>{`
+        .epc-circle{transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease}
+        .epc-circle:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 18px 34px -12px rgba(20,83,45,.3);border-color:#16a34a}
+        .svc-feat{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,border-color .3s ease}
+        .svc-feat:hover{transform:translateX(4px);border-color:#bbf7d0;box-shadow:var(--shadow-sm)}
+        .fin-card{transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease}
+        .fin-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+        .eth-bar{transform:scaleY(0);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+        .eth-row:hover .eth-bar{transform:scaleY(1)}
+        .eth-row:hover{box-shadow:var(--shadow-lg);border-color:#bbf7d0}
+        .eth-icon{transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease}
+        .eth-row:hover .eth-icon{transform:scale(1.07);background:#dcfce7;border-color:#86efac}
+      `}</style>
 
       {/* EPC Process at top (moved here) */}
       <div style={{background:'#fff',borderRadius:12,padding:'36px 28px',margin:'18px 28px',marginBottom:8,position:'relative'}}>
@@ -35,7 +48,7 @@ export function Services({setPage}){
           ].map((st,i,arr)=> {
             const item = (
               <div key={st.k} style={{flex:'0 0 220px',minWidth:200,display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center',padding:'12px 10px'}}>
-                <div style={{width:100,height:100,borderRadius:50,background:'#fff',border:'2px solid #14532d',display:'flex',alignItems:'center',justifyContent:'center',fontSize:30,color:'#14532d',boxShadow:'0 12px 30px rgba(20,83,45,.06)'}}>
+                <div className="epc-circle" style={{width:100,height:100,borderRadius:50,background:'#fff',border:'2px solid #14532d',display:'flex',alignItems:'center',justifyContent:'center',fontSize:30,color:'#14532d',boxShadow:'0 12px 30px rgba(20,83,45,.06)'}}>
                     <img src={`${IMG}${st.img}`} alt={st.k} style={{width:64,height:64,objectFit:'contain'}}/>
                   </div>
                   <div style={{height:10}}/>
@@ -69,15 +82,15 @@ export function Services({setPage}){
         
 
         {/* ── EPC ── */}
-        <div ref={r1} className={`reveal ${v1?'vis':''}`} style={{marginBottom:52,background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:20,padding:'48px 44px',position:'relative',overflow:'hidden'}}>
+        <div ref={r1} className={`reveal ${v1?'vis':''}`} style={{marginBottom:52,background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:'var(--r-xl)',padding:'48px 44px',boxShadow:'var(--shadow-sm)',position:'relative',overflow:'hidden'}}>
           <div className="g2" style={{alignItems:'flex-start',position:'relative'}}>
             <div>
-              <div style={{display:'inline-flex',width:56,height:56,borderRadius:14,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:18,boxShadow:'0 8px 22px rgba(22,163,74,.28)'}}><Settings size={26} strokeWidth={1.75} color="#fff"/></div>
+              <div style={{display:'flex',width:56,height:56,borderRadius:16,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:16,boxShadow:'0 10px 24px -8px rgba(22,163,74,.6)'}}><Settings size={26} strokeWidth={1.75} color="#fff"/></div>
               <div className="badge" style={{marginBottom:12}}><span className="dot"/>Service 01</div>
               <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.5rem,2.5vw,2.1rem)',color:'#14532d',marginBottom:14,lineHeight:1.2}}>Engineering, Procurement &amp; Construction (EPC)</h3>
               <p style={{color:'#374151',lineHeight:1.9,fontSize:14.5,marginBottom:16,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>The EPC contracting model offers several benefits for project owners. With a single point of contact for the entire project, we streamline communication, reduce delays, and improve overall project efficiency.</p>
               <p style={{color:'#6b7280',lineHeight:1.9,fontSize:14,marginBottom:22,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>Our EPC model covers feasibility study, detailed engineering design, statutory approvals, equipment procurement, civil works, electrical installation, grid connection, testing, commissioning, and hand-over with performance guarantees.</p>
-              <button className="btn-primary" onClick={()=>setPage('epc')} style={{padding:'11px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7}}>Learn More <ArrowRight size={14} strokeWidth={2.25}/></button>
+              <button className="btn-primary" onClick={()=>setPage('epc')} style={{padding:'11px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7,marginBottom:26}}>Learn More <ArrowRight size={14} strokeWidth={2.25}/></button>
             </div>
             <div style={{display:'flex',flexDirection:'column',gap:16}}>
               {[
@@ -87,7 +100,7 @@ export function Services({setPage}){
                 {i:ShieldCheck,t:'Reduced Risk',d:'Project risks transferred to the EPC contractor — managing design errors and delays.'},
                 {i:Star,t:'Quality Assurance',d:'Compliance with IEC, BIS, and MNRE standards for high-quality outcomes.'},
               ].map((p,i)=>(
-                <div key={i} style={{display:'flex',gap:13,alignItems:'flex-start',padding:'14px 16px',background:'#fff',borderRadius:12,border:'1px solid #e5e7eb'}}>
+                <div key={i} className="svc-feat" style={{display:'flex',gap:13,alignItems:'flex-start',padding:'15px 17px',background:'#fff',borderRadius:'var(--r-md)',border:'1px solid #e5e7eb'}}>
                   <div style={{width:36,height:36,borderRadius:10,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><p.i size={16} strokeWidth={1.75} color="#16a34a"/></div>
                   <div>
                     <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,color:'#14532d',fontSize:13,marginBottom:2}}>{p.t}</div>
@@ -100,19 +113,17 @@ export function Services({setPage}){
         </div>
 
         {/* ── FINANCING ── */}
-        <div ref={r2} className={`reveal ${v2?'vis':''}`} style={{marginBottom:52,background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:20,padding:'48px 44px'}}>
-          <div style={{display:'inline-flex',width:56,height:56,borderRadius:14,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:18,boxShadow:'0 8px 22px rgba(22,163,74,.28)'}}><CreditCard size={26} strokeWidth={1.75} color="#fff"/></div>
+        <div ref={r2} className={`reveal ${v2?'vis':''}`} style={{marginBottom:52,background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:'var(--r-xl)',padding:'48px 44px',boxShadow:'var(--shadow-sm)'}}>
+          <div style={{display:'flex',width:56,height:56,borderRadius:16,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:16,boxShadow:'0 10px 24px -8px rgba(22,163,74,.6)'}}><CreditCard size={26} strokeWidth={1.75} color="#fff"/></div>
           <div className="badge" style={{marginBottom:12}}><span className="dot"/>Service 02</div>
           <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.5rem,2.5vw,2.1rem)',color:'#14532d',marginBottom:8,lineHeight:1.2}}>Financing Models</h3>
           <p style={{color:'#16a34a',fontSize:13.5,marginBottom:10,fontFamily:"'Space Grotesk',sans-serif",fontWeight:500}}>CAPEX · LEASING · DEFERRED PAYMENT · OPEX / PPA / RESCO</p>
           <p style={{color:'#374151',lineHeight:1.9,fontSize:14.5,marginBottom:10,maxWidth:800,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>Attractive Financing Schemes for Our Rooftop Customers. Going Solar has never been this Easy &amp; Affordable. Take the right step into the world of Solar Power Solutions with our hassle-free financing.</p>
           <p style={{color:'#6b7280',lineHeight:1.9,fontSize:14,marginBottom:36,maxWidth:800,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>Depending on your situation, we connect you with partner organisations for unsecured loans from ₹1 Lakh up to ₹100 Lakhs, financing up to 80% of project cost with flexible repayment schedules.</p>
-        <button className="btn-primary" onClick={()=>setPage('financing')} style={{padding:'11px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7}}>Learn More <ArrowRight size={14} strokeWidth={2.25}/></button>
+        <button className="btn-primary" onClick={()=>setPage('financing')} style={{padding:'11px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7,marginBottom:26}}>Learn More <ArrowRight size={14} strokeWidth={2.25}/></button>
           <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:28}}>
             {models.map((m,i)=>(
-              <div key={i} style={{background:m.bg,border:`1px solid ${m.border}`,borderRadius:18,padding:'28px 22px',position:'relative',overflow:'hidden',transition:'all .3s'}}
-                onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow='0 12px 32px rgba(22,163,74,.15)'}}
-                onMouseLeave={e=>{e.currentTarget.style.transform='translateY(0)';e.currentTarget.style.boxShadow='none'}}>
+              <div key={i} className="fin-card" style={{background:m.bg,border:`1px solid ${m.border}`,borderRadius:'var(--r-lg)',padding:'28px 22px',position:'relative',overflow:'hidden'}}>
                 <div style={{position:'absolute',top:12,right:12,padding:'3px 10px',background:'rgba(255,255,255,.7)',border:`1px solid ${m.border}`,borderRadius:100,color:m.col,fontSize:10,fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,letterSpacing:.8}}>{m.badge}</div>
                 <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:48,color:`${m.col}18`,lineHeight:1,marginBottom:5}}>{m.num}</div>
                 <h4 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:15.5,color:'#14532d',marginBottom:10}}>Model {m.num}: {m.title}</h4>
@@ -141,18 +152,18 @@ export function Services({setPage}){
         </div>
  
         {/* ── ASSET MANAGEMENT ── */}
-        <div ref={r3} className={`reveal ${v3?'vis':''}`} style={{background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:20,padding:'48px 44px'}}>
+        <div ref={r3} className={`reveal ${v3?'vis':''}`} style={{background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:'var(--r-xl)',padding:'48px 44px',boxShadow:'var(--shadow-sm)'}}>
           <div className="g2" style={{alignItems:'center'}}>
-            <div style={{borderRadius:18,overflow:'hidden',boxShadow:'0 8px 28px rgba(22,163,74,.1)'}}>
+            <div className="media-zoom" style={{borderRadius:'var(--r-xl)',overflow:'hidden',boxShadow:'var(--shadow-lg)'}}>
               <img src={`${IMG}1.jpg`} alt="Asset Management" style={{width:'100%',height:340,objectFit:'cover'}}/>
             </div>
             <div>
-              <div style={{display:'inline-flex',width:56,height:56,borderRadius:14,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:18,boxShadow:'0 8px 22px rgba(22,163,74,.28)'}}><BarChart3 size={26} strokeWidth={1.75} color="#fff"/></div>
+              <div style={{display:'flex',width:56,height:56,borderRadius:16,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:16,boxShadow:'0 10px 24px -8px rgba(22,163,74,.6)'}}><BarChart3 size={26} strokeWidth={1.75} color="#fff"/></div>
               <div className="badge" style={{marginBottom:12}}><span className="dot"/>Service 03</div>
               <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.5rem,2.5vw,2.1rem)',color:'#14532d',marginBottom:14,lineHeight:1.2}}>Asset Management</h3>
               <p style={{color:'#374151',lineHeight:1.9,fontSize:14.5,marginBottom:14,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>At GreenChip, we specialise in solar asset management, providing comprehensive solutions that maximise performance and returns on your solar investments throughout the system's 25+ year lifetime.</p>
               <p style={{color:'#6b7280',lineHeight:1.9,fontSize:14,marginBottom:24,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>Our expert team monitors and manages your solar assets 24/7, ensuring optimal performance, timely preventive maintenance, fault diagnostics, inverter optimisation, and maximum energy generation to protect your ROI.</p>
-              <button className="btn-primary" onClick={()=>setPage('assetmanagement')} style={{padding:'11px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7}}>Learn More <ArrowRight size={14} strokeWidth={2.25}/></button>
+              <button className="btn-primary" onClick={()=>setPage('assetmanagement')} style={{padding:'11px 24px',fontSize:13,display:'inline-flex',alignItems:'center',gap:7,marginBottom:26}}>Learn More <ArrowRight size={14} strokeWidth={2.25}/></button>
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
                 {['24/7 Remote Monitoring','Preventive Maintenance','Performance Analytics','Inverter Optimisation','Fault Diagnostics','Financial Reporting'].map(f=>(
                   <div key={f} style={{display:'flex',alignItems:'center',gap:8,color:'#374151',fontSize:13}}>
@@ -182,6 +193,19 @@ export function EPC(){
   return(
     <div style={{background:'#f8fdf9',paddingTop:34}}>
       <PageHero title="EPC Services" subtitle="Engineering, Procurement & Construction — complete project delivery from design to commissioning." img={`${IMG}EPCdetails.jpg`} breadcrumb="Services → EPC"/>
+      <style>{`
+        .epc-circle{transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .35s ease,border-color .35s ease}
+        .epc-circle:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 18px 34px -12px rgba(20,83,45,.3);border-color:#16a34a}
+        .svc-feat{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,border-color .3s ease}
+        .svc-feat:hover{transform:translateX(4px);border-color:#bbf7d0;box-shadow:var(--shadow-sm)}
+        .fin-card{transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease}
+        .fin-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+        .eth-bar{transform:scaleY(0);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+        .eth-row:hover .eth-bar{transform:scaleY(1)}
+        .eth-row:hover{box-shadow:var(--shadow-lg);border-color:#bbf7d0}
+        .eth-icon{transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease}
+        .eth-row:hover .eth-icon{transform:scale(1.07);background:#dcfce7;border-color:#86efac}
+      `}</style>
       {/* EPC Process on EPC page */}
       <div style={{background:'#fff',borderRadius:12,padding:'28px 22px',margin:'18px 28px',marginBottom:8,position:'relative'}}>
         <div style={{position:'absolute',top:-60,right:-60,width:240,height:240,borderRadius:'50%',background:'radial-gradient(circle,#f0fdf4,transparent)',pointerEvents:'none'}}/>
@@ -198,7 +222,7 @@ export function EPC(){
           ].map((st,i,arr)=> {
             const item = (
               <div key={st.k} style={{flex:'0 0 220px',minWidth:200,display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center',padding:'12px 10px'}}>
-                <div style={{width:100,height:100,borderRadius:50,background:'#fff',border:'2px solid #14532d',display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,color:'#14532d',boxShadow:'0 10px 28px rgba(20,83,45,.06)'}}>
+                <div className="epc-circle" style={{width:100,height:100,borderRadius:50,background:'#fff',border:'2px solid #14532d',display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,color:'#14532d',boxShadow:'0 10px 28px rgba(20,83,45,.06)'}}>
                     <img src={`${IMG}${st.img}`} alt={st.k} style={{width:64,height:64,objectFit:'contain'}}/>
                   </div>
                   <div style={{height:10}}/>
@@ -230,7 +254,7 @@ export function EPC(){
             <p style={{color:'#374151',lineHeight:1.9,fontSize:15,marginBottom:14,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>The EPC (Engineering, Procurement, and Construction) contracting model offers several benefits — streamlined communication, single accountability, cost savings through bulk procurement, risk transfer, and quality assurance throughout the entire project lifecycle.</p>
             <p style={{color:'#6b7280',lineHeight:1.9,fontSize:14,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>GreenChip is a specialist EPC contractor for solar PV, wind, hybrid, and energy storage projects. We take full responsibility for project delivery, allowing you to focus on your core business while we handle every aspect of your renewable energy project.</p>
           </div>
-          <div className={`rev-r ${v1?'vis':''}`} style={{borderRadius:20,overflow:'hidden',boxShadow:'0 10px 32px rgba(22,163,74,.12)'}}>
+          <div className={`rev-r media-zoom ${v1?'vis':''}`} style={{borderRadius:'var(--r-xl)',overflow:'hidden',boxShadow:'var(--shadow-lg)'}}>
             <img src={`${IMG}17.jpg`} alt="EPC" style={{width:'100%',height:360,objectFit:'cover'}}/>
           </div>
         </div>
@@ -240,10 +264,11 @@ export function EPC(){
         </div>
         <div ref={r2} style={{display:'flex',flexDirection:'column',gap:16}}>
           {pts.map((p,i)=>(
-            <div key={i} className="card-flat" style={{display:'grid',gridTemplateColumns:'60px 1fr',gap:22,alignItems:'flex-start',padding:'28px 32px',
+            <div key={i} className="card-flat eth-row" style={{display:'grid',gridTemplateColumns:'60px 1fr',gap:22,alignItems:'flex-start',padding:'28px 32px',position:'relative',overflow:'hidden',
               opacity:v2?1:0,transform:v2?'translateX(0)':'translateX(-24px)',
-              transition:`all .6s ease ${i*.1}s`}}>
-              <div style={{width:50,height:50,borderRadius:13,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><p.i size={22} strokeWidth={1.75} color="#16a34a"/></div>
+              transition:`opacity .6s ease ${i*.09}s, transform .6s cubic-bezier(.16,1,.3,1) ${i*.09}s, box-shadow .35s ease, border-color .35s ease`}}>
+              <span className="eth-bar" style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'linear-gradient(180deg,#16a34a,#4ade80)',transformOrigin:'top'}}/>
+              <div className="eth-icon" style={{width:50,height:50,borderRadius:14,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><p.i size={22} strokeWidth={1.75} color="#16a34a"/></div>
               <div>
                 <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:19,color:'#14532d',marginBottom:8}}>{p.t}</h3>
                 <p style={{color:'#6b7280',fontSize:14,lineHeight:1.85,fontFamily:"'Roboto',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif"}}>{p.d}</p>

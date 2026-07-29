@@ -178,6 +178,12 @@ export default function TermsAndConditions() {
         </div>
       </div>
 
+      <style>{`
+        .legal-row:hover{transform:translateY(-2px);border-color:#b8d9c4!important}
+        .legal-row:hover .legal-ico{transform:scale(1.12)}
+        .legal-ico{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+      `}</style>
+
       {/* Content */}
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "48px 24px 80px" }}>
 
@@ -204,13 +210,13 @@ export default function TermsAndConditions() {
           {sections.map((section, i) => {
             const open = isOpen(section.id);
             return (
-              <div key={section.id} style={{
+              <div key={section.id} className="legal-row" style={{
                 background: "#fff",
-                borderRadius: 10,
+                borderRadius: 14,
                 border: `1px solid ${open ? "#b8d9c4" : "#dce8d4"}`,
                 overflow: "hidden",
-                transition: "border-color 0.2s, box-shadow 0.2s",
-                boxShadow: open ? "0 4px 20px rgba(26,122,58,0.1)" : "none",
+                transition: "border-color .3s ease, box-shadow .3s ease, transform .3s cubic-bezier(.16,1,.3,1)",
+                boxShadow: open ? "0 16px 32px -14px rgba(26,122,58,0.28)" : "0 1px 3px rgba(20,83,45,.05)",
               }}>
                 <button
                   onClick={() => {
@@ -222,11 +228,11 @@ export default function TermsAndConditions() {
                     padding: "18px 24px", background: open ? "#f0f9f4" : "none",
                     border: "none", cursor: "pointer",
                     display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12,
-                    transition: "background 0.2s",
+                    transition: "background .25s ease",
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                    <span style={{ width: 28, display:'flex', justifyContent:'center', flexShrink: 0 }}><section.icon size={18} strokeWidth={1.75} color="#1a7a3a"/></span>
+                    <span className="legal-ico" style={{ width: 28, display:'flex', justifyContent:'center', flexShrink: 0 }}><section.icon size={18} strokeWidth={1.75} color="#1a7a3a"/></span>
                     <div>
                       <span style={{ fontSize: 11, color: "#8aaa8e", fontFamily: "sans-serif", letterSpacing: "0.08em" }}>
                         CLAUSE {String(i + 1).padStart(2, "0")}
@@ -239,7 +245,7 @@ export default function TermsAndConditions() {
                   <span style={{
                     fontSize: 22, color: "#1a7a3a", lineHeight: 1,
                     transform: open ? "rotate(45deg)" : "rotate(0)",
-                    transition: "transform 0.25s", flexShrink: 0,
+                    transition: "transform .3s cubic-bezier(.16,1,.3,1)", flexShrink: 0,
                   }}>+</span>
                 </button>
                 {open && (

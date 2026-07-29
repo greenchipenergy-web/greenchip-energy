@@ -17,10 +17,10 @@ export function About({setPage}){
       <section className="section" style={{background:'#fff'}}>
         <div ref={r1} className="g2" style={{alignItems:'center'}}>
           <div className={`rev-l ${v1?'vis':''}`} style={{position:'relative'}}>
-            <div style={{borderRadius:20,overflow:'hidden'}}>
+            <div className="media-zoom" style={{borderRadius:'var(--r-xl)',overflow:'hidden',boxShadow:'var(--shadow-lg)'}}>
               <img src={`${IMG}about.png`} alt="About" style={{width:'100%',height:480,objectFit:'cover'}}/>
             </div>
-            <div style={{position:'absolute',bottom:-18,left:-18,background:'linear-gradient(135deg,#16a34a,#166534)',borderRadius:14,padding:'18px 22px',boxShadow:'0 14px 36px rgba(22,163,74,.3)'}}>
+            <div className="float-badge" style={{position:'absolute',bottom:-18,left:-18,background:'linear-gradient(135deg,#16a34a,#166534)',borderRadius:'var(--r-lg)',padding:'20px 24px',boxShadow:'0 18px 40px -12px rgba(22,163,74,.5)',border:'1px solid rgba(255,255,255,.16)'}}>
               <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#fff',fontSize:28,lineHeight:1}}>100+</div>
               <div style={{color:'rgba(255,255,255,.85)',fontSize:11,fontWeight:600,marginTop:3}}>PROFESSIONALS</div>
             </div>
@@ -52,7 +52,7 @@ export function About({setPage}){
       <div style={{background:'#f0fdf4',padding:'48px 8%',borderTop:'1px solid #bbf7d0',borderBottom:'1px solid #bbf7d0'}}>
         <div className="g4">
           {[['50+ MW','Installed Capacity'],['50+ GWh','Energy Generated'],['400+','Happy Clients'],['16 Yrs','Industry Experience']].map(([n,l])=>(
-            <div key={n} style={{textAlign:'center',padding:'16px 0'}}>
+            <div key={n} className="o-chip" style={{textAlign:'center',padding:'20px 12px',background:'#fff',border:'1px solid #bbf7d0',borderRadius:'var(--r-md)'}}>
               <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#16a34a',fontSize:'clamp(1.6rem,3vw,2.2rem)'}}>{n}</div>
               <div style={{color:'#6b7280',fontSize:12,letterSpacing:1.5,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginTop:6}}>{l}</div>
             </div>
@@ -89,19 +89,27 @@ export function Values(){
         </div>
         <div ref={ref} className="g3">
           {VALUES.map((v,i)=>(
-            <div key={i} className="card" style={{padding:'38px 30px',position:'relative',overflow:'hidden',
+            <div key={i} className="card val-card" style={{padding:'38px 30px',position:'relative',overflow:'hidden',display:'flex',flexDirection:'column',
               opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(28px)',
-              transition:`all .6s ease ${i*.1}s`}}>
-              <div style={{position:'absolute',top:-20,right:-20,width:120,height:120,borderRadius:'50%',background:'#f0fdf4',zIndex:0}}/>
-              <div style={{position:'relative',zIndex:1}}>
-                <div style={{width:56,height:56,borderRadius:14,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:20}}><v.icon size={26} strokeWidth={1.75} color="#16a34a"/></div>
+              transition:`opacity .6s ease ${i*.09}s, transform .6s cubic-bezier(.16,1,.3,1) ${i*.09}s, box-shadow .35s ease, border-color .35s ease`}}>
+              <div className="val-blob" style={{position:'absolute',top:-30,right:-30,width:140,height:140,borderRadius:'50%',background:'#f0fdf4',zIndex:0}}/>
+              <div style={{position:'relative',zIndex:1,display:'flex',flexDirection:'column',flex:1}}>
+                <div className="val-icon" style={{width:58,height:58,borderRadius:16,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:20}}><v.icon size={26} strokeWidth={1.75} color="#16a34a"/></div>
                 <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:21,color:'#14532d',marginBottom:12}}>{v.title}</h3>
                 <p style={{color:'#6b7280',fontSize:13.5,lineHeight:1.82}}>{v.desc}</p>
               </div>
-              <div style={{position:'absolute',bottom:0,left:0,right:0,height:3,background:'linear-gradient(90deg,#16a34a,transparent)',borderRadius:'0 0 16px 16px'}}/>
+              <span className="val-accent" style={{position:'absolute',bottom:0,left:0,height:3,width:'100%',background:'linear-gradient(90deg,#16a34a,#4ade80)',transformOrigin:'left'}}/>
             </div>
           ))}
         </div>
+        <style>{`
+          .val-blob{transition:transform .55s cubic-bezier(.16,1,.3,1),background .35s ease}
+          .val-card:hover .val-blob{transform:scale(1.35);background:#dcfce7}
+          .val-icon{transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease}
+          .val-card:hover .val-icon{transform:translateY(-3px) scale(1.06);background:#dcfce7;border-color:#86efac}
+          .val-accent{transform:scaleX(0);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+          .val-card:hover .val-accent{transform:scaleX(1)}
+        `}</style>
         {/* Banner */}
         <div style={{marginTop:64,borderRadius:20,overflow:'hidden',height:360,position:'relative'}}>
           <img src={`${IMG}Buildinggreen.jpg`} alt="" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
@@ -144,24 +152,24 @@ export function Approach(){
         </div>
         <div ref={ref} style={{display:'flex',flexDirection:'column',gap:40}}>
           {APPROACH.map((s,i)=>(
-            <div key={i} style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:52,alignItems:'center',
+            <div key={i} className="apr-step" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:52,alignItems:'center',
               opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(24px)',
-              transition:`all .7s ease ${i*.15}s`}}>
+              transition:`opacity .7s ease ${i*.15}s, transform .7s cubic-bezier(.16,1,.3,1) ${i*.15}s`}}>
               {i%2===0?(
                 <>
                   <div style={{textAlign:'right',paddingRight:40,borderRight:'2px solid #bbf7d0'}}>
-                    <div style={{display:'inline-flex',width:54,height:54,borderRadius:14,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:14,boxShadow:'0 8px 22px rgba(22,163,74,.28)'}}><s.icon size={24} strokeWidth={1.75} color="#fff"/></div>
+                    <div className="apr-icon" style={{display:'inline-flex',width:56,height:56,borderRadius:16,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:14,boxShadow:'0 10px 24px -8px rgba(22,163,74,.6)'}}><s.icon size={24} strokeWidth={1.75} color="#fff"/></div>
                     <div style={{color:'#16a34a',fontSize:9.5,letterSpacing:2.5,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginBottom:7,fontWeight:600}}>Step {s.num}</div>
                     <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:'clamp(1.3rem,2.2vw,1.9rem)',color:'#14532d',marginBottom:12}}>{s.title}</h3>
                     <p style={{color:'#6b7280',lineHeight:1.85,fontSize:14}}>{s.desc}</p>
                   </div>
-                  <div><div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:84,color:'#f0fdf4',lineHeight:1}}>{s.num}</div></div>
+                  <div><div className="apr-num" style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(64px,9vw,112px)',color:'#f0fdf4',lineHeight:1}}>{s.num}</div></div>
                 </>
               ):(
                 <>
-                  <div><div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:84,color:'#f0fdf4',lineHeight:1,textAlign:'right'}}>{s.num}</div></div>
+                  <div><div className="apr-num" style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(64px,9vw,112px)',color:'#f0fdf4',lineHeight:1,textAlign:'right'}}>{s.num}</div></div>
                   <div style={{paddingLeft:40,borderLeft:'2px solid #bbf7d0'}}>
-                    <div style={{display:'inline-flex',width:54,height:54,borderRadius:14,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:14,boxShadow:'0 8px 22px rgba(22,163,74,.28)'}}><s.icon size={24} strokeWidth={1.75} color="#fff"/></div>
+                    <div className="apr-icon" style={{display:'inline-flex',width:56,height:56,borderRadius:16,background:'linear-gradient(135deg,#16a34a,#166534)',alignItems:'center',justifyContent:'center',marginBottom:14,boxShadow:'0 10px 24px -8px rgba(22,163,74,.6)'}}><s.icon size={24} strokeWidth={1.75} color="#fff"/></div>
                     <div style={{color:'#16a34a',fontSize:9.5,letterSpacing:2.5,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginBottom:7,fontWeight:600}}>Step {s.num}</div>
                     <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:'clamp(1.3rem,2.2vw,1.9rem)',color:'#14532d',marginBottom:12}}>{s.title}</h3>
                     <p style={{color:'#6b7280',lineHeight:1.85,fontSize:14}}>{s.desc}</p>
@@ -268,6 +276,10 @@ export function Approach(){
       </section>
 
       <style>{`
+        .apr-icon{transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .35s ease}
+        .apr-step:hover .apr-icon{transform:translateY(-4px) scale(1.06);box-shadow:0 16px 30px -10px rgba(22,163,74,.75)}
+        .apr-num{transition:color .45s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+        .apr-step:hover .apr-num{color:#dcfce7;transform:scale(1.04)}
         @media(max-width:900px){
           div[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important}
           div[style*="text-align: right"]{text-align:left!important;padding-right:0!important;border-right:none!important}
@@ -291,12 +303,22 @@ export function Ethics(){
           <div className="badge" style={{marginBottom:14,justifyContent:'center'}}><span className="dot"/>Our Commitments</div>
           <h2 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.8rem,3.5vw,2.7rem)',color:'#14532d'}}>How We Operate</h2>
         </div>
+        <style>{`
+          .eth-bar{transform:scaleY(0);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+          .eth-row:hover .eth-bar{transform:scaleY(1)}
+          .eth-row:hover{box-shadow:var(--shadow-lg);border-color:#bbf7d0;transform:translateX(0) translateY(-3px)}
+          .eth-icon{transition:transform .45s cubic-bezier(.16,1,.3,1),background .35s ease,border-color .35s ease}
+          .eth-row:hover .eth-icon{transform:scale(1.07);background:#dcfce7;border-color:#86efac}
+          .float-badge{transition:transform .45s cubic-bezier(.16,1,.3,1)}
+          .float-badge:hover{transform:translateY(-5px) scale(1.03)}
+        `}</style>
         <div ref={ref} style={{display:'flex',flexDirection:'column',gap:18}}>
           {ETHICS.map((item,i)=>(
-            <div key={i} className="card-flat" style={{display:'grid',gridTemplateColumns:'68px 1fr',gap:24,alignItems:'flex-start',padding:'30px 34px',
+            <div key={i} className="card-flat eth-row" style={{display:'grid',gridTemplateColumns:'68px 1fr',gap:24,alignItems:'flex-start',padding:'30px 34px',position:'relative',overflow:'hidden',
               opacity:vis?1:0,transform:vis?'translateX(0)':'translateX(-24px)',
-              transition:`all .6s ease ${i*.1}s`}}>
-              <div style={{width:54,height:54,borderRadius:14,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><item.icon size={24} strokeWidth={1.75} color="#16a34a"/></div>
+              transition:`opacity .6s ease ${i*.09}s, transform .6s cubic-bezier(.16,1,.3,1) ${i*.09}s, box-shadow .35s ease, border-color .35s ease`}}>
+              <span className="eth-bar" style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:'linear-gradient(180deg,#16a34a,#4ade80)',transformOrigin:'top'}}/>
+              <div className="eth-icon" style={{width:54,height:54,borderRadius:15,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><item.icon size={24} strokeWidth={1.75} color="#16a34a"/></div>
               <div>
                 <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:20,color:'#14532d',marginBottom:9}}>{item.title}</h3>
                 <p style={{color:'#6b7280',fontSize:14,lineHeight:1.88}}>{item.desc}</p>
@@ -342,45 +364,40 @@ export function Team(){
           </p>
         </div>
 
-        <div ref={ref} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <div ref={ref} className="team-grid">
           {members.map((m, i) => {
-            const even = i % 2 === 0
-            const leftStyle = { flex: 1, padding: '56px 48px', color: '#14532d', background: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center' }
-            const rightStyle = { flex: 1, padding: '56px 48px', color: '#064e3b', background: '#f0fdf4', display: 'flex', flexDirection: 'column', justifyContent: 'center' }
+            const initials = m.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()
             return (
-              <div key={i} className="team-split" style={{ display: 'flex', borderRadius: 8, overflow: 'hidden', boxShadow: '0 8px 28px rgba(2,6,23,.06)', opacity: vis ? 1 : 0, transform: vis ? 'translateY(0)' : 'translateY(28px)', transition: `all .6s ease ${i * .07}s` }}>
-                {even ? (
-                  <>
-                    <div style={leftStyle}>
-                      <div style={{ fontSize: 12, color: 'rgba(20,83,45,.65)', textTransform: 'uppercase', letterSpacing: 2, marginBottom: 12 }}> {m.role} </div>
-                      <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 'clamp(1.4rem,2.6vw,2rem)', color: '#14532d' }}>{m.name}</div>
-                    </div>
-                    <div style={rightStyle}>
-                      <p style={{ color: 'rgba(6,78,59,.9)', lineHeight: 1.9, fontSize: 14, maxWidth: 720 }}>{m.desc}</p>
-                      <div style={{ marginTop: 18, height: 1, background: 'rgba(20,83,45,.06)', width: 120 }} />
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div style={rightStyle}>
-                      <p style={{ color: 'rgba(20,83,45,.65)', lineHeight: 1.9, fontSize: 14, maxWidth: 720 }}>{m.desc}</p>
-                      <div style={{ marginTop: 18, height: 1, background: 'rgba(255,255,255,.08)', width: 120 }} />
-                    </div>
-                    <div style={leftStyle}>
-                      <div style={{ fontSize: 12, color: 'rgba(20,83,45,.65)', textTransform: 'uppercase', letterSpacing: 2, marginBottom: 12 }}> {m.role} </div>
-                        <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, fontSize: 'clamp(1.4rem,2.6vw,2rem)', color: '#14532d' }}>{m.name}</div>
-                    </div>
-                  </>
-                )}
+              <div key={i} className="card team-card" style={{ padding: '30px 26px 28px', display:'flex', flexDirection:'column', position:'relative', overflow:'hidden', opacity: vis ? 1 : 0, transform: vis ? 'translateY(0)' : 'translateY(26px)', transition: `opacity .55s ease ${i * .05}s, transform .55s cubic-bezier(.16,1,.3,1) ${i * .05}s, box-shadow .35s ease, border-color .35s ease` }}>
+                {/* watermark initials */}
+                <span aria-hidden style={{position:'absolute',top:-14,right:6,fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:86,lineHeight:1,color:'#f0fdf4',pointerEvents:'none',userSelect:'none'}}>{initials}</span>
+
+                <div className="team-avatar" style={{ width:60, height:60, borderRadius:18, background:'linear-gradient(135deg,#16a34a,#166534)', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:20, letterSpacing:.5, marginBottom:18, boxShadow:'0 8px 20px -8px rgba(22,163,74,.6)', position:'relative', zIndex:1 }}>
+                  {initials}
+                </div>
+
+                <div style={{ position:'relative', zIndex:1 }}>
+                  <div style={{ color:'#16a34a', fontSize:10, textTransform:'uppercase', letterSpacing:2, fontWeight:700, fontFamily:"'Space Grotesk',sans-serif", marginBottom:7 }}>{m.role}</div>
+                  <h3 style={{ fontFamily:"'Syne',sans-serif", fontWeight:800, fontSize:18.5, color:'#14532d', lineHeight:1.25, marginBottom:11 }}>{m.name}</h3>
+                  <p style={{ color:'#6b7280', fontSize:13.5, lineHeight:1.82 }}>{m.desc}</p>
+                </div>
+
+                {/* bottom accent */}
+                <span className="team-accent" style={{ position:'absolute', left:0, bottom:0, height:3, width:'100%', background:'linear-gradient(90deg,#16a34a,#4ade80)', transformOrigin:'left' }}/>
               </div>
             )
           })}
         </div>
 
-        <style>{`@media(max-width:900px){
-          .team-split{flex-direction:column!important}
-          .team-split > div{padding:28px!important}
-        }`}</style>
+        <style>{`
+          .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+          .team-accent{transform:scaleX(0);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+          .team-card:hover .team-accent{transform:scaleX(1)}
+          .team-avatar{transition:transform .45s cubic-bezier(.16,1,.3,1)}
+          .team-card:hover .team-avatar{transform:translateY(-3px) scale(1.06)}
+          @media(max-width:1100px){.team-grid{grid-template-columns:repeat(2,1fr)}}
+          @media(max-width:640px){.team-grid{grid-template-columns:1fr}}
+        `}</style>
       </section>
     </div>
   )

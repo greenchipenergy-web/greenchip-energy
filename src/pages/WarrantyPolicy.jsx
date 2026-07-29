@@ -134,6 +134,14 @@ export default function WarrantyPolicy() {
         </div>
       </div>
 
+      <style>{`
+        .wr-tab:hover{transform:translateY(-2px)}
+        .wr-tr{transition:background .25s ease}
+        .wr-tr:hover{background:#f0f9f4!important}
+        .wr-exc{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease}
+        .wr-exc:hover{transform:translateX(4px);box-shadow:0 6px 16px -8px rgba(122,58,0,.35)}
+      `}</style>
+
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px 80px" }}>
 
         {/* ── WARRANTY PERIODS ── */}
@@ -147,14 +155,16 @@ export default function WarrantyPolicy() {
                 key={ct.id}
                 onClick={() => setActiveTab(ct.id)}
                 style={{
-                  padding: "9px 18px",
-                  borderRadius: 6,
+                  padding: "10px 20px",
+                  borderRadius: 100,
                   border: activeTab === ct.id ? "none" : "1px solid #c8ddc0",
                   background: activeTab === ct.id ? "#1a7a3a" : "#fff",
                   color: activeTab === ct.id ? "#fff" : "#3a5a3e",
                   fontFamily: "sans-serif", fontSize: 14, fontWeight: 600,
-                  cursor: "pointer", transition: "all 0.2s",
+                  cursor: "pointer",
+                  transition: "background .25s ease, color .25s ease, border-color .25s ease, transform .25s cubic-bezier(.16,1,.3,1)",
                 }}
+                className="wr-tab"
               >
                 <ct.icon size={15} strokeWidth={2} style={{display:'inline',verticalAlign:'-3px',marginRight:6}}/>{ct.label}
               </button>
@@ -162,7 +172,7 @@ export default function WarrantyPolicy() {
           </div>
 
           {/* Table */}
-          <div style={{ background: "#fff", borderRadius: 10, border: "1px solid #dce8d4", overflow: "hidden" }}>
+          <div style={{ background: "#fff", borderRadius: 14, border: "1px solid #dce8d4", overflow: "hidden" }}>
             <div style={{
               display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1.2fr",
               background: "#0a2e1a", padding: "12px 20px",
@@ -173,9 +183,9 @@ export default function WarrantyPolicy() {
               ))}
             </div>
             {activeCustomer.components.map((comp, i) => (
-              <div key={comp.name} style={{
+              <div key={comp.name} className="wr-tr" style={{
                 display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1.2fr",
-                padding: "14px 20px", gap: 8,
+                padding: "15px 20px", gap: 8,
                 background: i % 2 === 0 ? "#fff" : "#f5faf6",
                 borderTop: "1px solid #edf5eb",
               }}>
@@ -230,8 +240,9 @@ export default function WarrantyPolicy() {
                     <div key={exc.title} style={{
                       background: "#fff8f0", border: "1px solid #f5ddb8",
                       borderLeft: "3px solid #e8900a",
-                      borderRadius: 6, padding: "12px 16px",
-                    }}>
+                      borderRadius: 10, padding: "14px 18px",
+                    }}
+                    className="wr-exc">
                       <div style={{ fontFamily: "sans-serif", fontSize: 14, fontWeight: 700, color: "#7a3a00", marginBottom: 4, display:'flex', alignItems:'center', gap:7 }}><AlertTriangle size={15} strokeWidth={2}/>{exc.title}</div>
                       <div style={{ fontFamily: "sans-serif", fontSize: 13.5, color: "#5a4030", lineHeight: 1.7 }}>{exc.desc}</div>
                     </div>
@@ -297,8 +308,9 @@ export default function WarrantyPolicy() {
                 {/* Line */}
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginRight: 20 }}>
                   <div style={{
-                    width: 44, height: 44, borderRadius: "50%",
-                    background: "#1a7a3a", color: "#fff",
+                    width: 46, height: 46, borderRadius: "50%",
+                    background: "linear-gradient(135deg,#1a7a3a,#0a2e1a)", color: "#fff",
+                    boxShadow: "0 8px 18px -8px rgba(26,122,58,.7)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     fontFamily: "sans-serif", fontWeight: 800, fontSize: 14,
                     flexShrink: 0, zIndex: 1,
@@ -332,7 +344,7 @@ export default function WarrantyPolicy() {
         <div style={{ marginBottom: 56 }}>
           <SectionHeading number="04" title="Required Documents for Warranty Claim" />
           <div style={{
-            background: "#fff", borderRadius: 10,
+            background: "#fff", borderRadius: 14,
             border: "1px solid #dce8d4", overflow: "hidden",
           }}>
             {[
@@ -342,9 +354,9 @@ export default function WarrantyPolicy() {
               ["Serial Numbers of Affected Components", "Enables tracking and validation against supplied records"],
               ["Ownership Details (if not original customer)", "Required in case of warranty transfer or third-party claim"],
             ].map(([doc, purpose], i) => (
-              <div key={doc} style={{
+              <div key={doc} className="wr-tr" style={{
                 display: "grid", gridTemplateColumns: "1fr 1.5fr",
-                padding: "14px 20px", gap: 16,
+                padding: "15px 20px", gap: 16,
                 background: i % 2 === 0 ? "#fff" : "#f5faf6",
                 borderTop: i > 0 ? "1px solid #edf5eb" : "none",
               }}>
@@ -360,7 +372,7 @@ export default function WarrantyPolicy() {
         {/* ── WARRANTY TRANSFER ── */}
         <div style={{ marginBottom: 56 }}>
           <SectionHeading number="05" title="Warranty Transfer Policy" />
-          <div style={{ background: "#fff", borderRadius: 10, border: "1px solid #dce8d4", padding: 28 }}>
+          <div style={{ background: "#fff", borderRadius: 14, border: "1px solid #dce8d4", padding: 28 }}>
             <p style={{ fontFamily: "sans-serif", fontSize: 14.5, color: "#3d4e42", lineHeight: 1.85, margin: "0 0 20px" }}>
               GreenChip Energy permits the transfer of warranty coverage upon a change in ownership of the property or solar system. The new owner must notify GreenChip Energy in writing <strong>within 30 days</strong> of the change in ownership.
             </p>
@@ -388,7 +400,7 @@ export default function WarrantyPolicy() {
         {/* ── POST-WARRANTY / AMC ── */}
         <div style={{ marginBottom: 56 }}>
           <SectionHeading number="06" title="Post-Warranty Support & AMC" />
-          <div style={{ background: "#fff", borderRadius: 10, border: "1px solid #dce8d4", overflow: "hidden" }}>
+          <div style={{ background: "#fff", borderRadius: 14, border: "1px solid #dce8d4", overflow: "hidden" }}>
             <div style={{ background: "#0a2e1a", padding: "12px 20px", display: "grid", gridTemplateColumns: "1.5fr 1fr 2fr" }}>
               {["Service Component", "Frequency", "Inclusions"].map((h) => (
                 <div key={h} style={{ color: "rgba(255,255,255,0.8)", fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>{h}</div>
@@ -400,9 +412,9 @@ export default function WarrantyPolicy() {
               ["Preventive Maintenance", "Annual", "Electrical and mechanical checks, tightening of terminals"],
               ["SCADA / Monitoring Support", "Monthly / Quarterly", "Connectivity check, data log review, troubleshooting alerts"],
             ].map(([comp, freq, inc], i) => (
-              <div key={comp} style={{
+              <div key={comp} className="wr-tr" style={{
                 display: "grid", gridTemplateColumns: "1.5fr 1fr 2fr",
-                padding: "14px 20px", background: i % 2 === 0 ? "#fff" : "#f5faf6",
+                padding: "15px 20px", background: i % 2 === 0 ? "#fff" : "#f5faf6",
                 borderTop: "1px solid #edf5eb",
               }}>
                 <div style={{ fontFamily: "sans-serif", fontSize: 14, fontWeight: 600, color: "#1a2e1e" }}>{comp}</div>

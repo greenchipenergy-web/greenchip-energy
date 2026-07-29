@@ -77,7 +77,7 @@ const NList = ({ items }) => (
 
 /* ─── Info card ──────────────────────────────── */
 const InfoCard = ({ icon:Icon, title, items, col = '#16a34a', bg = '#f0fdf4', border = '#bbf7d0' }) => (
-  <div style={{ background: bg, border: `1px solid ${border}`, borderRadius: 16, padding: '28px 24px' }}>
+  <div className="o-card" style={{ background: bg, border: `1px solid ${border}`, borderRadius: 'var(--r-lg)', padding: '30px 26px' }}>
     <div style={{ width:48,height:48,borderRadius:12,background:'#fff',border:`1px solid ${border}`,display:'flex',alignItems:'center',justifyContent:'center',marginBottom: 12 }}><Icon size={22} strokeWidth={1.75} color={col}/></div>
     <h4 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#14532d', fontSize: 16, marginBottom: 14 }}>{title}</h4>
     <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
@@ -148,13 +148,11 @@ export function Initiatives({ setPage }) {
               onClick={() => setPage(c.page)}
             >
               {/* Image */}
-              <div style={{ position: 'relative', height: 280, overflow: 'hidden' }}>
+              <div className="media-zoom" style={{ position: 'relative', height: 280, overflow: 'hidden' }}>
                 <img
                   src={`${IMG_BASE}${c.img}`}
                   alt={c.title}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform .5s ease' }}
-                  onMouseEnter={e => e.target.style.transform = 'scale(1.06)'}
-                  onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(10,40,15,.6),transparent 55%)' }} />
                 <div style={{ position: 'absolute', top: 14, left: 14, padding: '4px 12px', background: 'rgba(255,255,255,.92)', borderRadius: 100, color: c.badgeCol, fontSize: 11, fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, display:'inline-flex', alignItems:'center', gap:6 }}>
@@ -249,10 +247,10 @@ export function HydrogenPage({ setPage }) {
 
           {/* Images */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 10px 32px rgba(22,163,74,.12)' }}>
+            <div className="media-zoom" style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
               <img src={`${IMG_BASE}greenhyd1.png`} alt="Hydrogen Electrolyser" style={{ width: '100%', height: 260, objectFit: 'cover' }} />
             </div>
-            <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 10px 32px rgba(22,163,74,.12)' }}>
+            <div className="media-zoom" style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
               <img src={`${IMG_BASE}greenhyd1.png`} alt="Green Hydrogen" style={{ width: '100%', height: 200, objectFit: 'cover' }} />
             </div>
           </div>
@@ -267,11 +265,12 @@ export function HydrogenPage({ setPage }) {
             <div
               key={i}
               style={{
-                background: '#fff', border: '1px solid #bbf7d0', borderRadius: 14, padding: '20px 22px',
+                background: '#fff', border: '1px solid #bbf7d0', borderRadius: 'var(--r-md)', padding: '22px 24px',
                 display: 'flex', alignItems: 'flex-start', gap: 13,
                 opacity: v2 ? 1 : 0, transform: v2 ? 'translateY(0)' : 'translateY(20px)',
-                transition: `all .55s ease ${i * .08}s`,
+                transition: `opacity .55s ease ${i * .08}s, transform .55s cubic-bezier(.16,1,.3,1) ${i * .08}s, box-shadow .35s ease, border-color .35s ease`,
               }}
+              className="o-chip"
             >
               <div style={{ width: 30, height: 30, borderRadius: 8, background: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}><Check size={14} strokeWidth={2.5} color="#16a34a"/></div>
               <p style={{ color: '#374151', fontSize: 14, lineHeight: 1.78 }}>{pt}</p>
@@ -308,7 +307,7 @@ export function HydrogenPage({ setPage }) {
                 ['5 MMT/year', 'Target annual green hydrogen output by 2030'],
                 ['60–100 GW', 'Required electrolyser capacity'],
               ].map(([n, l]) => (
-                <div key={n} style={{ background: '#f0fdf4', borderRadius: 10, padding: '14px 16px' }}>
+                <div key={n} className="o-chip" style={{ background: '#f0fdf4', borderRadius: 'var(--r-sm)', padding: '15px 17px', border: '1px solid #dcfce7' }}>
                   <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#16a34a', fontSize: 16 }}>{n}</div>
                   <div style={{ color: '#6b7280', fontSize: 12.5, marginTop: 3 }}>{l}</div>
                 </div>
@@ -321,8 +320,8 @@ export function HydrogenPage({ setPage }) {
         <SHead badge="Production Process" title="How Green Hydrogen is Produced" center />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 18, marginBottom: 56 }}>
           {processSteps.map((s, i) => (
-            <div key={i} className="card" style={{ padding: '28px 20px', textAlign: 'center' }}>
-              <div style={{ display:'flex', justifyContent:'center', marginBottom: 14 }}><s.icon size={32} strokeWidth={1.75} color="#16a34a"/></div>
+            <div key={i} className="card o-step" style={{ padding: '30px 20px', textAlign: 'center' }}>
+              <div className="o-step-icon" style={{ display:'flex', justifyContent:'center', marginBottom: 14 }}><s.icon size={32} strokeWidth={1.75} color="#16a34a"/></div>
               <div style={{ width: 26, height: 26, borderRadius: '50%', background: '#16a34a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, margin: '0 auto 14px', fontFamily: "'Space Grotesk',sans-serif" }}>{i + 1}</div>
               <h4 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#14532d', fontSize: 14.5, marginBottom: 10, lineHeight: 1.3 }}>{s.title}</h4>
               <p style={{ color: '#6b7280', fontSize: 12.5, lineHeight: 1.78 }}>{s.desc}</p>
@@ -342,7 +341,7 @@ export function HydrogenPage({ setPage }) {
               This results in <strong style={{ color: '#14532d' }}>zero carbon emissions</strong>, making green hydrogen a key player in the global transition to a low-carbon economy.
             </Body>
           </div>
-          <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 12px 36px rgba(22,163,74,.14)', opacity: v3 ? 1 : 0, transform: v3 ? 'translateX(0)' : 'translateX(30px)', transition: 'all .8s ease .2s' }}>
+          <div className="media-zoom" style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)', opacity: v3 ? 1 : 0, transform: v3 ? 'translateX(0)' : 'translateX(30px)', transition: 'opacity .8s ease .2s, transform .8s cubic-bezier(.16,1,.3,1) .2s' }}>
             <img src={`${IMG_BASE}greenhyd1.png`} alt="Green Hydrogen" style={{ width: '100%', height: 400, objectFit: 'cover' }} />
           </div>
         </div>
@@ -351,7 +350,7 @@ export function HydrogenPage({ setPage }) {
         <SHead badge="GreenChip Delivery Models" title="State-of-the-Art Green Hydrogen Production" center />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 22 }}>
           {deliveryModels.map((m, i) => (
-            <div key={i} className="card-flat" style={{ padding: '32px 30px', display: 'flex', gap: 18, alignItems: 'flex-start' }}>
+            <div key={i} className="card-flat o-card" style={{ padding: '34px 30px', display: 'flex', gap: 18, alignItems: 'flex-start' }}>
               <div style={{ width: 52, height: 52, borderRadius: 14, background: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><m.icon size={24} strokeWidth={1.75} color="#16a34a"/></div>
               <div>
                 <h4 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#14532d', fontSize: 16, marginBottom: 10 }}>{m.title}</h4>
@@ -444,10 +443,10 @@ export function CBGPage({ setPage }) {
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, opacity: v1 ? 1 : 0, transform: v1 ? 'translateX(0)' : 'translateX(30px)', transition: 'all .8s ease .2s' }}>
-            <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 10px 32px rgba(22,163,74,.12)' }}>
+            <div className="media-zoom" style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
               <img src={`${IMG_BASE}Latest_Solar_Projects/bio_CNG/bio_CNG2.jpeg`} alt="CBG Plant" style={{ width: '100%', height: 250, objectFit: 'cover' }} />
             </div>
-            <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 10px 32px rgba(22,163,74,.12)' }}>
+            <div className="media-zoom" style={{ borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
               <img src={`${IMG_BASE}Latest_Solar_Projects/bio_CNG/bio_CNG5.jpeg`} alt="Bio CNG" style={{ width: '100%', height: 180, objectFit: 'cover' }} />
             </div>
           </div>
@@ -469,7 +468,7 @@ export function CBGPage({ setPage }) {
         {/* Circular process images */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, marginTop: 36 }}>
           {[['Latest_Solar_Projects/bio_CNG/bio_CNG2.jpeg', 'CBG Plant Setup'], ['Latest_Solar_Projects/bio_CNG/bio_CNG3.jpeg', 'Biogas Process'], ['Latest_Solar_Projects/bio_CNG/bio_CNG4.jpeg', 'Bio Fertilizer']].map(([img, label]) => (
-            <div key={label} style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 24px rgba(22,163,74,.1)' }}>
+            <div key={label} className="media-zoom o-card" style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', border: '1px solid #e5e7eb' }}>
               <img src={`${IMG_BASE}${img}`} alt={label} style={{ width: '100%', height: 220, objectFit: 'cover' }} />
               <div style={{ background: '#fff', padding: '12px 16px', borderTop: '1px solid #bbf7d0' }}>
                 <div style={{ color: '#15803d', fontFamily: "'Space Grotesk',sans-serif", fontSize: 13, fontWeight: 600, textAlign: 'center' }}>{label}</div>
@@ -486,14 +485,14 @@ export function CBGPage({ setPage }) {
           {fiveAreas.map((a, i) => (
             <div
               key={i}
-              className="card-flat"
               style={{
-                display: 'grid', gridTemplateColumns: '64px 1fr', gap: 22, alignItems: 'flex-start', padding: '26px 30px',
+                display: 'grid', gridTemplateColumns: '64px 1fr', gap: 22, alignItems: 'flex-start', padding: '28px 30px',
                 opacity: v2 ? 1 : 0, transform: v2 ? 'translateX(0)' : 'translateX(-24px)',
-                transition: `all .6s ease ${i * .1}s`,
+                transition: `opacity .6s ease ${i * .1}s, transform .6s cubic-bezier(.16,1,.3,1) ${i * .1}s, box-shadow .35s ease, border-color .35s ease`,
               }}
+              className="card-flat o-card"
             >
-              <div style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg,#16a34a,#166534)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#fff', fontSize: 16, flexShrink: 0 }}>{a.num}</div>
+              <div className="o-num" style={{ width: 54, height: 54, borderRadius: 16, background: 'linear-gradient(135deg,#16a34a,#166534)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#fff', fontSize: 16, flexShrink: 0, boxShadow: '0 8px 18px -8px rgba(22,163,74,.6)' }}>{a.num}</div>
               <div>
                 <h4 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#14532d', fontSize: 17, marginBottom: 8 }}>{a.title}</h4>
                 <p style={{ color: '#6b7280', fontSize: 14, lineHeight: 1.82 }}>{a.desc}</p>
@@ -790,7 +789,7 @@ export function Calculator(){
           <p style={{color:'#6b7280',fontSize:15}}>Enter your monthly electricity bill to get an instant estimate</p>
         </div>
 
-        <div style={{background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:22,overflow:'hidden',boxShadow:'0 12px 48px rgba(22,163,74,.08)'}}>
+        <div style={{background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:'var(--r-xl)',overflow:'hidden',boxShadow:'var(--shadow-lg)'}}>
           <div style={{padding:'44px 48px',borderBottom:'1px solid #e5e7eb'}}>
             {/* Type tabs */}
             <div style={{display:'flex',gap:12,marginBottom:40}}>
@@ -842,12 +841,12 @@ export function Calculator(){
                     return v
                   }
                   return opts.map(v=> (
-                    <button key={v} onClick={()=>setBill(v)}
-                      style={{padding:'6px 15px',borderRadius:8,cursor:'pointer',
+                    <button key={v} className="calc-chip" onClick={()=>setBill(v)}
+                      style={{padding:'7px 16px',borderRadius:'var(--r-pill)',cursor:'pointer',
                         border:`1.5px solid ${bill===v?'#16a34a':'#e5e7eb'}`,
                         background:bill===v?'#f0fdf4':'#fff',
                         color:bill===v?'#16a34a':'#6b7280',
-                        fontFamily:"'Space Grotesk',sans-serif",fontSize:13,fontWeight:bill===v?600:400,transition:'all .2s'}}>
+                        fontFamily:"'Space Grotesk',sans-serif",fontSize:13,fontWeight:bill===v?600:400}}>
                       ₹{fmt(v)}
                     </button>
                   ))
@@ -876,9 +875,9 @@ export function Calculator(){
                   {ic:Timer,val:`${result.payback} Yrs`,label:'Payback Period',col:'#7c3aed',bg:'#f5f3ff',border:'#c4b5fd'},
                   {ic:Leaf,val:`${result.co2.toLocaleString('en-IN')} kg`,label:'CO₂ Saved / Year',col:'#16a34a',bg:'#f0fdf4',border:'#bbf7d0'},
                 ].map((m,i)=>(
-                  <div key={i} style={{background:m.bg,border:`1px solid ${m.border}`,borderRadius:16,padding:'22px 16px',textAlign:'center',
+                  <div key={i} className="calc-metric" style={{background:m.bg,border:`1px solid ${m.border}`,borderRadius:'var(--r-lg)',padding:'24px 16px',textAlign:'center',
                     opacity:show?1:0,transform:show?'translateY(0)':'translateY(12px)',
-                    transition:`all .5s ease ${i*.07}s`}}>
+                    transition:`opacity .5s ease ${i*.07}s, transform .5s cubic-bezier(.16,1,.3,1) ${i*.07}s, box-shadow .35s ease`}}>
                     <div style={{display:'flex',justifyContent:'center',marginBottom:8}}><m.ic size={22} strokeWidth={1.75} color={m.col}/></div>
                     <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:m.col,fontSize:'clamp(.95rem,2vw,1.4rem)',marginBottom:5}}>{m.val}</div>
                     <div style={{color:'#6b7280',fontSize:10.5,letterSpacing:1,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif"}}>{m.label}</div>
@@ -887,7 +886,7 @@ export function Calculator(){
               </div>
 
               {/* Cost breakdown */}
-              <div className="calc-cost" style={{background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:18,padding:'30px 34px',marginBottom:16}}>
+              <div className="calc-cost" style={{background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:'var(--r-lg)',padding:'32px 34px',marginBottom:16}}>
                 <h4 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,color:'#14532d',fontSize:17,marginBottom:22,display:'flex',alignItems:'center',gap:9}}><Lightbulb size={18} strokeWidth={2}/>Cost Breakdown</h4>
                 {[
                   ['Base Price (Excl. Subsidy & GST)',`₹${result.base.toLocaleString('en-IN')}`,'#374151'],
@@ -904,7 +903,7 @@ export function Calculator(){
                 </div>
               </div>
               {/* Trees */}
-              <div style={{display:'flex',alignItems:'center',gap:13,padding:'16px 20px',background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:12,marginBottom:12}}>
+              <div style={{display:'flex',alignItems:'center',gap:13,padding:'18px 22px',background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-md)',marginBottom:12}}>
                 <TreePine size={26} strokeWidth={1.75} color="#16a34a" style={{flexShrink:0}}/>
                 <span style={{color:'#374151',fontSize:13.5,lineHeight:1.7}}>Your system saves <strong style={{color:'#16a34a'}}>{result.co2.toLocaleString('en-IN')} kg</strong> CO₂/year — equal to planting <strong style={{color:'#16a34a'}}>{result.trees} trees</strong>!</span>
               </div>
@@ -915,7 +914,7 @@ export function Calculator(){
 
         {/* Map for Contact */}
         <div style={{marginTop:32}}>
-          <div style={{borderRadius:12,overflow:'hidden',boxShadow:'0 12px 34px rgba(2,6,23,.06)'}}>
+          <div style={{borderRadius:'var(--r-lg)',overflow:'hidden',boxShadow:'var(--shadow-md)',border:'1px solid #e5e7eb'}}>
             <iframe
               title="GreenChip Office Location"
               src="https://www.google.com/maps?q=17.4251103,78.4031862&z=17&output=embed"
@@ -944,7 +943,7 @@ export function Careers(){
       <PageHero title="Careers" subtitle="Join us in powering India's clean energy revolution." img={`${IMG}carear.png`} breadcrumb="Careers"/>
       <section className="section" style={{background:'#fff'}}>
         {/* Hero copy */}
-        <div style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:20,padding:'48px 44px',marginBottom:60,display:'grid',gridTemplateColumns:'1fr 1fr',gap:52,alignItems:'center'}}>
+        <div className="car-hero" style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-xl)',padding:'50px 46px',marginBottom:60,display:'grid',gridTemplateColumns:'1fr 1fr',gap:52,alignItems:'center'}}>
           <div>
             <div className="badge" style={{marginBottom:16}}><span className="dot dot-blink"/>We're Hiring</div>
             <h2 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.8rem,3vw,2.5rem)',color:'#14532d',lineHeight:1.15,marginBottom:18}}>
@@ -952,7 +951,7 @@ export function Careers(){
             </h2>
             <p style={{color:'#374151',lineHeight:1.9,fontSize:15,marginBottom:14}}>Our amazing people work together to deliver the exceptional every day, united in our purpose to unleash limitless energy.</p>
             <p style={{color:'#6b7280',lineHeight:1.9,fontSize:14,marginBottom:24}}>Each person is vital. Daily we're servicing solar panels; collaborating to build India's biggest EPC partner. Join a team that matters.</p>
-            <div style={{display:'flex',alignItems:'center',gap:16,padding:'18px 22px',background:'#fff',border:'1px solid #bbf7d0',borderRadius:13}}>
+            <div style={{display:'flex',alignItems:'center',gap:16,padding:'20px 24px',background:'#fff',border:'1px solid #bbf7d0',borderRadius:'var(--r-md)',boxShadow:'var(--shadow-sm)'}}>
               <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#16a34a',fontSize:36,lineHeight:1}}>10</div>
               <div>
                 <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,color:'#14532d',fontSize:14}}>Positions Open</div>
@@ -962,7 +961,7 @@ export function Careers(){
           </div>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
             {[[Globe2,'Impact','Work on projects powering thousands of homes'],[Rocket,'Growth','Fast-track your career in renewable energy'],[Handshake,'Culture','Collaborative, purpose-driven team'],[Lightbulb,'Innovation','Solar, storage & hydrogen technology']].map(([Ic,t,d])=>(
-              <div key={t} style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:14,padding:'20px 16px'}}>
+              <div key={t} className="o-chip" style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:'var(--r-md)',padding:'22px 18px'}}>
                 <div style={{marginBottom:8}}><Ic size={22} strokeWidth={1.75} color="#16a34a"/></div>
                 <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,color:'#16a34a',fontSize:13,marginBottom:4}}>{t}</div>
                 <div style={{color:'#6b7280',fontSize:12,lineHeight:1.7}}>{d}</div>
@@ -978,11 +977,13 @@ export function Careers(){
 
         <div ref={ref} style={{display:'flex',flexDirection:'column',gap:13}}>
           {JOBS.map((j,i)=>(
-            <div key={i} style={{background:'#fff',border:`1.5px solid ${open===i?'#16a34a':'#e5e7eb'}`,borderRadius:16,overflow:'hidden',transition:'border-color .25s',
+            <div key={i} className="job-row" style={{background:'#fff',border:`1.5px solid ${open===i?'#16a34a':'#e5e7eb'}`,borderRadius:'var(--r-lg)',overflow:'hidden',
+              boxShadow:open===i?'var(--shadow-md)':'var(--shadow-sm)',
+              transition:'border-color .3s ease, box-shadow .3s ease, transform .3s cubic-bezier(.16,1,.3,1)',
               opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(18px)'}}>
               <div onClick={()=>setOpen(open===i?null:i)} style={{padding:'24px 30px',cursor:'pointer',display:'flex',justifyContent:'space-between',alignItems:'center',gap:18}}>
                 <div style={{display:'flex',alignItems:'center',gap:16}}>
-                  <div style={{width:48,height:48,borderRadius:13,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><j.icon size={22} strokeWidth={1.75} color="#16a34a"/></div>
+                  <div className="job-icon" style={{width:50,height:50,borderRadius:14,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><j.icon size={22} strokeWidth={1.75} color="#16a34a"/></div>
                   <div>
                     <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:16.5,color:'#14532d',marginBottom:4}}>{j.title}</h3>
                     <div style={{display:'flex',gap:9}}>
@@ -1033,7 +1034,7 @@ export function Careers(){
         </div>
         {/* Map */}
         <div style={{marginTop:32}}>
-          <div style={{borderRadius:12,overflow:'hidden',boxShadow:'0 12px 34px rgba(2,6,23,.06)'}}>
+          <div style={{borderRadius:'var(--r-lg)',overflow:'hidden',boxShadow:'var(--shadow-md)',border:'1px solid #e5e7eb'}}>
             <iframe
               title="GreenChip Office Location"
               src="https://www.google.com/maps?q=17.4251103,78.4031862&z=17&output=embed"
@@ -1101,10 +1102,8 @@ export function   Contact({setPage}){
             {ic:Phone,t:'Call Us',lines:['84648 84642','9010434455'],col:'#059669',bg:'#ecfdf5',border:'#6ee7b7'},
             {ic:Mail,t:'Email Us',lines:['info@greenchipenergy.com','Mon–Fri: 10AM – 6PM'],col:'#15803d',bg:'#dcfce7',border:'#86efac'},
           ].map((c,i)=>(
-            <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:18,padding:'34px 28px',textAlign:'center',transition:'all .3s'}}
-              onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-5px)';e.currentTarget.style.boxShadow='0 12px 32px rgba(22,163,74,.12)'}}
-              onMouseLeave={e=>{e.currentTarget.style.transform='translateY(0)';e.currentTarget.style.boxShadow='none'}}>
-              <div style={{width:58,height:58,borderRadius:16,background:'#fff',border:`1px solid ${c.border}`,display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 16px',boxShadow:'0 4px 12px rgba(22,163,74,.1)'}}><c.ic size={24} strokeWidth={1.75} color={c.col}/></div>
+            <div key={i} className="o-card" style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:'var(--r-xl)',padding:'36px 28px',textAlign:'center'}}>
+              <div className="am-icon" style={{width:60,height:60,borderRadius:18,background:'#fff',border:`1px solid ${c.border}`,display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 16px',boxShadow:'var(--shadow-sm)'}}><c.ic size={24} strokeWidth={1.75} color={c.col}/></div>
               <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,color:'#14532d',fontSize:18,marginBottom:10}}>{c.t}</div>
               {c.lines.map((l,li)=><div key={li} style={{color:'#374151',fontSize:14,lineHeight:1.9}}>{l}</div>)}
             </div>
@@ -1153,7 +1152,7 @@ export function   Contact({setPage}){
             <div style={{display:'flex',flexDirection:'column',gap:18,marginBottom:34}}>
               {[[MapPin,'Address','64, Nandagiri Hills Rear Rd, HUDA Enclave, Jubilee Hills, Hyderabad, Telangana 500033'],[Phone,'Phone','84648 84642 / 9010434455'],[Mail,'Email','info@greenchipenergy.com'],[Clock,'Hours','Mon–Fri: 10:00 AM – 6:00 PM']].map(([Ic,label,val])=>(
                 <div key={label} style={{display:'flex',alignItems:'flex-start',gap:14}}>
-                  <div style={{width:44,height:44,borderRadius:12,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><Ic size={18} strokeWidth={1.75} color="#16a34a"/></div>
+                  <div className="am-icon" style={{width:46,height:46,borderRadius:14,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><Ic size={18} strokeWidth={1.75} color="#16a34a"/></div>
                   <div>
                     <div style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,color:'#16a34a',fontSize:10.5,letterSpacing:2,textTransform:'uppercase',marginBottom:3}}>{label}</div>
                     <div style={{color:'#374151',fontSize:14}}>{val}</div>
@@ -1161,7 +1160,7 @@ export function   Contact({setPage}){
                 </div>
               ))}
             </div>
-            <div style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:16,padding:'24px 22px'}}>
+            <div style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',padding:'26px 24px'}}>
               <h4 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,color:'#14532d',fontSize:15,marginBottom:13}}>Quick Links</h4>
               <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
                 {[
@@ -1173,9 +1172,7 @@ export function   Contact({setPage}){
                 ].map(([label,key])=>{
                   const nav = ()=>{ if(setPage){ setPage(key); window.scrollTo(0,0); try{window.dispatchEvent(new Event('nav-change'))}catch(e){} } }
                   return (
-                    <span key={key} onClick={nav} style={{padding:'5px 13px',background:'#fff',border:'1px solid #bbf7d0',borderRadius:100,color:'#16a34a',fontSize:12,cursor:'pointer',fontFamily:"'Space Grotesk',sans-serif",fontWeight:500,transition:'background .2s'}}
-                      onMouseEnter={e=>e.target.style.background='#dcfce7'}
-                      onMouseLeave={e=>e.target.style.background='#fff'}>{label}</span>
+                    <span key={key} className="ql-chip" onClick={nav} style={{padding:'6px 14px',background:'#fff',border:'1px solid #bbf7d0',borderRadius:'var(--r-pill)',color:'#16a34a',fontSize:12,cursor:'pointer',fontFamily:"'Space Grotesk',sans-serif",fontWeight:500}}>{label}</span>
                   )
                 })}
               </div>
@@ -1184,7 +1181,7 @@ export function   Contact({setPage}){
         </div>
         {/* Map (Contact) */}
         <div style={{marginTop:32}}>
-          <div style={{borderRadius:12,overflow:'hidden',boxShadow:'0 12px 34px rgba(2,6,23,.06)'}}>
+          <div style={{borderRadius:'var(--r-lg)',overflow:'hidden',boxShadow:'var(--shadow-md)',border:'1px solid #e5e7eb'}}>
             <iframe
               title="GreenChip Office Location"
               src="https://www.google.com/maps?q=17.4251103,78.4031862&z=17&output=embed"

@@ -223,12 +223,47 @@ textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{
 }
 .link-underline:hover::after{transform:scaleX(1);transform-origin:left}
 
-/* Arrow that nudges right on parent hover */
+/* Arrow that nudges right when its card is hovered */
 .nudge-x{transition:transform var(--t-base) var(--ease-out)}
-*:hover > .nudge-x,*:hover .nudge-x{transform:translateX(4px)}
+.card:hover .nudge-x,.card-flat:hover .nudge-x,.hover-lift:hover .nudge-x{transform:translateX(4px)}
 
 /* Frosted-glass surface for use over imagery */
 .glass{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(10px)}
+
+/* ─── PAGE-LEVEL COMPONENT INTERACTIONS ───────────────────── */
+/* Generic content card / chip lift used across inner pages */
+.o-card{transition:transform var(--t-base) var(--ease-out),box-shadow var(--t-base) var(--ease-out),border-color var(--t-base) ease}
+.o-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--g200)}
+
+.o-chip{transition:transform var(--t-base) var(--ease-out),box-shadow var(--t-base) var(--ease-out),border-color var(--t-base) ease}
+.o-chip:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:var(--g300)}
+
+/* Numbered step badges */
+.o-num{transition:transform var(--t-base) var(--ease-out)}
+.o-card:hover .o-num{transform:scale(1.07) rotate(-3deg)}
+
+/* Process step tiles */
+.o-step-icon{transition:transform var(--t-base) var(--ease-out)}
+.o-step:hover .o-step-icon{transform:translateY(-4px) scale(1.08)}
+
+/* Icon tiles that respond to their parent card */
+.am-icon{transition:transform var(--t-base) var(--ease-out),background var(--t-base) ease,border-color var(--t-base) ease}
+.o-card:hover .am-icon{transform:translateY(-3px) scale(1.06);background:var(--g100);border-color:var(--g300)}
+
+/* Calculator */
+.calc-chip{transition:transform var(--t-fast) var(--ease-out),border-color var(--t-fast) ease,background var(--t-fast) ease,color var(--t-fast) ease}
+.calc-chip:hover{transform:translateY(-2px);border-color:var(--g400);background:var(--g50);color:var(--g600)}
+.calc-metric{transition:transform var(--t-base) var(--ease-out),box-shadow var(--t-base) var(--ease-out)}
+.calc-metric:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+
+/* Careers job accordion */
+.job-row:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.job-icon{transition:transform var(--t-base) var(--ease-out),background var(--t-base) ease,border-color var(--t-base) ease}
+.job-row:hover .job-icon{transform:scale(1.07);background:var(--g100);border-color:var(--g300)}
+
+/* Contact quick-link chips */
+.ql-chip{transition:background var(--t-fast) ease,transform var(--t-fast) var(--ease-out),border-color var(--t-fast) ease}
+.ql-chip:hover{background:var(--g100);transform:translateY(-2px);border-color:var(--g300)}
 
 /* ─── SECTION PADDING ─────────────────────────────────────── */
 .section   {padding:88px 8%}

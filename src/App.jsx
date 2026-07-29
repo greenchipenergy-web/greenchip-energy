@@ -29,7 +29,7 @@ function FloatBtn(){
   return (
     <div style={{position:'fixed',bottom:isMobile?86:65,right:isMobile?14:50,zIndex:9000,opacity:show?1:0,transition:'opacity .45s',display:'flex',flexDirection:isMobile?'column':'row',alignItems:'center',gap:isMobile?8:0}}>
       <a href={waUrl} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp"
-        style={{width:56,height:56,borderRadius:'50%',border:'none',background:'linear-gradient(135deg,#25D366,#128C7E)',color:'#fff',fontSize:26,cursor:'pointer',boxShadow:'0 6px 22px rgba(18,140,126,.28)',display:'flex',alignItems:'center',justifyContent:'center',textDecoration:'none'}}>
+        className="fab-wa" style={{width:56,height:56,borderRadius:'50%',border:'none',background:'linear-gradient(135deg,#25D366,#128C7E)',color:'#fff',fontSize:26,cursor:'pointer',boxShadow:'0 10px 26px -8px rgba(18,140,126,.6)',display:'flex',alignItems:'center',justifyContent:'center',textDecoration:'none'}}>
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M20.52 3.48A11.73 11.73 0 0012.04.5C6.06.5 1.17 5.4 1.17 11.38c0 2 0.53 3.92 1.54 5.63L.5 23.5l6.69-2.07a11.78 11.78 0 005.85 1.5c6 0 10.9-4.9 10.9-10.88 0-2.92-1.14-5.62-3.46-7.58z" fill="#fff" opacity="0.06"/>
           <path d="M17.59 14.26c-.3-.15-1.77-.87-2.04-.97-.27-.1-.46-.15-.65.15-.19.3-.76.97-.93 1.17-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.8-1.49-1.79-1.66-2.09-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2 0-.37-.02-.52-.02-.15-.64-1.54-.88-2.11-.23-.55-.47-.48-.64-.49-.17-.01-.37-.01-.57-.01s-.52.07-.8.37c-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.06 2.88 1.21 3.08.15.2 2.09 3.2 5.07 4.49 2.98 1.28 3.22 1.07 3.81 1.01.59-.06 1.92-.78 2.19-1.53.27-.75.27-1.39.19-1.53-.08-.14-.27-.2-.57-.34z" fill="#fff"/>
@@ -89,7 +89,7 @@ export default function App(){
       <FloatBtn />
       {/* Global Get Quote floating button (desktop) */}
       <div className="global-quote" style={{position:'fixed',right:18,bottom:18,zIndex:1500}}>
-        <button onClick={()=>setLeadVisible(true)} style={{display:'inline-flex',alignItems:'center',gap:8,background:'linear-gradient(135deg,#16a34a,#14532d)',color:'#fff',border:'none',padding:'12px 16px',borderRadius:12,boxShadow:'0 8px 30px rgba(16,56,20,.22)',cursor:'pointer',fontWeight:700}}><Send size={15} strokeWidth={2}/>Get a Quote</button>
+        <button className="fab-quote" onClick={()=>setLeadVisible(true)} style={{display:'inline-flex',alignItems:'center',gap:8,background:'linear-gradient(135deg,#16a34a,#14532d)',color:'#fff',border:'none',padding:'13px 18px',borderRadius:'var(--r-pill)',boxShadow:'0 12px 30px -10px rgba(16,56,20,.5)',cursor:'pointer',fontWeight:700}}><Send size={15} strokeWidth={2}/>Get a Quote</button>
       </div>
       {/* Global mobile CTA (shows on small screens) */}
       <div className="global-mobile-cta">
@@ -99,6 +99,11 @@ export default function App(){
         </div>
       </div>
       <LeadForm visible={leadVisible} setVisible={setLeadVisible} />
+      <style>{`
+        .fab-wa,.fab-quote{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease}
+        .fab-wa:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 16px 34px -10px rgba(18,140,126,.75)}
+        .fab-quote:hover{transform:translateY(-4px);box-shadow:0 18px 38px -12px rgba(16,56,20,.65)}
+      `}</style>
     </>
   )
 }
