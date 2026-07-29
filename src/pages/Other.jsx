@@ -1,4 +1,4 @@
-import{useState,useEffect}from'react'
+import{useState,useEffect,useMemo}from'react'
 import{useReveal}from'../hooks/index.js'
 import{IMG,PROJECTS,JOBS,SOLUTIONS,LATEST_GALLERY}from'../data/content.js'
 import PageHero from'../components/PageHero.jsx'
@@ -754,13 +754,16 @@ export function Projects(){
 }
 
 /* ══ CALCULATOR ═══════════════════════════════ */
+const BILL_MIN = 500, BILL_MAX = 100000
+
 export function Calculator(){
   const[type,setType]=useState('home')
   const[bill,setBill]=useState(3000)
-  const[result,setResult]=useState(null)
+  const[done,setDone]=useState(false)
   const[show,setShow]=useState(false)
 
-  const calc=()=>{
+  // Derived so the figures stay live once the estimate has been run once.
+  const result=useMemo(()=>{
     const rpu=type==='home'?6.5:8.5
     const units=bill/rpu
     const kwp=type==='home'?Math.max(1,parseFloat((units/130).toFixed(1))):Math.max(3,parseFloat((units/100).toFixed(1)))
@@ -770,146 +773,183 @@ export function Calculator(){
     const unitCost = type==='home' ? 70000 : 40000
     const base=Math.round(kwp*unitCost)
     const subsidy=(type==='home'&&kwp<=12)?78000:0
-    const disc=0
-    const eff=Math.max(0,base-subsidy-disc)
+    const eff=Math.max(0,base-subsidy)
     const payback=eff>0?parseFloat((eff/annSav).toFixed(1)):0
     const co2=Math.round(annUnits*0.82)
     const trees=Math.round(co2/21)
-    setResult({kwp,annUnits,annSav,area,base,subsidy,disc,eff,payback,co2,trees})
-    setShow(false);setTimeout(()=>setShow(true),100)
+    return{kwp,annUnits,annSav,area,base,subsidy,eff,payback,co2,trees}
+  },[bill,type])
+
+  const calc=()=>{setDone(true);setShow(false);setTimeout(()=>setShow(true),80)}
+
+  const pct=Math.min(100,Math.max(0,((bill-BILL_MIN)/(BILL_MAX-BILL_MIN))*100))
+
+  const fmt = v=>{
+    if(v>=10000000){ const n=v/10000000; return (Number.isInteger(n)?n:n.toFixed(1))+'CR' }
+    if(v>=100000){ const n=v/100000; return (Number.isInteger(n)?n:n.toFixed(1))+'L' }
+    if(v>=1000){ const n=v/1000; return (Number.isInteger(n)?n:n.toFixed(1))+'k' }
+    return v
   }
+  const commercialOptions=[4000,7000,10000,20000,30000,40000,50000,100000,500000,1000000,3000000,5000000,10000000]
+  const residentialOptions=[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000]
+  const opts = type==='commercial'?commercialOptions:residentialOptions
+
+  const secondary=[
+    {ic:Sun,   val:`${result.annUnits.toLocaleString('en-IN')} kWh`, label:'Annual Generation'},
+    {ic:Ruler, val:`${result.area} sqft`,                            label:'Roof Area Required'},
+    {ic:Timer, val:`${result.payback} Yrs`,                          label:'Payback Period'},
+    {ic:Leaf,  val:`${result.co2.toLocaleString('en-IN')} kg`,       label:'CO₂ Saved / Year'},
+  ]
 
   return(
     <div style={{background:'#f8fdf9',paddingTop:34}}>
       <PageHero title="Solar Calculator" subtitle="AI-powered solar savings estimator for Indian rooftop & ground installations." img={`${IMG}calculate.png`} breadcrumb="Solar Calculator"/>
-      <section className="section" style={{background:'#fff',maxWidth:1060,margin:'0 auto'}}>
-        <div style={{textAlign:'center',marginBottom:52}}>
+
+      <section className="section" style={{background:'#fff',maxWidth:1180,margin:'0 auto'}}>
+        <div style={{textAlign:'center',marginBottom:44}}>
           <div className="badge" style={{marginBottom:14,justifyContent:'center'}}><span className="dot"/>Calculate Your Savings</div>
           <h2 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.8rem,3.5vw,2.7rem)',color:'#14532d',marginBottom:10}}>Explore Your Solar Potential</h2>
           <p style={{color:'#6b7280',fontSize:15}}>Enter your monthly electricity bill to get an instant estimate</p>
         </div>
 
-        <div style={{background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:'var(--r-xl)',overflow:'hidden',boxShadow:'var(--shadow-lg)'}}>
-          <div style={{padding:'44px 48px',borderBottom:'1px solid #e5e7eb'}}>
-            {/* Type tabs */}
-            <div style={{display:'flex',gap:12,marginBottom:40}}>
+        <div className="calc-shell">
+          {/* ───────────────── INPUT PANEL ───────────────── */}
+          <div className="calc-panel" style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:'var(--r-xl)',padding:'32px 30px',boxShadow:'var(--shadow-md)',display:'flex',flexDirection:'column'}}>
+
+            {/* Segmented type control */}
+            <div className="calc-seg" style={{position:'relative',display:'grid',gridTemplateColumns:'1fr 1fr',gap:4,background:'#f0fdf4',border:'1px solid #dcfce7',borderRadius:'var(--r-pill)',padding:4,marginBottom:32}}>
+              <span aria-hidden style={{position:'absolute',top:4,bottom:4,left:4,width:'calc(50% - 6px)',borderRadius:'var(--r-pill)',background:'linear-gradient(135deg,#16a34a,#166534)',boxShadow:'0 8px 18px -8px rgba(22,163,74,.7)',transform:type==='commercial'?'translateX(calc(100% + 4px))':'translateX(0)',transition:'transform .4s cubic-bezier(.16,1,.3,1)'}}/>
               {[['home',Home,'Residential / Home'],['commercial',Factory,'Commercial / Industrial']].map(([v,Ic,l])=>(
-                <button key={v} onClick={()=>{setType(v);setResult(null)}}
-                  style={{flex:1,padding:'13px 20px',borderRadius:12,cursor:'pointer',
-                    border:type===v?'none':'1.5px solid #d1d5db',
-                    background:type===v?'linear-gradient(135deg,#16a34a,#166534)':'#fff',
-                    color:type===v?'#fff':'#374151',
-                    fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,fontSize:14,
+                <button key={v} onClick={()=>{setType(v)}}
+                  style={{position:'relative',zIndex:1,padding:'11px 12px',borderRadius:'var(--r-pill)',cursor:'pointer',border:'none',background:'transparent',
+                    color:type===v?'#fff':'#15803d',
+                    fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,fontSize:13.5,
                     display:'flex',alignItems:'center',justifyContent:'center',gap:8,
-                    boxShadow:type===v?'0 6px 18px rgba(22,163,74,.28)':'var(--shadow-sm)',
-                    transition:'all .25s'}}>
-                  <Ic size={16} strokeWidth={2}/> {l}
+                    transition:'color .3s ease'}}>
+                  <Ic size={15} strokeWidth={2}/> {l}
                 </button>
               ))}
             </div>
 
-            {/* Bill input */}
-            <div style={{marginBottom:32}}>
-              <label style={{display:'block',color:'#15803d',fontFamily:"'Space Grotesk',sans-serif",fontSize:11,letterSpacing:2.5,textTransform:'uppercase',fontWeight:600,marginBottom:14}}>Monthly Electricity Bill</label>
-              <div style={{display:'flex',alignItems:'center',gap:18,flexWrap:'wrap'}}>
-                <div style={{position:'relative'}}>
-                  <span style={{position:'absolute',left:14,top:'50%',transform:'translateY(-50%)',color:'#16a34a',fontSize:18,fontWeight:800,fontFamily:"'Syne',sans-serif"}}>₹</span>
-                  <input type="number" value={bill} onChange={e=>setBill(Number(e.target.value))} className="input"
-                    style={{width:190,paddingLeft:36,fontSize:20,fontWeight:700,fontFamily:"'Syne',sans-serif",color:'#14532d'}}/>
-                </div>
-                <input type="range" min={500} max={100000} step={500} value={bill}
-                  onChange={e=>setBill(Number(e.target.value))}
-                  style={{flex:1,minWidth:200,accentColor:'#16a34a',height:5,cursor:'pointer',borderRadius:3}}/>
-              </div>
-              <div style={{display:'flex',justifyContent:'space-between',color:'#9ca3af',fontSize:11,marginTop:6,fontFamily:"'Space Grotesk',sans-serif"}}>
-                <span>₹500</span><span>₹1,00,000</span>
-              </div>
+            {/* Bill amount */}
+            <label style={{display:'block',color:'#15803d',fontFamily:"'Space Grotesk',sans-serif",fontSize:11,letterSpacing:2.5,textTransform:'uppercase',fontWeight:600,marginBottom:14}}>Monthly Electricity Bill</label>
+
+            <div className="calc-amount" style={{display:'flex',alignItems:'baseline',gap:4,background:'#f8fdf9',border:'1.5px solid #dcfce7',borderRadius:'var(--r-lg)',padding:'18px 22px',marginBottom:20}}>
+              <span style={{color:'#16a34a',fontSize:26,fontWeight:800,fontFamily:"'Syne',sans-serif",lineHeight:1}}>₹</span>
+              <input type="number" value={bill} onChange={e=>setBill(Number(e.target.value))} aria-label="Monthly electricity bill"
+                style={{flex:1,minWidth:0,border:'none',outline:'none',background:'transparent',fontSize:'clamp(1.7rem,4vw,2.3rem)',fontWeight:800,fontFamily:"'Syne',sans-serif",color:'#14532d',lineHeight:1.1,padding:0}}/>
+              <span style={{color:'#9ca3af',fontSize:12,fontFamily:"'Space Grotesk',sans-serif",whiteSpace:'nowrap'}}>/ month</span>
+            </div>
+
+            {/* Slider */}
+            <input className="calc-range" type="range" min={BILL_MIN} max={BILL_MAX} step={500} value={Math.min(bill,BILL_MAX)}
+              onChange={e=>setBill(Number(e.target.value))}
+              style={{'--pct':`${pct}%`}}/>
+            <div style={{display:'flex',justifyContent:'space-between',color:'#9ca3af',fontSize:11,marginTop:4,marginBottom:28,fontFamily:"'Space Grotesk',sans-serif"}}>
+              <span>₹500</span><span>₹1,00,000</span>
             </div>
 
             {/* Quick picks */}
-            <div style={{marginBottom:36}}>
-              <div style={{color:'#9ca3af',fontFamily:"'Space Grotesk',sans-serif",fontSize:10.5,letterSpacing:2,textTransform:'uppercase',marginBottom:11,fontWeight:600}}>Quick Select</div>
-              <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
-                {(()=>{
-                  const commercialOptions=[4000,7000,10000,20000,30000,40000,50000,100000,500000,1000000,3000000,5000000,10000000]
-                  const residentialOptions=[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,15000,20000,25000]
-                  const opts = type==='commercial'?commercialOptions:residentialOptions
-                  const fmt = v=>{
-                    if(v>=10000000){ const n=v/10000000; return (Number.isInteger(n)?n:n.toFixed(1))+'CR' }
-                    if(v>=100000){ const n=v/100000; return (Number.isInteger(n)?n:n.toFixed(1))+'L' }
-                    if(v>=1000){ const n=v/1000; return (Number.isInteger(n)?n:n.toFixed(1))+'k' }
-                    return v
-                  }
-                  return opts.map(v=> (
-                    <button key={v} className="calc-chip" onClick={()=>setBill(v)}
-                      style={{padding:'7px 16px',borderRadius:'var(--r-pill)',cursor:'pointer',
-                        border:`1.5px solid ${bill===v?'#16a34a':'#e5e7eb'}`,
-                        background:bill===v?'#f0fdf4':'#fff',
-                        color:bill===v?'#16a34a':'#6b7280',
-                        fontFamily:"'Space Grotesk',sans-serif",fontSize:13,fontWeight:bill===v?600:400}}>
-                      ₹{fmt(v)}
-                    </button>
-                  ))
-                })()}
-              </div>
+            <div style={{color:'#9ca3af',fontFamily:"'Space Grotesk',sans-serif",fontSize:10.5,letterSpacing:2,textTransform:'uppercase',marginBottom:11,fontWeight:600}}>Quick Select</div>
+            <div style={{display:'flex',flexWrap:'wrap',gap:7,marginBottom:26}}>
+              {opts.map(v=> (
+                <button key={v} className="calc-chip" onClick={()=>setBill(v)}
+                  style={{padding:'7px 14px',borderRadius:'var(--r-pill)',cursor:'pointer',
+                    border:`1.5px solid ${bill===v?'#16a34a':'#e5e7eb'}`,
+                    background:bill===v?'#f0fdf4':'#fff',
+                    color:bill===v?'#16a34a':'#6b7280',
+                    fontFamily:"'Space Grotesk',sans-serif",fontSize:12.5,fontWeight:bill===v?700:400}}>
+                  ₹{fmt(v)}
+                </button>
+              ))}
             </div>
 
-            <button className="btn-primary" onClick={calc} style={{width:'100%',padding:'16px',borderRadius:12,fontSize:16,boxShadow:'0 6px 20px rgba(22,163,74,.3)',display:'inline-flex',alignItems:'center',justifyContent:'center',gap:9}}>
+            <button className="btn-primary" onClick={calc} style={{width:'100%',padding:'16px',borderRadius:'var(--r-md)',fontSize:15.5,marginTop:'auto'}}>
               <Zap size={18} strokeWidth={2}/>Calculate My Solar Savings
             </button>
           </div>
 
-          {/* Results */}
-          {result&&(
-            <div style={{padding:'44px 48px',background:'#fff',opacity:show?1:0,transition:'opacity .5s ease'}}>
-              <div className="badge" style={{marginBottom:16}}><span className="dot"/>Your Solar Estimate</div>
-              <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,color:'#14532d',fontSize:20,marginBottom:32}}>Here's Your Personalised Solar Savings Report</h3>
-
-              {/* Metrics */}
-              <div className="calc-metrics" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginBottom:32}}>
-                {[
-                  {ic:Zap,val:`${result.kwp} kW`,label:'Ideal System Size',col:'#16a34a',bg:'#f0fdf4',border:'#bbf7d0'},
-                  {ic:IndianRupee,val:`₹${result.annSav.toLocaleString('en-IN')}`,label:'Annual Savings',col:'#d97706',bg:'#fffbeb',border:'#fde68a'},
-                  {ic:Sun,val:`${result.annUnits.toLocaleString('en-IN')} kWh`,label:'Annual Generation',col:'#059669',bg:'#ecfdf5',border:'#6ee7b7'},
-                  {ic:Ruler,val:`${result.area} sqft`,label:'Roof Area Required',col:'#2563eb',bg:'#eff6ff',border:'#bfdbfe'},
-                  {ic:Timer,val:`${result.payback} Yrs`,label:'Payback Period',col:'#7c3aed',bg:'#f5f3ff',border:'#c4b5fd'},
-                  {ic:Leaf,val:`${result.co2.toLocaleString('en-IN')} kg`,label:'CO₂ Saved / Year',col:'#16a34a',bg:'#f0fdf4',border:'#bbf7d0'},
-                ].map((m,i)=>(
-                  <div key={i} className="calc-metric" style={{background:m.bg,border:`1px solid ${m.border}`,borderRadius:'var(--r-lg)',padding:'24px 16px',textAlign:'center',
-                    opacity:show?1:0,transform:show?'translateY(0)':'translateY(12px)',
-                    transition:`opacity .5s ease ${i*.07}s, transform .5s cubic-bezier(.16,1,.3,1) ${i*.07}s, box-shadow .35s ease`}}>
-                    <div style={{display:'flex',justifyContent:'center',marginBottom:8}}><m.ic size={22} strokeWidth={1.75} color={m.col}/></div>
-                    <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:m.col,fontSize:'clamp(.95rem,2vw,1.4rem)',marginBottom:5}}>{m.val}</div>
-                    <div style={{color:'#6b7280',fontSize:10.5,letterSpacing:1,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif"}}>{m.label}</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Cost breakdown */}
-              <div className="calc-cost" style={{background:'#f8fdf9',border:'1px solid #e5e7eb',borderRadius:'var(--r-lg)',padding:'32px 34px',marginBottom:16}}>
-                <h4 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,color:'#14532d',fontSize:17,marginBottom:22,display:'flex',alignItems:'center',gap:9}}><Lightbulb size={18} strokeWidth={2}/>Cost Breakdown</h4>
-                {[
-                  ['Base Price (Excl. Subsidy & GST)',`₹${result.base.toLocaleString('en-IN')}`,'#374151'],
-                  ['PM Surya Ghar Govt. Subsidy',result.subsidy>0?`− ₹${result.subsidy.toLocaleString('en-IN')}`:'N/A (Commercial)','#16a34a'],
-                ].map(([label,val,col],i)=>(
-                  <div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'12px 0',borderBottom:'1px solid #f3f4f6'}}>
-                    <span style={{color:'#6b7280',fontSize:14}}>{label}</span>
-                    <span style={{color:col,fontWeight:600,fontFamily:"'Syne',sans-serif",fontSize:14.5}}>{val}</span>
-                  </div>
-                ))}
-                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 20px',background:'linear-gradient(135deg,#f0fdf4,#dcfce7)',borderRadius:12,border:'1px solid #bbf7d0',marginTop:12}}>
-                  <span style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,color:'#14532d',fontSize:15}}>Effective Cost *</span>
-                  <span style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#16a34a',fontSize:22}}>₹{result.eff.toLocaleString('en-IN')}</span>
+          {/* ───────────────── RESULTS PANEL ───────────────── */}
+          <div className="calc-panel">
+            {!done ? (
+              <div className="calc-empty" style={{height:'100%',minHeight:420,background:'#f8fdf9',border:'1.5px dashed #bbf7d0',borderRadius:'var(--r-xl)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center',padding:'40px 32px'}}>
+                <div style={{width:72,height:72,borderRadius:'50%',background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:20}}>
+                  <Zap size={28} strokeWidth={1.75} color="#16a34a"/>
                 </div>
+                <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,color:'#14532d',fontSize:19,marginBottom:10}}>Your Solar Estimate</h3>
+                <p style={{color:'#6b7280',fontSize:13.5,lineHeight:1.8,maxWidth:280}}>Enter your monthly electricity bill to get an instant estimate</p>
               </div>
-              {/* Trees */}
-              <div style={{display:'flex',alignItems:'center',gap:13,padding:'18px 22px',background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-md)',marginBottom:12}}>
-                <TreePine size={26} strokeWidth={1.75} color="#16a34a" style={{flexShrink:0}}/>
-                <span style={{color:'#374151',fontSize:13.5,lineHeight:1.7}}>Your system saves <strong style={{color:'#16a34a'}}>{result.co2.toLocaleString('en-IN')} kg</strong> CO₂/year — equal to planting <strong style={{color:'#16a34a'}}>{result.trees} trees</strong>!</span>
+            ) : (
+              <div style={{display:'flex',flexDirection:'column',gap:14,height:'100%',opacity:show?1:0,transform:show?'translateY(0)':'translateY(14px)',transition:'opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1)'}}>
+
+                {/* Headline metrics */}
+                <div style={{background:'linear-gradient(135deg,#14532d,#166534 55%,#15803d)',borderRadius:'var(--r-xl)',padding:'30px 30px 28px',position:'relative',overflow:'hidden',boxShadow:'var(--shadow-lg)'}}>
+                  <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 1px 1px,rgba(255,255,255,.07) 1px,transparent 0)',backgroundSize:'26px 26px',pointerEvents:'none'}}/>
+                  <div style={{position:'absolute',top:'-45%',right:'-15%',width:280,height:280,borderRadius:'50%',background:'radial-gradient(circle,rgba(74,222,128,.28),transparent 70%)',pointerEvents:'none'}}/>
+
+                  <div style={{position:'relative',display:'inline-flex',alignItems:'center',gap:7,padding:'5px 13px',background:'rgba(255,255,255,.14)',border:'1px solid rgba(255,255,255,.26)',borderRadius:'var(--r-pill)',color:'#fff',fontSize:10,letterSpacing:2,textTransform:'uppercase',fontWeight:700,fontFamily:"'Space Grotesk',sans-serif",marginBottom:20}}>
+                    <span style={{width:5,height:5,borderRadius:'50%',background:'#4ade80',boxShadow:'0 0 8px 2px rgba(74,222,128,.8)'}}/>Your Solar Estimate
+                  </div>
+
+                  <div style={{position:'relative',display:'grid',gridTemplateColumns:'1fr 1fr',gap:20}}>
+                    <div>
+                      <div style={{display:'flex',alignItems:'center',gap:7,color:'#bbf7d0',fontSize:10,letterSpacing:1.4,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginBottom:8}}>
+                        <Zap size={13} strokeWidth={2}/>Ideal System Size
+                      </div>
+                      <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#fff',fontSize:'clamp(1.7rem,3.4vw,2.4rem)',lineHeight:1,letterSpacing:'-.02em'}}>{result.kwp} kW</div>
+                    </div>
+                    <div>
+                      <div style={{display:'flex',alignItems:'center',gap:7,color:'#bbf7d0',fontSize:10,letterSpacing:1.4,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginBottom:8}}>
+                        <IndianRupee size={13} strokeWidth={2}/>Annual Savings
+                      </div>
+                      <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#4ade80',fontSize:'clamp(1.7rem,3.4vw,2.4rem)',lineHeight:1,letterSpacing:'-.02em'}}>₹{result.annSav.toLocaleString('en-IN')}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Secondary metrics */}
+                <div className="calc-metrics" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+                  {secondary.map((m,i)=>(
+                    <div key={i} className="calc-metric" style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:'var(--r-md)',padding:'18px 18px'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:10}}>
+                        <span style={{width:30,height:30,borderRadius:9,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                          <m.ic size={15} strokeWidth={1.9} color="#16a34a"/>
+                        </span>
+                        <span style={{color:'#6b7280',fontSize:10,letterSpacing:1.2,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",lineHeight:1.3}}>{m.label}</span>
+                      </div>
+                      <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#14532d',fontSize:'clamp(1rem,2vw,1.3rem)'}}>{m.val}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Cost breakdown */}
+                <div className="calc-cost" style={{background:'#fff',border:'1px solid #e5e7eb',borderRadius:'var(--r-lg)',padding:'24px 26px'}}>
+                  <h4 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,color:'#14532d',fontSize:15.5,marginBottom:16,display:'flex',alignItems:'center',gap:9}}><Lightbulb size={17} strokeWidth={2}/>Cost Breakdown</h4>
+                  {[
+                    ['Base Price (Excl. Subsidy & GST)',`₹${result.base.toLocaleString('en-IN')}`,'#374151'],
+                    ['PM Surya Ghar Govt. Subsidy',result.subsidy>0?`− ₹${result.subsidy.toLocaleString('en-IN')}`:'N/A (Commercial)','#16a34a'],
+                  ].map(([label,val,col],i)=>(
+                    <div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12,padding:'11px 0',borderBottom:'1px solid #f3f4f6'}}>
+                      <span style={{color:'#6b7280',fontSize:13}}>{label}</span>
+                      <span style={{color:col,fontWeight:600,fontFamily:"'Syne',sans-serif",fontSize:14,whiteSpace:'nowrap'}}>{val}</span>
+                    </div>
+                  ))}
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12,padding:'15px 18px',background:'linear-gradient(135deg,#f0fdf4,#dcfce7)',borderRadius:'var(--r-md)',border:'1px solid #bbf7d0',marginTop:14}}>
+                    <span style={{fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,color:'#14532d',fontSize:14}}>Effective Cost *</span>
+                    <span style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#16a34a',fontSize:20,whiteSpace:'nowrap'}}>₹{result.eff.toLocaleString('en-IN')}</span>
+                  </div>
+                </div>
+
+                {/* Trees */}
+                <div style={{display:'flex',alignItems:'center',gap:13,padding:'16px 20px',background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-md)'}}>
+                  <TreePine size={26} strokeWidth={1.75} color="#16a34a" style={{flexShrink:0}}/>
+                  <span style={{color:'#374151',fontSize:13,lineHeight:1.7}}>Your system saves <strong style={{color:'#16a34a'}}>{result.co2.toLocaleString('en-IN')} kg</strong> CO₂/year — equal to planting <strong style={{color:'#16a34a'}}>{result.trees} trees</strong>!</span>
+                </div>
+
+                <p style={{color:'#9ca3af',fontSize:11.5,lineHeight:1.7}}>* Taxes &amp; net-metering charges extra. PM Surya Ghar subsidy for residential ≤10 kW. Estimates vary by location and site conditions.</p>
               </div>
-              <p style={{color:'#9ca3af',fontSize:11.5}}>* Taxes & net-metering charges extra. PM Surya Ghar subsidy for residential ≤10 kW. Estimates vary by location and site conditions.</p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Map for Contact */}
@@ -927,9 +967,52 @@ export function Calculator(){
             />
           </div>
         </div>
-
       </section>
-      <style>{`@media(max-width:900px){.calc-metrics{grid-template-columns:1fr!important;gap:18px!important}.calc-cost{padding:18px!important}.badge{margin-left:0!important}}`}</style>
+
+      <style>{`
+        .calc-shell{display:grid;grid-template-columns:1.05fr 1fr;gap:22px;align-items:stretch}
+        .calc-shell > .calc-panel{height:100%}
+
+        /* Hide the number input spinners so the big figure stays clean */
+        .calc-amount input::-webkit-outer-spin-button,
+        .calc-amount input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+        .calc-amount input[type=number]{-moz-appearance:textfield}
+        .calc-amount{transition:border-color .25s ease,box-shadow .25s ease}
+        .calc-amount:focus-within{border-color:#16a34a;box-shadow:0 0 0 4px rgba(34,197,94,.14)}
+
+        /* Custom range slider — filled track in brand green */
+        .calc-range{-webkit-appearance:none;appearance:none;width:100%;background:transparent;height:24px;cursor:pointer;display:block}
+        .calc-range:focus{outline:none}
+        .calc-range::-webkit-slider-runnable-track{
+          height:8px;border-radius:99px;
+          background:linear-gradient(90deg,#16a34a 0%,#4ade80 var(--pct),#e5e7eb var(--pct),#e5e7eb 100%);
+        }
+        .calc-range::-webkit-slider-thumb{
+          -webkit-appearance:none;appearance:none;
+          width:22px;height:22px;border-radius:50%;margin-top:-7px;
+          background:#fff;border:3px solid #16a34a;
+          box-shadow:0 4px 10px -2px rgba(22,163,74,.5);
+          transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s ease;
+        }
+        .calc-range:hover::-webkit-slider-thumb{transform:scale(1.12)}
+        .calc-range:active::-webkit-slider-thumb{transform:scale(1.2);box-shadow:0 0 0 6px rgba(34,197,94,.18)}
+        .calc-range::-moz-range-track{height:8px;border-radius:99px;background:#e5e7eb}
+        .calc-range::-moz-range-progress{height:8px;border-radius:99px;background:linear-gradient(90deg,#16a34a,#4ade80)}
+        .calc-range::-moz-range-thumb{
+          width:18px;height:18px;border-radius:50%;
+          background:#fff;border:3px solid #16a34a;
+          box-shadow:0 4px 10px -2px rgba(22,163,74,.5);
+        }
+
+        @media(max-width:960px){
+          .calc-shell{grid-template-columns:1fr;gap:18px}
+          .calc-empty{min-height:260px!important}
+        }
+        @media(max-width:600px){
+          .calc-metrics{grid-template-columns:1fr!important}
+          .calc-cost{padding:20px!important}
+        }
+      `}</style>
     </div>
   )
 }
