@@ -99,7 +99,7 @@ export function Initiatives({ setPage }) {
       badgeCol: '#15803d',
     },
     {
-      img: 'Latest_Solar_Projects/bio_CNG/bio_CNG.jpeg',
+      img: 'Latest_Solar_Projects/bio_CNG/bio_CNG3.jpeg',
       title: 'CBG (Bio-CNG) Production Plant',
       tag: 'Bio Energy',
       desc: 'Welcome to GreenChip, your partner in sustainable energy solutions. We specialise in setting up CBG (Bio-CNG) manufacturing plants across India using cutting-edge biomethanation technology.',
