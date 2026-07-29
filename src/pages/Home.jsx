@@ -33,7 +33,7 @@ function Hero({setPage}){
 
   return(
     /* Full-viewport hero, padded top for topbar(34) + navbar(66) = 100px */
-      <div className="hero-padding" style={{position:'relative',marginTop:0,height:'calc(100vh - 100px)',minHeight:560,overflow:'hidden',boxSizing:'border-box',padding:'64px 8% 88px'}}>
+      <div className="hero-padding" style={{position:'relative',marginTop:0,height:'calc(100vh - 100px)',minHeight:600,overflow:'hidden',boxSizing:'border-box',padding:'64px 8% 88px'}}>
       {/* Slide videos */}
       {slides.map((s,i)=>(
         <div key={i} style={{position:'absolute',inset:0,opacity:i===slide?1:0,transition:'opacity 1.4s ease',zIndex:0,pointerEvents:i===slide?'auto':'none',willChange:'opacity'}} aria-hidden={i===slide?false:true}>
@@ -51,58 +51,108 @@ function Hero({setPage}){
       ))}
 
       {/* Overlays — strong gradient so text is always legible */}
-      <div style={{position:'absolute',inset:0,background:'linear-gradient(120deg,rgba(10, 40, 15, 0.56) 0%,rgba(10, 40, 15, 0.49) 55%,rgba(10, 40, 15, 0.35) 100%)',zIndex:1}}/>
-      <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 10% 60%,rgba(34,197,94,.18) 0%,transparent 55%)',zIndex:1}}/>
+      <div style={{position:'absolute',inset:0,background:'linear-gradient(105deg,rgba(8,32,13,.82) 0%,rgba(10,40,15,.6) 45%,rgba(10,40,15,.32) 100%)',zIndex:1}}/>
+      <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 8% 55%,rgba(34,197,94,.2) 0%,transparent 55%)',zIndex:1}}/>
       {/* Dot pattern */}
       <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(circle at 1px 1px,rgba(255,255,255,.07) 1px,transparent 0)',backgroundSize:'30px 30px',zIndex:1}}/>
+      {/* Bottom vignette so the dots and scroll hint stay readable */}
+      <div style={{position:'absolute',left:0,right:0,bottom:0,height:220,background:'linear-gradient(to top,rgba(6,26,11,.75),transparent)',zIndex:1,pointerEvents:'none'}}/>
 
       {/* Content — z-index keeps it above all overlays */}
         <div style={{position:'relative',zIndex:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'flex-start',height:'100%',padding:'0 2% 88px',pointerEvents:'auto',boxSizing:'border-box',textAlign:'left'}}>
         {/* Badge */}
-        <div style={{animation:'fadeUp .5s ease both',display:'inline-flex',alignItems:'center',gap:7,padding:'4px 14px',background:'rgba(255,255,255,.14)',border:'1px solid rgba(255,255,255,.28)',borderRadius:100,color:'#fff',fontSize:11,fontFamily:"'Space Grotesk',sans-serif",letterSpacing:'2px',textTransform:'uppercase',fontWeight:600,marginBottom:20,width:'fit-content',backdropFilter:'blur(8px)'}}>
-          <span style={{width:6,height:6,borderRadius:'50%',background:'#4ade80',display:'inline-block',animation:'dotBlink 1.8s infinite'}}/>
+        <div key={`tag-${visible}`} className="hero-tag" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'6px 16px',background:'rgba(255,255,255,.13)',border:'1px solid rgba(255,255,255,.26)',borderRadius:100,color:'#fff',fontSize:11,fontFamily:"'Space Grotesk',sans-serif",letterSpacing:'2px',textTransform:'uppercase',fontWeight:600,marginBottom:22,width:'fit-content',backdropFilter:'blur(10px)'}}>
+          <span style={{width:6,height:6,borderRadius:'50%',background:'#4ade80',display:'inline-block',boxShadow:'0 0 10px 2px rgba(74,222,128,.8)',animation:'dotBlink 1.8s infinite'}}/>
           {slides[visible].tag} · Renewable Energy
         </div>
 
-        {/* Headline */}
-        <h1 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(2.2rem,6vw,4.4rem)',color:'#fff',lineHeight:1.0,maxWidth:'min(980px,90%)',animation:'fadeUp .65s .08s ease both',textShadow:'0 2px 24px rgba(0,0,0,.25)',whiteSpace:'normal',overflow:'visible',overflowWrap:'break-word'}}>
-          {slides[visible].h1}
-        </h1>
-        <h2 style={{marginTop:6,color:'#86efac',fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(1.6rem,3.6vw,2.2rem)',lineHeight:1,maxWidth:'min(900px,88%)',whiteSpace:'normal',overflow:'visible',overflowWrap:'break-word'}}>{slides[visible].h2}</h2>
+        {/* Headline — both lines share one size and flip in on slide change */}
+        <div className="hero-head" style={{perspective:'1200px',maxWidth:'min(1000px,94%)'}}>
+          <h1 key={`h1-${visible}`} className="hero-flip" style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(2rem,5.3vw,4rem)',color:'#fff',lineHeight:1.02,letterSpacing:'-.02em',textShadow:'0 3px 28px rgba(0,0,0,.35)',overflowWrap:'break-word'}}>
+            {slides[visible].h1}
+          </h1>
+          <h2 key={`h2-${visible}`} className="hero-flip hero-flip-2" style={{marginTop:4,fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:'clamp(2rem,5.3vw,4rem)',lineHeight:1.02,letterSpacing:'-.02em',color:'#86efac',textShadow:'0 3px 28px rgba(0,0,0,.3)',overflowWrap:'break-word'}}>
+            {slides[visible].h2}
+          </h2>
+        </div>
 
-        <p style={{color:'rgba(255,255,255,.82)',fontSize:'clamp(14px,1.4vw,17px)',maxWidth:480,lineHeight:1.85,marginTop:20,marginBottom:38,animation:'fadeUp .65s .16s ease both'}}>
+        <p style={{color:'rgba(255,255,255,.84)',fontSize:'clamp(14px,1.4vw,17px)',maxWidth:500,lineHeight:1.85,marginTop:24,marginBottom:38,animation:'fadeUp .65s .16s ease both'}}>
           Turnkey solar &amp; renewable energy solutions for commercial, industrial &amp; public sectors across India. Cut energy bills up to <strong style={{color:'#86efac'}}>70%</strong>.
         </p>
 
         <div className="hero-buttons" style={{display:'flex',gap:13,flexWrap:'wrap',animation:'fadeUp .65s .22s ease both'}}>
-          <button className="btn-white" onClick={()=>setPage('calculator')} style={{padding:'13px 30px',fontSize:14,borderRadius:8,display:'inline-flex',alignItems:'center',gap:8}}>
+          <button className="btn-white" onClick={()=>setPage('calculator')} style={{padding:'14px 32px',fontSize:14,borderRadius:'var(--r-sm)'}}>
             <Sun size={16} strokeWidth={2}/>Calculate Savings
           </button>
-          <button onClick={()=>setPage('solutions')} style={{padding:'13px 30px',fontSize:14,borderRadius:8,background:'transparent',color:'#fff',border:'1.5px solid rgba(255,255,255,.55)',fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,cursor:'pointer',transition:'all .25s',display:'flex',alignItems:'center',gap:7}}
-            onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,.1)'}
-            onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
-            Explore Solutions <ArrowRight size={15} strokeWidth={2.25}/>
+          <button className="hero-ghost" onClick={()=>setPage('solutions')} style={{padding:'14px 32px',fontSize:14,borderRadius:'var(--r-sm)',background:'rgba(255,255,255,.06)',color:'#fff',border:'1.5px solid rgba(255,255,255,.5)',fontFamily:"'Space Grotesk',sans-serif",fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',gap:8,backdropFilter:'blur(8px)'}}>
+            Explore Solutions <ArrowRight className="hero-ghost-arrow" size={15} strokeWidth={2.25}/>
           </button>
         </div>
 
-        {/* Slide dots */}
-        <div style={{display:'flex',gap:8,marginTop:48,animation:'fadeUp .65s .3s ease both'}}>
+        {/* Slide indicators — the active one fills for the duration of the slide */}
+        <div style={{display:'flex',gap:10,marginTop:52,animation:'fadeUp .65s .3s ease both'}}>
           {slides.map((_,i)=>(
-            <button key={i} onClick={()=>setSlide(i)} style={{width:i===slide?28:8,height:8,borderRadius:4,background:i===slide?'#4ade80':'rgba(255,255,255,.35)',border:'none',cursor:'pointer',transition:'all .35s',padding:0}}/>
+            <button key={i} onClick={()=>setSlide(i)} aria-label={`Go to slide ${i+1}`}
+              style={{width:i===slide?46:10,height:5,borderRadius:99,background:'rgba(255,255,255,.28)',border:'none',cursor:'pointer',padding:0,position:'relative',overflow:'hidden',transition:'width .45s cubic-bezier(.16,1,.3,1)'}}>
+              {i===slide&&<span key={`fill-${slide}`} className="hero-dot-fill" style={{position:'absolute',inset:0,background:'linear-gradient(90deg,#4ade80,#86efac)',transformOrigin:'left'}}/>}
+            </button>
           ))}
         </div>
       </div>
 
       {/* Scroll hint */}
-      <div style={{position:'absolute',bottom:36,left:'8%',zIndex:2,display:'flex',alignItems:'center',gap:10,animation:'fadeIn 1s 1.2s ease both',opacity:0}}>
-        <div style={{width:1,height:48,background:'linear-gradient(to bottom,rgba(255,255,255,.6),transparent)'}}/>
-        <span style={{color:'rgba(255,255,255,.55)',fontSize:10,letterSpacing:3,fontFamily:"'Space Grotesk',sans-serif",textTransform:'uppercase'}}>Scroll</span>
+      <div style={{position:'absolute',bottom:36,right:'8%',zIndex:2,display:'flex',flexDirection:'column',alignItems:'center',gap:10,animation:'fadeIn 1s 1.2s ease both',opacity:0}}>
+        <span style={{color:'rgba(255,255,255,.55)',fontSize:10,letterSpacing:3,fontFamily:"'Space Grotesk',sans-serif",textTransform:'uppercase',writingMode:'vertical-rl'}}>Scroll</span>
+        <div className="hero-scroll-line" style={{width:1,height:52,background:'linear-gradient(to bottom,rgba(255,255,255,.55),transparent)'}}/>
       </div>
 
       <style>{`
         @keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
         @keyframes dotBlink{0%,100%{opacity:1}50%{opacity:0}}
+
+        /* Headline flip — each line rotates in around its own horizontal axis */
+        @keyframes heroFlip{
+          0%  {opacity:0;transform:rotateX(-92deg) translateY(6px)}
+          55% {opacity:1}
+          100%{opacity:1;transform:rotateX(0deg) translateY(0)}
+        }
+        .hero-flip{
+          transform-origin:50% 50%;
+          backface-visibility:hidden;
+          transform-style:preserve-3d;
+          animation:heroFlip .85s cubic-bezier(.2,.9,.25,1.05) both;
+        }
+        .hero-flip-2{animation-delay:.13s}
+
+        /* Tag pill fades up whenever the slide copy changes */
+        @keyframes heroTag{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        .hero-tag{animation:heroTag .55s cubic-bezier(.16,1,.3,1) both}
+
+        /* Active slide indicator fills across the slide duration */
+        @keyframes heroDotFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+        .hero-dot-fill{animation:heroDotFill 5.5s linear both}
+
+        /* Ghost button */
+        .hero-ghost{transition:background .3s ease,border-color .3s ease,transform .3s cubic-bezier(.16,1,.3,1)}
+        .hero-ghost:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.85);transform:translateY(-3px)}
+        .hero-ghost-arrow{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+        .hero-ghost:hover .hero-ghost-arrow{transform:translateX(4px)}
+
+        /* Scroll hint pulse */
+        @keyframes scrollPulse{0%,100%{opacity:.35;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
+        .hero-scroll-line{transform-origin:top;animation:scrollPulse 2.4s ease-in-out infinite}
+
+        /* Short viewports: shrink the headline so the hero never overflows */
+        @media(max-height:760px){
+          .hero-head h1,.hero-head h2{font-size:clamp(1.8rem,4.4vw,3.1rem)!important}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+          .hero-flip,.hero-tag{animation:fadeIn .4s ease both}
+          .hero-dot-fill{animation:none;transform:scaleX(1)}
+          .hero-scroll-line{animation:none}
+        }
       `}</style>
     </div>
   )
