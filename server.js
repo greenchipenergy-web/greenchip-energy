@@ -140,6 +140,7 @@ app.get('/api/health', (req, res) => {
 // exist (committed to git), unlike dist/images which depends on the host's
 // build step correctly copying Vite's public/ output.
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')))
+app.use('/videos', express.static(path.join(__dirname, 'public', 'videos')))
 
 // Serve the built frontend (npm run build output)
 const distDir = path.join(__dirname, 'dist')

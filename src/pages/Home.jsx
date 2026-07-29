@@ -9,10 +9,11 @@ function Hero({setPage}){
   const[slide,setSlide]=useState(0)
   const[visible,setVisible]=useState(0)
   const contentTimer = useRef(null)
+  const videoRefs = useRef([])
   const slides=[
-    {img:`${IMG}carousel-5.jpg`,h1:'Industry',h2:'Decarbonisation',tag:'EPC Solutions'},
-    {img:`${IMG}1-1.jpg`,h1:'Shaping The',h2:'Energy Transition',tag:'Solar Power'},
-    {img:`${IMG}2-2.jpg`,h1:'Digitalising &',h2:'Decentralising Energy',tag:'Smart Systems'},
+    {video:'/videos/hero-1.mp4',h1:'Industry',h2:'Decarbonisation',tag:'EPC Solutions'},
+    {video:'/videos/hero-2.mp4',h1:'Shaping The',h2:'Energy Transition',tag:'Solar Power'},
+    {video:'/videos/hero-3.mp4',h1:'Digitalising &',h2:'Decentralising Energy',tag:'Smart Systems'},
   ]
   useEffect(()=>{const t=setInterval(()=>setSlide(s=>(s+1)%3),5500);return()=>clearInterval(t)},[])
 
@@ -22,13 +23,30 @@ function Hero({setPage}){
     return ()=>clearTimeout(contentTimer.current)
   },[slide])
 
+  useEffect(()=>{
+    videoRefs.current.forEach((v,i)=>{
+      if(!v)return
+      if(i===slide){v.currentTime=0;v.play().catch(()=>{})}
+      else v.pause()
+    })
+  },[slide])
+
   return(
     /* Full-viewport hero, padded top for topbar(34) + navbar(66) = 100px */
       <div className="hero-padding" style={{position:'relative',marginTop:0,height:'calc(100vh - 100px)',minHeight:560,overflow:'hidden',boxSizing:'border-box',padding:'64px 8% 88px'}}>
-      {/* Slide images */}
+      {/* Slide videos */}
       {slides.map((s,i)=>(
         <div key={i} style={{position:'absolute',inset:0,opacity:i===slide?1:0,transition:'opacity 1.4s ease',zIndex:0,pointerEvents:i===slide?'auto':'none',willChange:'opacity'}} aria-hidden={i===slide?false:true}>
-          <img src={s.img} alt="" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center',display:'block'}}/>
+          <video
+            ref={el=>videoRefs.current[i]=el}
+            src={s.video}
+            muted
+            loop
+            playsInline
+            autoPlay={i===0}
+            preload={i===slide?'auto':'none'}
+            style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center',display:'block'}}
+          />
         </div>
       ))}
 
