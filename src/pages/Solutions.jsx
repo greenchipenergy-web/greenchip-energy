@@ -21,20 +21,20 @@ export function Solutions({setPage}){
         <div ref={ref} className="g3">
           {SOLUTIONS.map((s,i)=>(
             <div key={i} className="card" onClick={()=>setPage(s.id==='rooftop'?'rooftop':'sol_'+s.id)}
-              style={{cursor:'pointer',overflow:'hidden',
+              style={{cursor:'pointer',overflow:'hidden',display:'flex',flexDirection:'column',height:'100%',
                 opacity:vis?1:0,transform:vis?'translateY(0)':'translateY(28px)',
                 transition:`all .6s ease ${i*.07}s`}}>
-              <div style={{position:'relative',height:210,overflow:'hidden'}}>
+              <div style={{position:'relative',height:210,overflow:'hidden',flexShrink:0}}>
                 <img src={`${IMG}${s.img}`} alt={s.title} style={{width:'100%',height:'100%',objectFit:'cover',transition:'transform .5s ease'}}
                   onMouseEnter={e=>e.target.style.transform='scale(1.07)'}
                   onMouseLeave={e=>e.target.style.transform='scale(1)'}/>
                 <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(10,40,15,.7),transparent 55%)'}}/>
                 <div style={{position:'absolute',top:12,left:12,width:36,height:36,borderRadius:'50%',background:'rgba(255,255,255,.9)',display:'flex',alignItems:'center',justifyContent:'center'}}><s.icon size={18} strokeWidth={2} color="#16a34a"/></div>
               </div>
-              <div style={{padding:'24px 24px 28px'}}>
+              <div style={{padding:'24px 24px 28px',display:'flex',flexDirection:'column',flex:1}}>
                 <div style={{color:'#16a34a',fontSize:9.5,letterSpacing:2.5,textTransform:'uppercase',fontFamily:"'Space Grotesk',sans-serif",marginBottom:7,fontWeight:600}}>{s.sub}</div>
                 <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:19,color:'#14532d',marginBottom:10}}>{s.title}</h3>
-                <p style={{color:'#6b7280',fontSize:13,lineHeight:1.82,marginBottom:14}}>{s.intro}</p>
+                <p style={{color:'#6b7280',fontSize:13,lineHeight:1.82,marginBottom:14,flex:1}}>{s.intro}</p>
                 {/* Stats row */}
                 {s.stats&&(
                   <div style={{display:'flex',gap:10,marginBottom:14,flexWrap:'wrap'}}>
