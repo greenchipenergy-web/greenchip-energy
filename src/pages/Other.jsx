@@ -6,7 +6,7 @@ import{Check,ArrowRight,ArrowLeft,X,Sun,FlaskConical,Microscope,Truck,Settings,F
 
 /* ══ INITIATIVES ══════════════════════════════ */
 
-const IMG_BASE = 'https://www.greenchipenergy.com/img/'
+const IMG_BASE = IMG
 
 /* ─── Shared section wrapper ─────────────────── */
 const Sec = ({ children, bg = '#fff', pt = 88, pb = 88 }) => (
@@ -99,7 +99,7 @@ export function Initiatives({ setPage }) {
       badgeCol: '#15803d',
     },
     {
-      img: 'bio1.jpg',
+      img: 'Latest_Solar_Projects/bio_CNG/bio_CNG.jpeg',
       title: 'CBG (Bio-CNG) Production Plant',
       tag: 'Bio Energy',
       desc: 'Welcome to GreenChip, your partner in sustainable energy solutions. We specialise in setting up CBG (Bio-CNG) manufacturing plants across India using cutting-edge biomethanation technology.',
@@ -242,7 +242,7 @@ export function HydrogenPage({ setPage }) {
               <img src={`${IMG_BASE}greenhyd1.png`} alt="Hydrogen Electrolyser" style={{ width: '100%', height: 260, objectFit: 'cover' }} />
             </div>
             <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 10px 32px rgba(22,163,74,.12)' }}>
-              <img src={`${IMG_BASE}greenhyd2.jpg`} alt="Green Hydrogen" style={{ width: '100%', height: 200, objectFit: 'cover' }} />
+              <img src={`${IMG_BASE}greenhyd1.png`} alt="Green Hydrogen" style={{ width: '100%', height: 200, objectFit: 'cover' }} />
             </div>
           </div>
         </div>
@@ -332,7 +332,7 @@ export function HydrogenPage({ setPage }) {
             </Body>
           </div>
           <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 12px 36px rgba(22,163,74,.14)', opacity: v3 ? 1 : 0, transform: v3 ? 'translateX(0)' : 'translateX(30px)', transition: 'all .8s ease .2s' }}>
-            <img src={`${IMG_BASE}greenhyd3.png`} alt="Green Hydrogen" style={{ width: '100%', height: 400, objectFit: 'cover' }} />
+            <img src={`${IMG_BASE}greenhyd1.png`} alt="Green Hydrogen" style={{ width: '100%', height: 400, objectFit: 'cover' }} />
           </div>
         </div>
 
@@ -406,7 +406,7 @@ export function CBGPage({ setPage }) {
       <PageHero
         title="CBG (Bio-CNG) Production Plant"
         subtitle="Your partner in sustainable bio-energy solutions — setting up CBG manufacturing plants across India."
-        img={`${IMG_BASE}bio1.jpg`}
+        img={`${IMG_BASE}Latest_Solar_Projects/bio_CNG/bio_CNG.jpeg`}
         breadcrumb="New Initiatives → CBG Production Plant"
       />
 
@@ -434,10 +434,10 @@ export function CBGPage({ setPage }) {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, opacity: v1 ? 1 : 0, transform: v1 ? 'translateX(0)' : 'translateX(30px)', transition: 'all .8s ease .2s' }}>
             <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 10px 32px rgba(22,163,74,.12)' }}>
-              <img src={`${IMG_BASE}bio2.jpg`} alt="CBG Plant" style={{ width: '100%', height: 250, objectFit: 'cover' }} />
+              <img src={`${IMG_BASE}Latest_Solar_Projects/bio_CNG/bio_CNG2.jpeg`} alt="CBG Plant" style={{ width: '100%', height: 250, objectFit: 'cover' }} />
             </div>
             <div style={{ borderRadius: 18, overflow: 'hidden', boxShadow: '0 10px 32px rgba(22,163,74,.12)' }}>
-              <img src={`${IMG_BASE}bio1.jpg`} alt="Bio CNG" style={{ width: '100%', height: 180, objectFit: 'cover' }} />
+              <img src={`${IMG_BASE}Latest_Solar_Projects/bio_CNG/bio_CNG5.jpeg`} alt="Bio CNG" style={{ width: '100%', height: 180, objectFit: 'cover' }} />
             </div>
           </div>
         </div>
@@ -457,7 +457,7 @@ export function CBGPage({ setPage }) {
 
         {/* Circular process images */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, marginTop: 36 }}>
-          {[['bio2.jpg', 'CBG Plant Setup'], ['bio3.png', 'Biogas Process'], ['bio4.png', 'Bio Fertilizer']].map(([img, label]) => (
+          {[['Latest_Solar_Projects/bio_CNG/bio_CNG2.jpeg', 'CBG Plant Setup'], ['Latest_Solar_Projects/bio_CNG/bio_CNG3.jpeg', 'Biogas Process'], ['Latest_Solar_Projects/bio_CNG/bio_CNG4.jpeg', 'Bio Fertilizer']].map(([img, label]) => (
             <div key={label} style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 24px rgba(22,163,74,.1)' }}>
               <img src={`${IMG_BASE}${img}`} alt={label} style={{ width: '100%', height: 220, objectFit: 'cover' }} />
               <div style={{ background: '#fff', padding: '12px 16px', borderTop: '1px solid #bbf7d0' }}>
