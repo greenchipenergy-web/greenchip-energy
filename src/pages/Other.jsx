@@ -1019,7 +1019,7 @@ export function Blogs(){
   return(
     <div style={{background:'#f8fdf9'}}>
       <PageHero title="Blogs" subtitle="Insights, updates and stories from the GreenChip Energy team." breadcrumb="Blogs"/>
-      <section className="section" style={{background:'#fff',padding:'88px 8%'}}>
+      <section className="section" style={{background:'#fff'}}>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:28}} className="blog-card-grid">
           {[1,2,3].map((n,i)=>(
             <div key={n} className="o-card blog-card" style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',overflow:'hidden',animationDelay:`${i*.12}s`}}>
@@ -1046,8 +1046,8 @@ export function Blogs(){
         </div>
       </section>
       <style>{`
-        @media(max-width:900px){.blog-card-grid{grid-template-columns:1fr 1fr!important}}
-        @media(max-width:600px){.blog-card-grid{grid-template-columns:1fr!important}}
+        @media(max-width:900px){.blog-card-grid{grid-template-columns:1fr 1fr!important;gap:20px!important}}
+        @media(max-width:600px){.blog-card-grid{grid-template-columns:1fr!important;gap:18px!important}}
 
         .blog-card{opacity:0;animation:blogCardIn .6s ease both}
         @keyframes blogCardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
