@@ -1019,11 +1019,27 @@ export function Blogs(){
   return(
     <div style={{background:'#f8fdf9'}}>
       <PageHero title="Blogs" subtitle="Insights, updates and stories from the GreenChip Energy team." breadcrumb="Blogs"/>
-      <section className="section" style={{background:'#fff'}}>
-        <div style={{textAlign:'center',padding:'60px 20px',color:'#6b7280',fontSize:15}}>
-          Blog posts coming soon.
+      <section className="section" style={{background:'#fff',padding:'88px 8%'}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:28}} className="blog-card-grid">
+          {[1,2,3].map(n=>(
+            <div key={n} className="o-card" style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',overflow:'hidden'}}>
+              <div style={{aspectRatio:'16/10',background:'linear-gradient(135deg,#dcfce7,#bbf7d0)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                <Sun size={34} strokeWidth={1.5} color="#16a34a" style={{opacity:.5}}/>
+              </div>
+              <div style={{padding:'22px 22px 26px'}}>
+                <div className="badge" style={{marginBottom:14}}><span className="dot dot-blink"/>Coming Soon</div>
+                <div style={{height:14,borderRadius:6,background:'#bbf7d0',opacity:.6,marginBottom:10,width:'85%'}}/>
+                <div style={{height:10,borderRadius:6,background:'#bbf7d0',opacity:.4,marginBottom:8,width:'100%'}}/>
+                <div style={{height:10,borderRadius:6,background:'#bbf7d0',opacity:.4,width:'60%'}}/>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
+      <style>{`
+        @media(max-width:900px){.blog-card-grid{grid-template-columns:1fr 1fr!important}}
+        @media(max-width:600px){.blog-card-grid{grid-template-columns:1fr!important}}
+      `}</style>
     </div>
   )
 }
