@@ -1021,10 +1021,19 @@ export function Blogs(){
       <PageHero title="Blogs" subtitle="Insights, updates and stories from the GreenChip Energy team." breadcrumb="Blogs"/>
       <section className="section" style={{background:'#fff',padding:'88px 8%'}}>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:28}} className="blog-card-grid">
-          {[1,2,3].map(n=>(
-            <div key={n} className="o-card" style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',overflow:'hidden'}}>
-              <div style={{aspectRatio:'16/10',background:'linear-gradient(135deg,#dcfce7,#bbf7d0)',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                <Sun size={34} strokeWidth={1.5} color="#16a34a" style={{opacity:.5}}/>
+          {[1,2,3].map((n,i)=>(
+            <div key={n} className="o-card blog-card" style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',overflow:'hidden',animationDelay:`${i*.12}s`}}>
+              <div style={{aspectRatio:'16/10',position:'relative',overflow:'hidden'}}>
+                <img
+                  className="blog-card-img"
+                  src={`${IMG}gallery-${n}.jpg`}
+                  alt=""
+                  style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}}
+                />
+                <div style={{position:'absolute',inset:0,background:'linear-gradient(135deg,rgba(20,83,45,.55),rgba(22,163,74,.35))'}}/>
+                <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center'}}>
+                  <Sun size={34} strokeWidth={1.5} color="#fff" style={{opacity:.85}}/>
+                </div>
               </div>
               <div style={{padding:'22px 22px 26px'}}>
                 <div className="badge" style={{marginBottom:14}}><span className="dot dot-blink"/>Coming Soon</div>
@@ -1039,6 +1048,13 @@ export function Blogs(){
       <style>{`
         @media(max-width:900px){.blog-card-grid{grid-template-columns:1fr 1fr!important}}
         @media(max-width:600px){.blog-card-grid{grid-template-columns:1fr!important}}
+
+        .blog-card{opacity:0;animation:blogCardIn .6s ease both}
+        @keyframes blogCardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+        .blog-card-img{filter:blur(6px);transform:scale(1.08);opacity:0;animation:blogImgIn 1s ease forwards;animation-delay:.15s}
+        @keyframes blogImgIn{from{filter:blur(6px);opacity:0}to{filter:blur(2px);opacity:1}}
+        .blog-card:hover .blog-card-img{filter:blur(0px);transform:scale(1.12);transition:filter .5s ease,transform .5s ease}
       `}</style>
     </div>
   )
