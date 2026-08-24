@@ -1015,6 +1015,19 @@ export function Calculator(){
 }
 
 /* ══ CAREERS ══════════════════════════════════ */
+export function Blogs(){
+  return(
+    <div style={{background:'#f8fdf9'}}>
+      <PageHero title="Blogs" subtitle="Insights, updates and stories from the GreenChip Energy team." breadcrumb="Blogs"/>
+      <section className="section" style={{background:'#fff'}}>
+        <div style={{textAlign:'center',padding:'60px 20px',color:'#6b7280',fontSize:15}}>
+          Blog posts coming soon.
+        </div>
+      </section>
+    </div>
+  )
+}
+
 export function Careers(){
   const[open,setOpen]=useState(null)
   const[ref,vis]=useReveal()

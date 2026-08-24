@@ -74,7 +74,7 @@ export default function Footer({setPage}){
           {/* Company */}
           <div className="foot-col-links">
             <div style={colHead}>Company</div>
-            {[['about','About Us'],['values','Our Values'],['approach','Our Approach'],['ethics','Ethics'],['team','Team']].map(([p,l])=>(
+            {[['about','About Us'],['values','Our Values'],['approach','Our Approach'],['ethics','Ethics'],['team','Team'],['blogs','Blogs']].map(([p,l])=>(
               <span key={p} className="foot-link" onClick={()=>go(p)} style={link}>{l}</span>
             ))}
           </div>

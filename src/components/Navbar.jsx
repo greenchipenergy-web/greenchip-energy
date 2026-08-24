@@ -105,7 +105,7 @@ export default function Navbar({page,setPage}){
             </div>}
           </div>
 
-          {[['projects','Projects'],['careers','Careers'],['contact','Contact']].map(([p,l])=>(
+          {[['projects','Projects'],['careers','Careers'],['blogs','Blogs'],['contact','Contact']].map(([p,l])=>(
             <button key={p} className={`nav-link${page===p?' is-active':''}`} style={lk(p)} onClick={()=>go(p)}>{l}</button>
           ))}
 
@@ -139,7 +139,7 @@ export default function Navbar({page,setPage}){
       {mob&&(
         <div style={{position:'absolute',top:'100%',left:0,right:0,background:'#fff',borderTop:'1px solid #e5e7eb',padding:'10px 0 20px',zIndex:1100,boxShadow:'0 8px 30px rgba(0,0,0,.06)'}}>
           {/* Mobile header logo removed as requested */}
-          {[['home','Home'],...ABOUT_DD,...WHAT_DD,['projects','Projects'],['careers','Careers'],['calculator','Solar Calculator'],['terms','Terms & Conditions'],['privacy','Privacy Policy'],['warranty','Warranty Policy'],['contact','Contact']].map(([p,l])=>(
+          {[['home','Home'],...ABOUT_DD,...WHAT_DD,['projects','Projects'],['careers','Careers'],['blogs','Blogs'],['calculator','Solar Calculator'],['terms','Terms & Conditions'],['privacy','Privacy Policy'],['warranty','Warranty Policy'],['contact','Contact']].map(([p,l])=>(
             <div key={p} className="mob-item" onClick={()=>go(p)} style={{padding:'12px 20px',color:page===p?'#16a34a':'#374151',cursor:'pointer',fontFamily:"'Inter',sans-serif",fontSize:14,borderBottom:'1px solid #f3f4f6',display:'flex',alignItems:'center',gap:8}}>
               {page===p&&<span style={{width:3,height:3,borderRadius:'50%',background:'#16a34a'}}/>}
               {p==='calculator'&&<Sun size={14} strokeWidth={2}/>}
