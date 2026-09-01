@@ -1014,15 +1014,61 @@ export function Calculator(){
   )
 }
 
-/* ══ CAREERS ══════════════════════════════════ */
-export function Blogs(){
+/* ══ BLOGS ══════════════════════════════════ */
+const BLOG_POSTS = [
+  {
+    slug: 'full-energy-infrastructure-stack-2026',
+    page: 'blog_full_energy_stack',
+    img: 'blog-full-energy-infrastructure-stack-2026.jpeg',
+    tag: 'Company Insight',
+    title: "From Generation to Grid: GreenChip Energy's Full Energy Infrastructure Stack",
+    excerpt: 'Most renewable energy providers stop at generation. GreenChip Energy spans solar, battery storage, green hydrogen, Bio-CNG, and substation transmission up to 400kV — the full stack, not just one piece of it.',
+    date: 'August 2026',
+    readTime: '9 min read',
+  },
+]
+
+export function Blogs({ setPage }){
   return(
     <div style={{background:'#f8fdf9'}}>
       <PageHero title="Blogs" subtitle="Insights, updates and stories from the GreenChip Energy team." breadcrumb="Blogs"/>
       <section className="section" style={{background:'#fff'}}>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:28}} className="blog-card-grid">
-          {[1,2,3].map((n,i)=>(
-            <div key={n} className="o-card blog-card" style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',overflow:'hidden',animationDelay:`${i*.12}s`}}>
+          {BLOG_POSTS.map((post,i)=>(
+            <div
+              key={post.slug}
+              className="o-card blog-card card"
+              style={{background:'#fff',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',overflow:'hidden',animationDelay:`${i*.12}s`,cursor:'pointer'}}
+              onClick={()=>setPage?.(post.page)}
+            >
+              <div className="media-zoom" style={{aspectRatio:'16/10',position:'relative',overflow:'hidden'}}>
+                <img
+                  className="blog-card-img"
+                  src={`${IMG}${post.img}`}
+                  alt={post.title}
+                  style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}}
+                />
+                <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(10,40,15,.55) 0%,transparent 55%)'}}/>
+                <div style={{position:'absolute',top:14,left:14,padding:'4px 12px',background:'rgba(255,255,255,.92)',borderRadius:100,color:'#15803d',fontSize:11,fontFamily:"'Space Grotesk',sans-serif",fontWeight:600}}>{post.tag}</div>
+              </div>
+              <div style={{padding:'22px 22px 26px'}}>
+                <div style={{display:'flex',alignItems:'center',gap:9,marginBottom:10,color:'#6b7280',fontSize:12}}>
+                  <Clock size={13} strokeWidth={2.25}/>{post.readTime}<span style={{color:'#d1d5db'}}>•</span>{post.date}
+                </div>
+                <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:17,color:'#14532d',marginBottom:10,lineHeight:1.35}}>{post.title}</h3>
+                <p style={{color:'#6b7280',fontSize:13.5,lineHeight:1.8,marginBottom:16}}>{post.excerpt}</p>
+                <button
+                  className="btn-primary"
+                  onClick={e=>{e.stopPropagation();setPage?.(post.page)}}
+                  style={{padding:'9px 20px',fontSize:12.5,borderRadius:8,display:'inline-flex',alignItems:'center',gap:7}}
+                >
+                  Read More <ArrowRight size={14} strokeWidth={2.25}/>
+                </button>
+              </div>
+            </div>
+          ))}
+          {[1,2].map((n,i)=>(
+            <div key={n} className="o-card blog-card" style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',overflow:'hidden',animationDelay:`${(i+BLOG_POSTS.length)*.12}s`}}>
               <div style={{aspectRatio:'16/10',position:'relative',overflow:'hidden'}}>
                 <img
                   className="blog-card-img"
@@ -1056,6 +1102,154 @@ export function Blogs(){
         @keyframes blogImgIn{from{filter:blur(6px);opacity:0}to{filter:blur(2px);opacity:1}}
         .blog-card:hover .blog-card-img{filter:blur(0px);transform:scale(1.12);transition:filter .5s ease,transform .5s ease}
       `}</style>
+    </div>
+  )
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BLOG DETAIL — Full Energy Infrastructure Stack 2026
+   Route: 'blog_full_energy_stack'
+══════════════════════════════════════════════════════════════ */
+export function BlogFullEnergyStack({ setPage }){
+  const stack = [
+    { title: 'Solar Generation (On Grid & Off Grid)', desc: 'Turnkey photovoltaic systems designed and delivered for commercial, industrial, and public sector clients across rural and urban India, for new build, refurbishment, and existing buildings.' },
+    { title: 'Solar Asset Management', desc: 'Expert consultation on system design and performance optimization, continuous performance monitoring using advanced systems, and data analytics with comprehensive reporting on energy production, system efficiency, and financial performance.' },
+    { title: 'Battery Energy Storage & Distributed Renewable Energy', desc: 'Storage infrastructure supporting reliable power availability alongside variable renewable generation, part of the core initial focus area.' },
+    { title: 'Green Hydrogen', desc: 'Named specifically as part of the core focus, alongside solar and storage — reflecting broader involvement in emerging clean energy carriers beyond electricity alone.' },
+    { title: 'CBG (Bio-CNG) Production', desc: 'Customized production plant solutions, delivering a high-quality product with product guarantee and after-sales services, and support in securing subsidy money and loans for the investment.' },
+    { title: 'Substation EPC & Transmission (up to 400/220/132kV)', desc: "EHV substation design, transmission line engineering, and HVDC converter substation capability — the critical infrastructure connecting generated power to where it's actually needed." },
+  ]
+
+  const comparison = [
+    ['Performance issues discovered only after significant energy loss', 'Continuous monitoring identifies anomalies proactively'],
+    ['Limited visibility into actual system efficiency', 'Data analytics and comprehensive reporting on production and efficiency'],
+    ['Reactive troubleshooting', 'Expert consultation actively optimizing performance over time'],
+  ]
+
+  const checklist = [
+    'Map your actual project needs across the full chain. Generation, storage, ongoing asset management, and grid connection each matter for a complete project.',
+    'Consider the coordination cost of using separate vendors. A single accountable provider spanning multiple stages can reduce handoff risk and delay.',
+    'Ask about ongoing asset management, not just installation. Ongoing monitoring and optimization protect the long-term value of a generation investment.',
+    'Consider whether your project involves non-electricity renewable needs too. Green hydrogen and Bio-CNG capability extends beyond standard solar/storage projects.',
+    'Confirm genuine grid-connection and substation capability if relevant. This final link matters directly for larger commercial or industrial projects.',
+  ]
+
+  const faqs = [
+    { q: "What is GreenChip Energy's core focus area?", a: 'Solar energy (On Grid and Off Grid), battery energy storage systems, distributed renewable energy, and green hydrogen, headquartered in Hyderabad and operating Pan India.' },
+    { q: 'Does GreenChip Energy offer ongoing support after installation?', a: 'Yes — solar asset management services including expert consultation, performance monitoring, and data analytics and reporting.' },
+    { q: 'Does GreenChip Energy handle grid connection infrastructure too?', a: 'Yes — Substation EPC solutions up to 400/220/132kV, including HVDC converter substation capability.' },
+    { q: 'What other renewable capabilities does GreenChip Energy offer?', a: 'CBG (Bio-CNG) production plant solutions, alongside their core solar, storage, and hydrogen focus.' },
+  ]
+
+  return (
+    <div style={{ background: '#f8fdf9' }}>
+      <PageHero
+        title="From Generation to Grid: GreenChip Energy's Full Energy Infrastructure Stack"
+        subtitle="By GreenChip Energy · Updated August 2026 · 9 min read"
+        img={`${IMG_BASE}blog-full-energy-infrastructure-stack-2026.jpeg`}
+        breadcrumb="Blogs → Full Energy Infrastructure Stack"
+      />
+
+      <Sec bg="#fff">
+        <div style={{ maxWidth: 820, margin: '0 auto' }}>
+          <button className="btn-outline" onClick={() => setPage('blogs')} style={{ padding: '9px 20px', fontSize: 12.5, borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 7, marginBottom: 32 }}>
+            <ArrowLeft size={14} strokeWidth={2.25}/>Back to Blogs
+          </button>
+
+          <p style={{ color: '#374151', fontSize: 16, lineHeight: 1.9, marginBottom: 30 }}>
+            Most renewable energy providers specialize in one link of the chain — panel installation, or battery supply, or grid connection work. Coordinating across separate vendors for each piece is exactly where many energy infrastructure projects lose time and accountability. GreenChip Energy is built to span the entire chain itself.
+          </p>
+
+          <H3>A Genuinely Broad Core Focus</H3>
+          <div style={{ background: '#f0fdf4', borderLeft: '4px solid #16a34a', borderRadius: 12, padding: '22px 26px', margin: '18px 0 30px' }}>
+            <p style={{ color: '#14532d', fontWeight: 600, fontSize: 14.5, lineHeight: 1.85, margin: 0 }}>
+              Headquartered in Hyderabad, we work across Pan India and provide sustainable, cost efficient and resilient solutions as a service to commercial and industrial customers. We have a core initial focus on Solar energy On Grid, Off Grid, Battery energy storage system, Distributed Renewable energy and Green Hydrogen.
+            </p>
+          </div>
+
+          <H3>The Full Stack, Piece by Piece</H3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 30 }}>
+            {stack.map((s, i) => (
+              <div key={i} className="card-flat o-card" style={{ padding: '22px 24px' }}>
+                <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#16a34a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13, marginBottom: 10, fontFamily: "'Space Grotesk',sans-serif" }}>{i + 1}</div>
+                <h4 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#14532d', fontSize: 15.5, marginBottom: 8 }}>{s.title}</h4>
+                <p style={{ color: '#6b7280', fontSize: 13.5, lineHeight: 1.82, margin: 0 }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <H3>Why Spanning This Full Chain Matters</H3>
+          <Body>
+            With our leading expertise in system design and installation, an integrated renewable energy service is provided from the design and consultation stage right through to installation and performance monitoring. A project requiring both new solar generation and the substation infrastructure to connect it to the grid can be handled by a single accountable provider, rather than coordinating separately between a solar EPC contractor and an entirely different electrical infrastructure firm.
+          </Body>
+
+          <H3>Investor-Facing Infrastructure Support Too</H3>
+          <div style={{ background: '#f0fdf4', borderLeft: '4px solid #16a34a', borderRadius: 12, padding: '22px 26px', margin: '18px 0 30px' }}>
+            <p style={{ color: '#14532d', fontWeight: 600, fontSize: 14.5, lineHeight: 1.85, margin: 0 }}>
+              We support investors for energy transition infrastructure assets for Industry decarbonisation. This reflects a role extending beyond direct client project delivery alone — supporting the broader financial infrastructure behind energy transition projects, relevant to investors specifically focused on decarbonisation assets.
+            </p>
+          </div>
+
+          <H3>Why Generation Without Asset Management Leaves Value on the Table</H3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 30 }}>
+            {comparison.map(([without, wth], i) => (
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="o-blog-compare">
+                <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 10, padding: '14px 16px', color: '#7f1d1d', fontSize: 13, lineHeight: 1.7 }}>{without}</div>
+                <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: '14px 16px', color: '#14532d', fontSize: 13, lineHeight: 1.7 }}>{wth}</div>
+              </div>
+            ))}
+          </div>
+
+          <H3>Why Bio-CNG Reflects Genuine Sector Breadth</H3>
+          <Body>
+            By partnering with GreenChip on CBG (Bio-CNG) production, clients contribute to India's green energy goals while tapping into the growing market demand for sustainable and renewable fuels. This capability sits meaningfully outside the electricity-generation focus of solar and battery storage, reflecting genuine breadth into the broader renewable fuel and waste-to-energy sector, not just a single narrow specialization.
+          </Body>
+
+          <H3>Why the Substation Capability Completes the Chain</H3>
+          <Body>
+            Generated power — whether from solar, distributed renewable sources, or elsewhere — genuinely needs reliable transmission infrastructure to actually reach its destination. GreenChip's substation EPC work, trusted by major industrial names and approved by Power Grid Corporation of India, means this critical final link isn't outsourced to a separate, uncoordinated vendor.
+          </Body>
+
+          <H3>A Practical Checklist for Evaluating a Full-Stack Energy Infrastructure Partner</H3>
+          <NList items={checklist}/>
+
+          <div style={{ background: 'linear-gradient(135deg,#14532d,#166534)', borderRadius: 20, padding: '40px 40px', textAlign: 'center', margin: '36px 0' }}>
+            <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#fff', fontSize: 'clamp(1.3rem,2.5vw,1.7rem)', marginBottom: 12 }}>
+              Work With a Provider Spanning the Full Energy Infrastructure Chain
+            </h3>
+            <p style={{ color: 'rgba(255,255,255,.85)', fontSize: 14.5, maxWidth: 560, margin: '0 auto 24px', lineHeight: 1.85 }}>
+              Solar generation, asset management, battery storage, green hydrogen, Bio-CNG, and substation transmission — all from one accountable partner.
+            </p>
+            <button className="btn-white" onClick={() => setPage('contact')} style={{ padding: '12px 30px', fontSize: 13.5, borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              Explore GreenChip Energy <ArrowRight size={15} strokeWidth={2.25}/>
+            </button>
+          </div>
+
+          <H3>Frequently Asked Questions</H3>
+          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 30 }}>
+            {faqs.map((f, i) => (
+              <div key={i} style={{ borderBottom: '1px solid #e5e7eb', padding: '18px 0' }}>
+                <h4 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: '#14532d', fontSize: 15, marginBottom: 8 }}>{f.q}</h4>
+                <p style={{ color: '#6b7280', fontSize: 13.5, lineHeight: 1.8, margin: 0 }}>{f.a}</p>
+              </div>
+            ))}
+          </div>
+
+          <H3>Final Thoughts</H3>
+          <Body>
+            Energy infrastructure projects genuinely lose coordination and accountability when spread across separate, uncoordinated vendors for generation, storage, and grid connection. Spanning solar generation, ongoing asset management, battery storage, green hydrogen, Bio-CNG, and substation transmission up to 400/220/132kV under one provider addresses this directly.
+          </Body>
+          <Body>
+            With genuine breadth across the full energy infrastructure chain, backed by real industrial trust and government-level approval for its highest-stakes transmission work, GreenChip Energy offers commercial, industrial, and public sector clients a genuinely integrated path from generation to grid.
+          </Body>
+
+          <div style={{ background: '#f3f4f6', borderRadius: 10, padding: '18px 22px', fontSize: 12.5, color: '#6b7280', lineHeight: 1.8, marginTop: 30 }}>
+            <strong style={{ color: '#374151' }}>Note:</strong> This article reflects the services and information published by GreenChip Energy on greenchipenergy.com at the time of writing. Service availability and project scope may vary; please contact GreenChip Energy directly for current details relevant to your specific project.
+          </div>
+        </div>
+      </Sec>
+
+      <style>{`@media(max-width:640px){.o-blog-compare{grid-template-columns:1fr!important}}`}</style>
     </div>
   )
 }

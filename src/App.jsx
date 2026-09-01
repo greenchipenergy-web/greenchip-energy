@@ -9,7 +9,7 @@ import{Solutions,SolutionDetail}from'./pages/Solutions.jsx'
 import{Services,EPC}from'./pages/Services.jsx'
 import FinancingPage from'./pages/FinancingPage.jsx'
 import AssetManagementPage from'./pages/AssetManagementPage.jsx'
-import { Initiatives, HydrogenPage, CBGPage, Projects, Calculator, Careers, Blogs, Contact } from './pages/Other.jsx'
+import { Initiatives, HydrogenPage, CBGPage, Projects, Calculator, Careers, Blogs, BlogFullEnergyStack, Contact } from './pages/Other.jsx'
 import{SOLUTIONS}from'./data/content.js'
 import{Send,Sun}from'lucide-react'
 
@@ -66,7 +66,8 @@ function PageView({page,setPage}){
     projects:    <Projects/>,
     calculator:  <Calculator/>,
     careers:     <Careers/>,
-    blogs:       <Blogs/>,
+    blogs:       <Blogs      setPage={setPage}/>,
+    blog_full_energy_stack: <BlogFullEnergyStack setPage={setPage}/>,
     contact:     <Contact setPage={setPage}/>,
     initiatives:  <Initiatives    setPage={setPage} />,
     ni_hydrogen:  <HydrogenPage  setPage={setPage} />,   
