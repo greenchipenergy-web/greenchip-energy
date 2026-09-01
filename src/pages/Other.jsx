@@ -1043,10 +1043,9 @@ export function Blogs({ setPage }){
             >
               <div className="media-zoom" style={{aspectRatio:'16/10',position:'relative',overflow:'hidden'}}>
                 <img
-                  className="blog-card-img"
                   src={`${IMG}${post.img}`}
                   alt={post.title}
-                  style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}}
+                  style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover',transition:'transform .5s ease'}}
                 />
                 <div style={{position:'absolute',inset:0,background:'linear-gradient(to top,rgba(10,40,15,.55) 0%,transparent 55%)'}}/>
                 <div style={{position:'absolute',top:14,left:14,padding:'4px 12px',background:'rgba(255,255,255,.92)',borderRadius:100,color:'#15803d',fontSize:11,fontFamily:"'Space Grotesk',sans-serif",fontWeight:600}}>{post.tag}</div>
