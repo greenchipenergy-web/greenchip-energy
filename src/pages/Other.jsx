@@ -2,6 +2,8 @@ import{useState,useEffect,useMemo}from'react'
 import{useReveal}from'../hooks/index.js'
 import{IMG,PROJECTS,JOBS,SOLUTIONS,LATEST_GALLERY}from'../data/content.js'
 import PageHero from'../components/PageHero.jsx'
+import{BLOGS}from'../data/blogs.js'
+import{pathForPage}from'../data/seo.js'
 import{Check,ArrowRight,ArrowLeft,X,Sun,FlaskConical,Microscope,Truck,Settings,Factory,Rocket,Briefcase,Building2,Landmark,Globe2,Wrench,Handshake,Lightbulb,Zap,IndianRupee,Ruler,Timer,Leaf,TreePine,Home,MapPin,Phone,Mail,Clock,CheckCircle2,Send,Loader2,ZoomIn,Play}from'lucide-react'
 
 /* ══ INITIATIVES ══════════════════════════════ */
@@ -1015,18 +1017,13 @@ export function Calculator(){
 }
 
 /* ══ BLOGS ══════════════════════════════════ */
-const BLOG_POSTS = [
-  {
-    slug: 'full-energy-infrastructure-stack-2026',
-    page: 'blog_full_energy_stack',
-    img: 'blog-full-energy-infrastructure-stack-2026.jpeg',
-    tag: 'Company Insight',
-    title: "From Generation to Grid: GreenChip Energy's Full Energy Infrastructure Stack",
-    excerpt: 'Most renewable energy providers stop at generation. GreenChip Energy spans solar, battery storage, green hydrogen, Bio-CNG, and substation transmission up to 400kV — the full stack, not just one piece of it.',
-    date: 'August 2026',
-    readTime: '9 min read',
-  },
-]
+// Pulls the <article> body out of a blog HTML file and drops its <h1> (PageHero shows the title)
+const articleBody = raw => (raw.match(/<article[^>]*>([\s\S]*?)<\/article>/)?.[1] ?? raw).replace(/<h1[^>]*>[\s\S]*?<\/h1>/, '')
+const readTime = html => `${Math.max(1, Math.round(html.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length / 200))} min read`
+
+const BLOG_HTML = import.meta.glob('../blogs/**/*.html', { query: '?raw', import: 'default', eager: true })
+
+export const BLOG_POSTS = BLOGS.map(b => b.file ? { ...b, html: articleBody(BLOG_HTML[`../blogs/${b.file}`]) } : b)
 
 export function Blogs({ setPage }){
   return(
@@ -1052,21 +1049,23 @@ export function Blogs({ setPage }){
               </div>
               <div style={{padding:'22px 22px 26px'}}>
                 <div style={{display:'flex',alignItems:'center',gap:9,marginBottom:10,color:'#6b7280',fontSize:12}}>
-                  <Clock size={13} strokeWidth={2.25}/>{post.readTime}<span style={{color:'#d1d5db'}}>•</span>{post.date}
+                  <Clock size={13} strokeWidth={2.25}/>{post.readTime ?? readTime(post.html)}<span style={{color:'#d1d5db'}}>•</span>{post.date}
                 </div>
                 <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:17,color:'#14532d',marginBottom:10,lineHeight:1.35}}>{post.title}</h3>
                 <p style={{color:'#6b7280',fontSize:13.5,lineHeight:1.8,marginBottom:16}}>{post.excerpt}</p>
-                <button
+                <a
+                  href={pathForPage(post.page)}
                   className="btn-primary"
-                  onClick={e=>{e.stopPropagation();setPage?.(post.page)}}
-                  style={{padding:'9px 20px',fontSize:12.5,borderRadius:8,display:'inline-flex',alignItems:'center',gap:7}}
+                  onClick={e=>{e.preventDefault();e.stopPropagation();setPage?.(post.page)}}
+                  style={{padding:'9px 20px',fontSize:12.5,borderRadius:8,display:'inline-flex',alignItems:'center',gap:7,textDecoration:'none'}}
                 >
                   Read More <ArrowRight size={14} strokeWidth={2.25}/>
-                </button>
+                </a>
               </div>
             </div>
           ))}
-          {[1,2].map((n,i)=>(
+          {/* Coming Soon cards only fill out the last row of the grid */}
+          {Array.from({length:(3-BLOG_POSTS.length%3)%3},(_,i)=>i+1).map((n,i)=>(
             <div key={n} className="o-card blog-card" style={{background:'#f0fdf4',border:'1px solid #bbf7d0',borderRadius:'var(--r-lg)',overflow:'hidden',animationDelay:`${(i+BLOG_POSTS.length)*.12}s`}}>
               <div style={{aspectRatio:'16/10',position:'relative',overflow:'hidden'}}>
                 <img
@@ -1100,6 +1099,79 @@ export function Blogs({ setPage }){
         .blog-card-img{filter:blur(6px);transform:scale(1.08);opacity:0;animation:blogImgIn 1s ease forwards;animation-delay:.15s}
         @keyframes blogImgIn{from{filter:blur(6px);opacity:0}to{filter:blur(2px);opacity:1}}
         .blog-card:hover .blog-card-img{filter:blur(0px);transform:scale(1.12);transition:filter .5s ease,transform .5s ease}
+      `}</style>
+    </div>
+  )
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BLOG DETAIL — generic page for posts written as HTML in src/blogs
+   Route: each post's `page` key in BLOG_POSTS
+══════════════════════════════════════════════════════════════ */
+export function BlogPost({ post, setPage }){
+  return (
+    <div style={{ background: '#f8fdf9' }}>
+      <PageHero
+        title={post.title}
+        subtitle={`By GreenChip Energy · ${post.date} · ${readTime(post.html)}`}
+        img={`${IMG_BASE}${post.img}`}
+        breadcrumb={`Blogs → ${post.tag}`}
+      />
+
+      <Sec bg="#fff">
+        <div style={{ maxWidth: 820, margin: '0 auto' }}>
+          <button className="btn-outline" onClick={() => setPage('blogs')} style={{ padding: '9px 20px', fontSize: 12.5, borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 7, marginBottom: 32 }}>
+            <ArrowLeft size={14} strokeWidth={2.25}/>Back to Blogs
+          </button>
+
+          <div className="blog-prose" dangerouslySetInnerHTML={{ __html: post.html }}/>
+
+          <div style={{ background: 'linear-gradient(135deg,#14532d,#166534)', borderRadius: 20, padding: '40px 40px', textAlign: 'center', margin: '44px 0 8px' }}>
+            <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 800, color: '#fff', fontSize: 'clamp(1.3rem,2.5vw,1.7rem)', marginBottom: 12 }}>
+              Planning a Solar or Energy Infrastructure Project?
+            </h3>
+            <p style={{ color: 'rgba(255,255,255,.85)', fontSize: 14.5, maxWidth: 560, margin: '0 auto 24px', lineHeight: 1.85 }}>
+              Talk to the GreenChip Energy team about design, procurement, installation, and long-term asset management.
+            </p>
+            <button className="btn-white" onClick={() => setPage('contact')} style={{ padding: '12px 30px', fontSize: 13.5, borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              Contact Us <ArrowRight size={15} strokeWidth={2.25}/>
+            </button>
+          </div>
+        </div>
+      </Sec>
+
+      <style>{`
+        .blog-prose{color:#374151;font-size:14.5px;line-height:1.95}
+        .blog-prose h2{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:#14532d;margin:40px 0 14px;padding-bottom:8px;border-bottom:2px solid #dcfce7;scroll-margin-top:120px}
+        .blog-prose h3{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;color:#14532d;margin:28px 0 10px;scroll-margin-top:120px}
+        .blog-prose p{margin:0 0 18px}
+        .blog-prose .lead{font-size:16px;line-height:1.9}
+        .blog-prose a{color:#15803d;font-weight:600;text-decoration:none}
+        .blog-prose a:hover{text-decoration:underline}
+        .blog-prose ul,.blog-prose ol{padding-left:22px;margin:0 0 20px}
+        .blog-prose li{margin:0 0 8px;line-height:1.8}
+        .blog-prose li::marker{color:#16a34a;font-weight:700}
+        .blog-prose strong{color:#14532d}
+        .blog-prose hr{border:none;border-top:1px solid #e5e7eb;margin:32px 0}
+        .blog-prose .table-wrap{overflow-x:auto;margin:22px 0}
+        .blog-prose table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.6;margin:22px 0}
+        .blog-prose .table-wrap table{margin:0}
+        .blog-prose th,.blog-prose td{border:1px solid #d1fae5;padding:10px 13px;text-align:left;vertical-align:top}
+        .blog-prose th{background:#f0fdf4;color:#14532d;font-weight:700}
+        .blog-prose .callout{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:12px;padding:20px 24px;margin:18px 0 28px;color:#14532d}
+        .blog-prose .client-grid{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+        .blog-prose .client-tag{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:100px;padding:5px 14px;font-size:12.5px;font-weight:600;color:#14532d}
+        .blog-prose .capability-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:20px 0 28px}
+        .blog-prose .capability{background:#fff;border:1px solid #d1fae5;border-radius:12px;padding:16px 18px;line-height:1.7}
+        .blog-prose .capability strong{display:block;margin-bottom:4px}
+        .blog-prose .capability span{font-size:13px;color:#6b7280}
+        .blog-prose .cta{background:linear-gradient(135deg,#14532d,#166534);color:rgba(255,255,255,.88);border-radius:20px;padding:32px 28px;text-align:center;margin:36px 0}
+        .blog-prose .cta h3{color:#fff;margin-top:0}
+        .blog-prose .cta a.btn{display:inline-block;background:#fff;color:#14532d;padding:11px 26px;border-radius:8px;margin-top:6px}
+        .blog-prose .faq-item{border-bottom:1px solid #e5e7eb;padding:6px 0 2px}
+        .blog-prose .faq-item h3{margin-top:14px}
+        .blog-prose .note{background:#f3f4f6;border-radius:10px;padding:18px 22px;font-size:12.5px;color:#6b7280;line-height:1.8;margin-top:30px}
+        .blog-prose .note strong{color:#374151}
       `}</style>
     </div>
   )

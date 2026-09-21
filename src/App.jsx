@@ -1,4 +1,4 @@
-import{useState,useEffect}from'react'
+import{useState,useEffect,useCallback}from'react'
 import'./index.css'
 import Navbar from'./components/Navbar.jsx'
 import Footer from'./components/Footer.jsx'
@@ -9,8 +9,9 @@ import{Solutions,SolutionDetail}from'./pages/Solutions.jsx'
 import{Services,EPC}from'./pages/Services.jsx'
 import FinancingPage from'./pages/FinancingPage.jsx'
 import AssetManagementPage from'./pages/AssetManagementPage.jsx'
-import { Initiatives, HydrogenPage, CBGPage, Projects, Calculator, Careers, Blogs, BlogFullEnergyStack, Contact } from './pages/Other.jsx'
+import { Initiatives, HydrogenPage, CBGPage, Projects, Calculator, Careers, Blogs, BLOG_POSTS, BlogPost, BlogFullEnergyStack, Contact } from './pages/Other.jsx'
 import{SOLUTIONS}from'./data/content.js'
+import{pathForPage,pageForPath,seoForPage,applySeo}from'./data/seo.js'
 import{Send,Sun}from'lucide-react'
 
 /* ── Floating solar button ──────────────────── */
@@ -68,6 +69,7 @@ function PageView({page,setPage}){
     careers:     <Careers/>,
     blogs:       <Blogs      setPage={setPage}/>,
     blog_full_energy_stack: <BlogFullEnergyStack setPage={setPage}/>,
+    ...Object.fromEntries(BLOG_POSTS.filter(p=>p.html).map(p=>[p.page,<BlogPost post={p} setPage={setPage}/>])),
     contact:     <Contact setPage={setPage}/>,
     initiatives:  <Initiatives    setPage={setPage} />,
     ni_hydrogen:  <HydrogenPage  setPage={setPage} />,   
@@ -77,9 +79,22 @@ function PageView({page,setPage}){
 }
 
 export default function App(){
-  const[page,setPage]=useState('home')
+  const[page,setPageState]=useState(()=>pageForPath(window.location.pathname))
   const [leadVisible,setLeadVisible] = useState(false)
-  useEffect(()=>{window.scrollTo(0,0)},[page])
+
+  // Each page has its own URL (see src/data/seo.js); keep the address bar and history in sync
+  const setPage=useCallback(next=>{
+    const path=pathForPage(next)
+    if(path!==window.location.pathname) window.history.pushState(null,'',path)
+    setPageState(next)
+  },[])
+  useEffect(()=>{
+    const onPop=()=>setPageState(pageForPath(window.location.pathname))
+    window.addEventListener('popstate',onPop)
+    return()=>window.removeEventListener('popstate',onPop)
+  },[])
+
+  useEffect(()=>{window.scrollTo(0,0);applySeo(seoForPage(page))},[page])
 
   return(
     <>
