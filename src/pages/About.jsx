@@ -336,7 +336,7 @@ export function Team(){
   const[ref,vis]=useReveal()
   const members = [
     { name: 'Sachin kumar Koyalkar', role: 'Founder and Director', desc: 'Provides overall strategic direction and leads business growth and partnerships.' },
-    { name: 'Vijay srikakulam', role: 'Director', desc: 'Oversees project delivery and stakeholder relationships across operations.' },
+    { name: 'Ram C V', role: 'Director', desc: 'Oversees project delivery and stakeholder relationships across operations.' },
     { name: 'Kiran kumar T', role: 'Finance Head', desc: 'Responsible for financial planning, reporting and cashflow management.' },
     { name: 'Ramakrishna Polineni', role: 'Operations Head', desc: 'Leads site operations, construction delivery and field teams.' },
     { name: 'Mahesh K', role: 'Design Head', desc: 'Heads system design and engineering for PV and storage projects.' },
