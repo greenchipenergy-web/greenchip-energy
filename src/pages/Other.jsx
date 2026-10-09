@@ -1153,6 +1153,8 @@ export function BlogPost({ post, setPage }){
         .blog-prose li::marker{color:#16a34a;font-weight:700}
         .blog-prose strong{color:#14532d}
         .blog-prose hr{border:none;border-top:1px solid #e5e7eb;margin:32px 0}
+        .blog-prose .blog-infographic{margin:8px 0 28px;text-align:center}
+        .blog-prose .blog-infographic img{max-width:100%;height:auto;border-radius:12px;border:1px solid #d1fae5}
         .blog-prose .table-wrap{overflow-x:auto;margin:22px 0}
         .blog-prose table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.6;margin:22px 0}
         .blog-prose .table-wrap table{margin:0}
