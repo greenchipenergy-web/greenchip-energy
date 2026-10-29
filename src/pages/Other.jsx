@@ -1491,7 +1491,7 @@ export function   Contact({setPage}){
         <div className="g3" style={{marginBottom:60}}>
           {[
             {ic:MapPin,t:'Our Office',lines:['GreenChip Energy','64, Nandagiri Hills Rear Rd, HUDA Enclave, Jubilee Hills, Hyderabad, Telangana 500033'],col:'#16a34a',bg:'#f0fdf4',border:'#bbf7d0'},
-            {ic:Phone,t:'Call Us',lines:['84648 84642','9010434455'],col:'#059669',bg:'#ecfdf5',border:'#6ee7b7'},
+            {ic:Phone,t:'Call Us',lines:['84648 84642','9010100808'],col:'#059669',bg:'#ecfdf5',border:'#6ee7b7'},
             {ic:Mail,t:'Email Us',lines:['info@greenchipenergy.com','Mon–Fri: 10AM – 6PM'],col:'#15803d',bg:'#dcfce7',border:'#86efac'},
           ].map((c,i)=>(
             <div key={i} className="o-card" style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:'var(--r-xl)',padding:'36px 28px',textAlign:'center'}}>
@@ -1542,7 +1542,7 @@ export function   Contact({setPage}){
               We're Here To <span className="grad-text">Help You</span>
             </h2>
             <div style={{display:'flex',flexDirection:'column',gap:18,marginBottom:34}}>
-              {[[MapPin,'Address','64, Nandagiri Hills Rear Rd, HUDA Enclave, Jubilee Hills, Hyderabad, Telangana 500033'],[Phone,'Phone','84648 84642 / 9010434455'],[Mail,'Email','info@greenchipenergy.com'],[Clock,'Hours','Mon–Fri: 10:00 AM – 6:00 PM']].map(([Ic,label,val])=>(
+              {[[MapPin,'Address','64, Nandagiri Hills Rear Rd, HUDA Enclave, Jubilee Hills, Hyderabad, Telangana 500033'],[Phone,'Phone','84648 84642 / 9010100808'],[Mail,'Email','info@greenchipenergy.com'],[Clock,'Hours','Mon–Fri: 10:00 AM – 6:00 PM']].map(([Ic,label,val])=>(
                 <div key={label} style={{display:'flex',alignItems:'flex-start',gap:14}}>
                   <div className="am-icon" style={{width:46,height:46,borderRadius:14,background:'#f0fdf4',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><Ic size={18} strokeWidth={1.75} color="#16a34a"/></div>
                   <div>

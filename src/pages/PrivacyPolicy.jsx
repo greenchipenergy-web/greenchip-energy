@@ -144,7 +144,7 @@ We encourage you to review this Policy periodically to remain informed of how we
 
 Grievance Officer: GreenChip Energy
 Address: #103, Plot No. 64, Pavani Suits, Nandagiri Hills Rear Rd, HUDA Enclave, Journalist Colony, Road No. 70, Jubilee Hills, Hyderabad, Telangana 500033
-Tel: +91-8464884642 / +91-9010434455
+Tel: +91-8464884642 / +91-9010100808
 Email: info@greenchipenergy.com
 
 For general enquiries, you may also use the "Contact Us" link on the Website or visit www.greenchipenergy.com.`,

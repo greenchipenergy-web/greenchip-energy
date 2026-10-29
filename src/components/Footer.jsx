@@ -98,7 +98,7 @@ export default function Footer({setPage}){
           {/* Contact */}
           <div className="foot-col-contact">
             <div style={colHead}>Talk To Us</div>
-            {[[MapPin,'64, Nandagiri Hills Rear Rd, HUDA Enclave, Jubilee Hills, Hyderabad, Telangana 500033'],[Phone,'84648 84642'],[Phone,'9010434455'],[Mail,'info@greenchipenergy.com']].map(([Ic,val],i)=>(
+            {[[MapPin,'64, Nandagiri Hills Rear Rd, HUDA Enclave, Jubilee Hills, Hyderabad, Telangana 500033'],[Phone,'84648 84642'],[Phone,'9010100808'],[Mail,'info@greenchipenergy.com']].map(([Ic,val],i)=>(
               <div key={i} style={{display:'flex',gap:9,marginBottom:12,alignItems:'flex-start'}}>
                 <Ic size={14} strokeWidth={2} color="#86efac" style={{flexShrink:0,marginTop:2}}/>
                 <span style={{color:'rgba(255,255,255,.6)',fontSize:12.5,lineHeight:1.6}}>{val}</span>

@@ -464,7 +464,7 @@ export default function WarrantyPolicy() {
               padding: "10px 22px", borderRadius: 6,
               textDecoration: "none", fontWeight: 600, fontSize: 14,
               border: "1px solid rgba(255,255,255,0.2)",
-            }}>+91-8464884642 / 9010434455</a>
+            }}>+91-8464884642 / 9010100808</a>
             <a href="https://www.greenchipenergy.com/contact.html" style={{
               background: "rgba(255,255,255,0.1)", color: "#fff",
               padding: "10px 22px", borderRadius: 6,
